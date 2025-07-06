@@ -1,13 +1,13 @@
-import { Loader2, Plus } from "lucide-react"
-import { OrganizationsTable } from "@/components/tables/organizations-table"
-import { useOrganizations } from "@/hooks/OrganizationsHooks"
-import { useSearch } from "@/context/SearchContext"
 import { Link } from "react-router-dom"
+import { Loader2, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useSearch } from "@/context/SearchContext"
+import { useOrganizations } from "@/features/organization/hooks/OrganizationsHooks"
+import { OrganizationsTable } from "@/features/organization/components/organizations-table"
 
 export default function Organization() {
-    const { organizations, isLoading } = useOrganizations()
     const { searchTerm } = useSearch()
+    const { organizations, isLoading } = useOrganizations()
 
     const filtered = organizations.filter((org) =>
         org.name_org?.toLowerCase().includes(searchTerm.toLowerCase()) ||

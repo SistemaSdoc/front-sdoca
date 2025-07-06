@@ -1,13 +1,13 @@
-import { Loader2, Plus } from "lucide-react"
-import { UsersTable } from "@/components/tables/users-table"
 import { Link } from "react-router-dom"
+import { Loader2, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useSearch } from "@/context/SearchContext"
-import { useUsersList } from "@/hooks/usuariosHooks"
+import { useUsersList } from "@/features/users/hooks/usuariosHooks"
+import { UsersTable } from "@/features/users/components/users-table"
 
 export default function Users() {
-    const { users, isLoading } = useUsersList()
     const { searchTerm } = useSearch()
+    const { users, isLoading } = useUsersList()
 
     const filtered = users.filter((user) =>
         user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -16,7 +16,7 @@ export default function Users() {
 
     return (
         <div className="relative space-y-6">
-            <h1 className="pl-4 text-2xl font-semibold">Usuários</h1>
+            <h1 className="text-2xl font-semibold">Usuários</h1>
 
             {isLoading ? (
                 <div className="flex justify-center py-10">

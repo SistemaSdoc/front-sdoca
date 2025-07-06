@@ -6,8 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 // hook de carregar areas
 export function useAreas() {
-    //const navigate = useNavigate()
-
     const { data: areas = [], isLoading, isError, error, refetch } = useQuery({
         queryKey: ['areas'],
         queryFn: async function () {
@@ -32,8 +30,6 @@ export function useAreas() {
 
 // hook para carregar uma area
 export function useArea(id) {
-    //const navigate = useNavigate()
-
     const { data: area = {}, isLoading, isError, error, refetch } = useQuery({
         queryKey: ['area', id],
         queryFn: async function () {

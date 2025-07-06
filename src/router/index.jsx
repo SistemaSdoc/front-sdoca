@@ -1,25 +1,25 @@
 import { createBrowserRouter } from "react-router-dom"
 import DashboardLayout from "@/layouts/DashboardLayout"
-import Home from '@/pages/dashboard/Home'
-import { Login } from "@/pages/auth/Login"
-import { Register } from "@/pages/auth/Register"
+import Home from '@/pages/Home'
+import { Login } from "@/features/auth/pages/Login"
+import { Register } from "@/features/auth/pages/Register"
 import PrivateRoute from "@/router/PrivateRoutes"
 import GuestRoute from "@/router/GuestRoute"
 import { AuthProvider } from "@/context/AuthContext"
 
-import Organization from '@/pages/dashboard/organization/index'
-import NewOrganization from '@/pages/dashboard/organization/new'
-import EditOrganization from '@/pages/dashboard/organization/edit'
-import ViewOrganization from '@/pages/dashboard/organization/view'
+import Organization from '@/features/organization/pages/index'
+import NewOrganization from '@/features/organization/pages/new'
+import EditOrganization from '@/features/organization/pages/edit'
+import ViewOrganization from '@/features/organization/pages/view'
 
-import Areas from '@/pages/dashboard/area/index'
-import NewArea from '@/pages/dashboard/area/new'
-import EditArea from '@/pages/dashboard/area/edit'
+import Areas from '@/features/areas/pages/index'
+import NewArea from '@/features/areas/pages/new'
+import EditArea from '@/features/areas/pages/edit'
 //import ViewOrganization from '@/pages/dashboard/organization/view'
 
-import Users from '@/pages/dashboard/user/index'
-import NewUser from '@/pages/dashboard/user/new'
-import EditUser from '@/pages/dashboard/user/edit'
+import Users from '@/features/users/pages/index'
+import NewUser from '@/features/users/pages/new'
+import EditUser from '@/features/users/pages/edit'
 //import ViewOrganization from '@/pages/dashboard/organization/view'
 
 const router = createBrowserRouter([

@@ -1,24 +1,26 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
-import { useDeleteArea } from "@/hooks/areasHooks"
-import { Eye, MoreHorizontal, Edit3, Trash2, Layers, Loader2 } from "lucide-react"
+import { useDeleteUser } from "@/features/users/hooks/usuariosHooks"
+import { Eye, MoreHorizontal, Edit3, Trash2, Users, Loader2 } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 
-export function AreasTable({ areas = [] }) {
+
+export function UsersTable({ users = [] }) {
   const navigate = useNavigate()
-  const deleteMutation = useDeleteArea()
-  const [areaId, setAreaId] = useState(null)
+  const deleteMutation = useDeleteUser()
+  const [userId, setUserId] = useState(null)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
 
   function confirmDelete() {
-    if (areaId) {
-      deleteMutation.mutate(areaId, {
+    if (userId) {
+      deleteMutation.mutate(setUserId, {
         onSuccess: () => {
           setShowDeleteDialog(false)
-          setAreaId(null)
+          setUserId(null)
         },
       })
     }
@@ -26,10 +28,10 @@ export function AreasTable({ areas = [] }) {
 
   return (
     <>
-      {areas.length === 0 ? (
+      {users.length === 0 ? (
         <div className="py-12 text-center">
-          <Layers className="w-12 h-12 mx-auto text-muted-foreground" />
-          <h3 className="mt-4 text-lg font-semibold">Nenhuma organização encontrada</h3>
+          <Users className="w-12 h-12 mx-auto text-muted-foreground" />
+          <h3 className="mt-4 text-lg font-semibold">Nenhum usuário encontrado</h3>
           <p className="text-muted-foreground">Tente ajustar os filtros de busca.</p>
         </div>
       ) : (
@@ -39,29 +41,28 @@ export function AreasTable({ areas = [] }) {
               <TableRow>
                 <TableHead className="px-4">Nome</TableHead>
                 <TableHead className="px-4">Email</TableHead>
-                <TableHead className="px-4">Telefone</TableHead>
-                <TableHead className="px-4">Descrição</TableHead>
-                <TableHead className="px-4">Criada em</TableHead>
+                <TableHead className="px-4">Área pertencente</TableHead>
+                <TableHead className="px-4">Papel no sistema</TableHead>
+                <TableHead className="px-4">Criado em</TableHead>
                 <TableHead className="w-[50px] px-4"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {areas.map((area) => (
-                <TableRow key={area.id}>
+              {users.map((user) => (
+                <TableRow key={user.id}>
                   <TableCell className="px-4">
                     <div className="flex items-center space-x-3 font-medium">
-                      <div className="w-8 h-8 bg-gray-200 flex justify-center items-center rounded-md">
-                        <span>{area.slogan_area}</span>
-                      </div>
-                      <span>{area.name_area}</span>
+                      <Avatar className="w-8 h-8">
+                        <AvatarImage src={`http://localhost:8000/storage/${user.profile_photo_path}`} alt={user.name} />
+                        <AvatarFallback>{user.name?.slice(0, 1).toUpperCase() || "?"}</AvatarFallback>
+                      </Avatar>
+                      <span>{user.name}</span>
                     </div>
                   </TableCell>
-                  <TableCell className="px-4">{area.email_area}</TableCell>
-                  <TableCell className="px-4">{area.telefone_area}</TableCell>
-                  <TableCell className="max-w-[250px] truncate text-muted-foreground px-4">
-                    {area.descricao_area}
-                  </TableCell>
-                  <TableCell className="px-4">{area.created_at || "-"}</TableCell>
+                  <TableCell className="px-4">{user.email}</TableCell>
+                  <TableCell className="px-4">{user.area}</TableCell>
+                  <TableCell className="px-4">{user.role || "-"}</TableCell>
+                  <TableCell className="px-4">{user.created_at || "-"}</TableCell>
                   <TableCell className="px-4">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -70,21 +71,21 @@ export function AreasTable({ areas = [] }) {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => navigate(`/dashboard/areas/${area.encrypted_id}`)}>
-                          <Eye className="w-4 h-4 mr-2" />
+                        <DropdownMenuItem onClick={() => navigate(`/dashboard/users/${user.encrypted_id}`)}>
+                          <Eye className="w-4 h-4" />
                           Visualizar
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate(`/dashboard/areas/edit/${area.encrypted_id}`)}>
-                          <Edit3 className="w-4 h-4 mr-2" />
+                        <DropdownMenuItem onClick={() => navigate(`/dashboard/users/edit/${user.encrypted_id}`)}>
+                          <Edit3 className="w-4 h-4" />
                           Editar
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => {
-                            setAreaId(area.id)
+                            setUserId(user.id)
                             setShowDeleteDialog(true)
                           }}
                         >
-                          <Trash2 className="w-4 h-4 mr-2" />
+                          <Trash2 className="w-4 h-4" />
                           Apagar
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -101,9 +102,9 @@ export function AreasTable({ areas = [] }) {
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Apagar Área</AlertDialogTitle>
+            <AlertDialogTitle>Apagar Usuário</AlertDialogTitle>
             <AlertDialogDescription>
-              Tem certeza que deseja apagar esta área? Essa ação é irreversível.
+              Tem certeza que deseja apagar este usuário? Essa ação é irreversível.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

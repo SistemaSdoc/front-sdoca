@@ -4,10 +4,8 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
 
-// hook de carregar usuários
+// hook para carregar usuários
 export function useUsersList() {
-    //const navigate = useNavigate()
-
     const { data: users = [], isLoading, isError, error, refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async function () {
@@ -30,9 +28,31 @@ export function useUsersList() {
     }
 }
 
-export function useCreateData() {
-    //const navigate = useNavigate()
+// hook para carregar dados de um usuário
+export function useUserShow(id) {
+    const { data: user = {}, isLoading, isError, error, refetch } = useQuery({
+        queryKey: ['user', id],
+        queryFn: async function () {
+            const response = await axios.get(`/users/${id}`)
+            return response.data.users
+        },
+        enabled: !!id,
+        onError: () => {
+            toast.error('Erro ao carregar usuário')
+        },
+        staleTime: 1000 * 60 * 5
+    })
 
+    return {
+        user,
+        isLoading,
+        isError,
+        error,
+        refetch
+    }
+}
+// hook para carregar dados para a criação de usuários
+export function useCreateData() {
     const { data, isLoading, isError, error, refetch } = useQuery({
         queryKey: ['user_data'],
         queryFn: async function () {
@@ -55,32 +75,6 @@ export function useCreateData() {
     }
 }
 
-// hook para carregar um usuário
-export function useUserShow(id) {
-    //const navigate = useNavigate()
-
-    const { data: user = {}, isLoading, isError, error, refetch } = useQuery({
-        queryKey: ['user', id],
-        queryFn: async function () {
-            const response = await axios.get(`/users/${id}`)
-            return response.data.users
-        },
-        enabled: !!id,
-        onError: () => {
-            toast.error('Erro ao carregar usuário')
-        },
-        staleTime: 1000 * 60 * 5
-    })
-
-    return {
-        user,
-        isLoading,
-        isError,
-        error,
-        refetch
-    }
-}
-
 // hook para criar um usuário
 export function useCreateUser() {
     const navigate = useNavigate()
@@ -88,7 +82,11 @@ export function useCreateUser() {
 
     const mutation = useMutation({
         mutationFn: async function (formData) {
-            const request = await axios.post('/users', formData)
+            const request = await axios.post('/users', formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            })
             return request.data
         },
         onSuccess: () => {
@@ -105,8 +103,6 @@ export function useCreateUser() {
 }
 
 export function useEditUser(id) {
-    //const navigate = useNavigate()
-
     const { data, isLoading, isError, error, refetch } = useQuery({
         queryKey: ['user_edit_data', id],
         queryFn: async function () {
@@ -129,7 +125,7 @@ export function useEditUser(id) {
     }
 }
 
-// hook para atualizar uma area
+// hook para actualizar um usuário
 export function useUpdateUser() {
     const navigate = useNavigate()
     const queryClient = useQueryClient()
@@ -152,7 +148,7 @@ export function useUpdateUser() {
     return mutation
 }
 
-// hook para deletar uma area
+// hook para apagar um usuário
 export function useDeleteUser() {
     const navigate = useNavigate()
     const queryClient = useQueryClient()

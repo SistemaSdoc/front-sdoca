@@ -1,13 +1,13 @@
-import { Loader2, Plus } from "lucide-react"
-import { AreasTable } from "@/components/tables/areas-table"
 import { Link } from "react-router-dom"
+import { Loader2, Plus } from "lucide-react"
+import { useAreas } from "@/features/areas/hooks/areasHooks"
 import { Button } from "@/components/ui/button"
 import { useSearch } from "@/context/SearchContext"
-import { useAreas } from "@/hooks/areasHooks"
+import { AreasTable } from "@/features/areas/components/areas-table"
 
 export default function Areas() {
-    const { areas, isLoading } = useAreas()
     const { searchTerm } = useSearch()
+    const { areas, isLoading } = useAreas()
 
     const filtered = areas.filter((area) =>
         area.name_area?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -16,7 +16,7 @@ export default function Areas() {
 
     return (
         <div className="relative space-y-6">
-            <h1 className="pl-4 text-2xl font-semibold">Areas</h1>
+            <h1 className="pl-4 text-2xl font-semibold">Áreas</h1>
 
             {isLoading ? (
                 <div className="flex justify-center py-10">
