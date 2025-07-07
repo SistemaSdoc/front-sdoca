@@ -30,7 +30,7 @@ export function useAreas() {
 
 // hook para carregar uma area
 export function useArea(id) {
-    const { data: area = {}, isLoading, isError, error, refetch } = useQuery({
+    const { data = {}, isLoading, isError, error, refetch } = useQuery({
         queryKey: ['area', id],
         queryFn: async function () {
             const response = await axios.get(`/areas/${id}`)
@@ -44,7 +44,7 @@ export function useArea(id) {
     })
 
     return {
-        area,
+        area: data,
         isLoading,
         isError,
         error,

@@ -155,6 +155,7 @@ export function useDeleteUser() {
 
     const mutation = useMutation({
         mutationFn: async function (id) {
+            await axios.get("/sanctum/csrf-cookie")
             const request = await axios.delete(`/users/${id}`)
             return request.data
         },

@@ -20,19 +20,26 @@ export function useOrganizations() {
 
 // 2. Buscar uma organização pelo ID
 export function useOrganization(id) {
-    const { data: organization = {}, isLoading, isError, error, refetch } = useQuery({
-        queryKey: ["organization", id],
-        queryFn: async () => {
-            const res = await axios.get(`/organizacoes/${id}`)
-            return res.data.organizacao
-        },
-        enabled: !!id, // só executa se tiver ID
-        onError: () => toast.error("Erro ao buscar organização"),
-        staleTime: 1000 * 60 * 5,
-    })
+  const { data = {}, isLoading, isError, error, refetch } = useQuery({
+    queryKey: ["organization", id],
+    queryFn: async () => {
+      const res = await axios.get(`/organizacoes/${id}`)
+      return res.data.organizacao
+    },
+    enabled: !!id,
+    onError: () => toast.error("Erro ao buscar organização"),
+    staleTime: 1000 * 60 * 5,
+  })
 
-    return { organization, isLoading, isError, error, refetch }
+  return {
+    organization: data, // ✅ esse nome é importante pra funcionar lá no outro hook
+    isLoading,
+    isError,
+    error,
+    refetch
+  }
 }
+
 
 // 3. Criar uma nova organização
 export function useCreateOrganization() {

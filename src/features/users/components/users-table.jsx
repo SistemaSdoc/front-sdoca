@@ -17,7 +17,7 @@ export function UsersTable({ users = [] }) {
 
   function confirmDelete() {
     if (userId) {
-      deleteMutation.mutate(setUserId, {
+      deleteMutation.mutate(userId, {
         onSuccess: () => {
           setShowDeleteDialog(false)
           setUserId(null)

@@ -7,7 +7,16 @@ import { UserForm } from "@/features/users/components/UserForm"
 
 export default function EditUserPage() {
   const { id } = useParams()
-  const { register, handleSubmit, setValue, onSubmit, isPending, data, isLoading } = useEditUserForm(id)
+  
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    onSubmit,
+    isPending,
+    data,
+    isLoading
+  } = useEditUserForm(id)
 
   if (isLoading) {
     return (
