@@ -22,6 +22,11 @@ import NewUser from '@/features/users/pages/new'
 import EditUser from '@/features/users/pages/edit'
 //import ViewOrganization from '@/pages/dashboard/organization/view'
 
+import Documents from '@/features/documentos/pages/index'
+//import NewDocument from '@/features/documentos/pages/new'
+//import EditDocument from '@/features/documentos/pages/edit'
+//import ViewDocument from '@/pages/dashboard/documentos/view'
+
 const router = createBrowserRouter([
     {
         path: "/login",
@@ -71,6 +76,12 @@ const router = createBrowserRouter([
             { path: "users", element: <Users /> },
             { path: "users/new", element: <NewUser /> },
             { path: "users/edit/:id", element: <EditUser /> },
+            //{ path: "area/:id", element: <ViewArea /> },
+
+            // Documents
+            { path: "documents", element: <Documents /> },
+            //{ path: "documents/new", element: <NewDocument /> },
+            //{ path: "documents/edit/:id", element: <EditDocument /> },
             //{ path: "area/:id", element: <ViewArea /> },
         ],
     }
