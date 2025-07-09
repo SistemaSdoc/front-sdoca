@@ -27,6 +27,21 @@ import Documents from '@/features/documentos/pages/index'
 //import EditDocument from '@/features/documentos/pages/edit'
 //import ViewDocument from '@/pages/dashboard/documentos/view'
 
+import Temporalidades from '@/features/temporalidade/pages/index'
+import NewTemporalidade from '@/features/temporalidade/pages/new'
+import EditTemporalidade from '@/features/temporalidade/pages/edit'
+//import ViewDocument from '@/pages/dashboard/documentos/view'
+
+import Classifications from '@/features/classification/pages/index'
+import NewClassification from '@/features/classification/pages/new'
+import EditClassification from '@/features/classification/pages/edit'
+//import ViewDocument from '@/pages/dashboard/documentos/view'
+
+import DocTypes from '@/features/doc-type/pages/index'
+import NewDocType from '@/features/doc-type/pages/new'
+import EditDocType from '@/features/doc-type/pages/edit'
+//import ViewDocument from '@/pages/dashboard/documentos/view'
+
 const router = createBrowserRouter([
     {
         path: "/login",
@@ -83,6 +98,24 @@ const router = createBrowserRouter([
             //{ path: "documents/new", element: <NewDocument /> },
             //{ path: "documents/edit/:id", element: <EditDocument /> },
             //{ path: "area/:id", element: <ViewArea /> },
+
+            // Temporalidades
+            { path: "temps", element: <Temporalidades /> },
+            { path: "temps/new", element: <NewTemporalidade /> },
+            { path: "temps/edit/:id", element: <EditTemporalidade /> },
+            //{ path: "area/:id", element: <ViewArea /> },
+
+            // Classifications
+            { path: "classifications", element: <Classifications /> },
+            { path: "classifications/new", element: <NewClassification /> },
+            { path: "classifications/edit/:id", element: <EditClassification /> },
+            //{ path: "classifications/:id", element: <ViewArea /> },
+
+            // Doc types
+            { path: "doc-types", element: <DocTypes /> },
+            { path: "doc-types/new", element: <NewDocType /> },
+            { path: "doc-types/edit/:id", element: <EditDocType /> },
+            //{ path: "classifications/:id", element: <ViewArea /> 
         ],
     }
 

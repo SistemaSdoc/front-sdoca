@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { ChevronLeftIcon, Building2, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { OrganizationForm } from "@/features/organization/components/OrganizationForm"
+import { OrganizationForm } from "@/features/organization/components/organization-form"
 import { useCreateOrganizationForm } from "@/features/organization/hooks/forms/useCreateForm"
 
 export default function NewOrganization() {

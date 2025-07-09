@@ -2,7 +2,7 @@
 import { Link, useParams } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { ChevronLeftIcon, Loader2, Users } from "lucide-react"
-import { useEditUserForm } from "@/features/users/hooks/forms/useEditUserForm"
+import { useEditUserForm } from "@/features/users/hooks/forms/useEditForm"
 import { UserForm } from "@/features/users/components/UserForm"
 
 export default function EditUserPage() {

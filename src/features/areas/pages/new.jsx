@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { ChevronLeftIcon, Loader2, Users } from "lucide-react"
-import { useCreateAreaForm } from "@/features/areas/hooks/forms/useCreateAreaForm"
-import { AreaForm } from "@/features/areas/components/AreaForm"
+import { useCreateAreaForm } from "@/features/areas/hooks/forms/useCreateForm"
+import { AreaForm } from "@/features/areas/components/area-form"
 
 export default function NewUser() {
   const {

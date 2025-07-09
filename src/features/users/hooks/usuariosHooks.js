@@ -162,7 +162,7 @@ export function useDeleteUser() {
         onSuccess: () => {
             toast.success('Usuário apagado com sucesso!')
             queryClient.invalidateQueries({ queryKey: ['users'] })
-            navigate('/dashboard/users')
+            navigate('/dashboard/users')        
         },
         onError: () => {
             toast.error('Erro ao apagar usuário!')

@@ -1,7 +1,7 @@
 "use client"
 
 import { Link } from "react-router-dom"
-import { Building2, ChevronRight, Command, FileArchive, FileText, FolderOpen, Home, Layers, Users } from "lucide-react"
+import { Building2, ChevronRight, Command, FileArchive, FileClock, FileText, FolderOpen, Home, Layers, Tags, Users, FileType } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -45,10 +45,25 @@ const data = {
       icon: FileText,
     },
     {
-      title: "Arquivos",
-      url: "/dashboard/archives",
-      icon: FolderOpen,
+      title: "Temporalidades",
+      url: "/dashboard/temps",
+      icon: FileClock,
     },
+    {
+      title: "Classificações",
+      url: "/dashboard/classifications",
+      icon: Tags,
+    },
+    {
+      title: "Tipo de documentos",
+      url: "/dashboard/doc-types",
+      icon: FileType,
+    },
+    /*  {
+       title: "Arquivos",
+       url: "/dashboard/archives",
+       icon: FolderOpen,
+     }, */
   ],
 }
 
@@ -71,7 +86,7 @@ export function AppSidebar({ ...props }) {
                   <SidebarMenuButton asChild isActive={item.isActive}>
                     <Link to={item.url}>
                       {item.icon && <item.icon className="w-4 h-4" />}
-                      <span>{item.title}</span>
+                      <span>{item.title}</span> 
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

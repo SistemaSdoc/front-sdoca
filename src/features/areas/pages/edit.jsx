@@ -1,8 +1,8 @@
 import { useParams, Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { ChevronLeftIcon, Loader2, Layers } from "lucide-react"
-import { AreaForm } from "@/features/areas/components/AreaForm"
-import { useEditAreaForm } from "@/features/areas/hooks/forms/useEditAreaForm"
+import { AreaForm } from "@/features/areas/components/area-form"
+import { useEditAreaForm } from "@/features/areas/hooks/forms/useEditForm"
 
 export default function EditArea() {
   const { id } = useParams()

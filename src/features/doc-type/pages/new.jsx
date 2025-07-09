@@ -1,19 +1,19 @@
 import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
-import { ChevronLeftIcon, Loader2, Users } from "lucide-react"
-import { useCreateUserForm } from "@/features/users/hooks/forms/useCreateForm"
-import { UserForm } from "@/features/users/components/UserForm"
+import { ChevronLeftIcon, Loader2, FileType } from "lucide-react"
+import { useCreateForm } from "@/features/doc-type/hooks/forms/useCreateForm"
+import { DocTypeForm } from "@/features/doc-type/components/doc-type-form"
 
-export default function NewUser() {
+export default function NewDocType() {
   const {
     register,
     handleSubmit,
     setValue,
     onSubmit,
     isPending,
-    data,
-    isLoading
-  } = useCreateUserForm()
+    isLoading,
+    classificacoes
+  } = useCreateForm()
 
   if (isLoading) {
     return (
@@ -26,7 +26,7 @@ export default function NewUser() {
   return (
     <>
       <div className="pt-2 pl-4">
-        <Link to='/dashboard/users'>
+        <Link to='/dashboard/doc-types'>
           <Button variant="link" className="gap-1">
             <ChevronLeftIcon className="opacity-60" size={16} />
             Voltar
@@ -36,22 +36,26 @@ export default function NewUser() {
 
       <div className="space-y-2 text-center">
         <div className="flex items-center justify-center space-x-2">
-          <Users className="w-8 h-8 text-primary" />
-          <h1 className="text-3xl font-medium">Criar Novo Usuário</h1>
+          <FileType className="w-8 h-8 text-primary" />
+          <h1 className="text-3xl font-medium">Criar Novo Tipo de Documento</h1>
         </div>
         <p className="text-muted-foreground">
-          Preencha os dados abaixo para registrar um novo usuário no sistema
+          Preencha os dados abaixo para registrar um novo tipo de documento no sistema
         </p>
       </div>
 
-      <UserForm
+      <DocTypeForm
         register={register}
         handleSubmit={handleSubmit}
         setValue={setValue}
         onSubmit={onSubmit}
         isPending={isPending}
-        data={data}
+        classifications={classificacoes}
       />
     </>
   )
 }
+
+
+
+

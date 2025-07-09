@@ -19,9 +19,15 @@ export function AuthProvider({ children }) {
         setLoading(true)
         try {
             const response = await axios.get("/user")
-            console.log('usuario: ', response.data)
-            setUser(response.data)
+            console.log('usuario básico: ', response.data)
+            console.log('ID do usuário básico: ', response.data.id)
+
+            const fullData = await axios.get(`/users/${response.data.id}`)
+            setUser(fullData.data)
+            console.log("User completo:", fullData.data.user)
+
         } catch (err) {
+            console.error("❌ Erro em fetchUser:", err)
             setUser(null)
             setError(err)
         } finally {
@@ -76,12 +82,19 @@ export function AuthProvider({ children }) {
         }
     }
 
+    function hasRole(...roles) {
+        return roles.includes(user?.role)
+    }
+
     return (
-        <AuthContext.Provider value={{ user, loading, error, Login, Register, Logout }}>
+        <AuthContext.Provider value={{ user, loading, error, Login, Register, Logout, hasRole }}>
             {children}
         </AuthContext.Provider>
     )
 }
+
+
+
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
