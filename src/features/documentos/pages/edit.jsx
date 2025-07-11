@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
-import { ChevronLeftIcon, FileText, Loader2, Tags } from "lucide-react"
-import { useCreateForm } from "@/features/documentos/hooks/forms/useCreateForm"
+import { ChevronLeftIcon, Loader2, Tags } from "lucide-react"
+import { useEditForm } from "@/features/documentos/hooks/forms/useEditForm"
 import { DocumentForm } from "@/features/documentos/components/document-form"
 
-export default function NewDocument() {
+export default function EditClassification() {
+  const { id } = useParams()
+
   const {
     register,
     handleSubmit,
@@ -14,7 +16,7 @@ export default function NewDocument() {
     isLoading,
     areas,
     tiposDocumentos
-  } = useCreateForm()
+  } = useEditForm(id)
 
   if (isLoading) {
     return (
@@ -37,11 +39,11 @@ export default function NewDocument() {
 
       <div className="space-y-2 text-center">
         <div className="flex items-center justify-center space-x-2">
-          <FileText className="w-8 h-8 text-primary" />
-          <h1 className="text-3xl font-medium">Criar Novo Documento</h1>
+          <Tags className="w-8 h-8 text-primary" />
+          <h1 className="text-3xl font-medium">Editar Documento</h1>
         </div>
         <p className="text-muted-foreground">
-          Preencha os dados abaixo para registrar um novo documento no sistema
+          Atualize os dados abaixo para editar o documento no sistema
         </p>
       </div>
 
@@ -53,11 +55,8 @@ export default function NewDocument() {
         isPending={isPending}
         areas={areas}
         doc_types={tiposDocumentos}
+        isEdit={true}
       />
     </>
   )
 }
-
-
-
-

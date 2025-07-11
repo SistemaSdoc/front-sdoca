@@ -2,6 +2,7 @@
 
 import { Link } from "react-router-dom"
 import { Building2, ChevronRight, Command, FileArchive, FileClock, FileText, FolderOpen, Home, Layers, Tags, Users, FileType } from "lucide-react"
+import { useAuth } from "@/context/AuthContext"
 import {
   Sidebar,
   SidebarContent,
@@ -28,52 +29,55 @@ const data = {
       title: "Organizações",
       url: "/dashboard/organizations",
       icon: Building2,
+      permissions: ["super-admin-post", "admin-post"],
     },
     {
       title: "Áreas",
       url: "/dashboard/areas",
       icon: Layers,
+      permissions: ["admin-post", "supervi-post"],
     },
     {
       title: "Usuários",
       url: "/dashboard/users",
       icon: Users,
+      permissions: ["admin-post"],
     },
     {
       title: "Documentos",
       url: "/dashboard/documents",
       icon: FileText,
+      permissions: ["user-post"],
     },
     {
       title: "Temporalidades",
       url: "/dashboard/temps",
       icon: FileClock,
+      permissions: ["super-admin-post"],
     },
     {
       title: "Classificações",
       url: "/dashboard/classifications",
       icon: Tags,
+      permissions: ["super-admin-post"],
     },
     {
       title: "Tipo de documentos",
       url: "/dashboard/doc-types",
       icon: FileType,
+      permissions: ["super-admin-post"],
     },
-    /*  {
-       title: "Arquivos",
-       url: "/dashboard/archives",
-       icon: FolderOpen,
-     }, */
   ],
 }
 
 export function AppSidebar({ ...props }) {
+  const { canAny } = useAuth()
+
   return (
     <Sidebar className="border-r-0" {...props}>
       <SidebarHeader>
         <div className="flex items-center gap-2 px-2 py-2">
-          <div
-            className="flex items-center justify-center text-black rounded-md size-5">
+          <div className="flex items-center justify-center text-black rounded-md size-5">
             <FileArchive className="size-5" />
           </div>
           <span className="font-semibold truncate">SDOCA</span>
@@ -81,24 +85,29 @@ export function AppSidebar({ ...props }) {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {data.navMain.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={item.isActive}>
-                    <Link to={item.url}>
-                      {item.icon && <item.icon className="w-4 h-4" />}
-                      <span>{item.title}</span> 
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {data.navMain
+                .filter(
+                  (item) =>
+                    !item.permissions || canAny(item.permissions) // 👈 esse filtro mágico
+                )
+                .map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild isActive={item.isActive}>
+                      <Link to={item.url}>
+                        {item.icon && <item.icon className="w-4 h-4" />}
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarHeader>
-      <SidebarContent>{/* Content area - can be used for additional navigation or content */}</SidebarContent>
+      <SidebarContent>{/* Adicionais, se quiser */}</SidebarContent>
       <SidebarRail />
     </Sidebar>
-  );
+  )
 }
 
 

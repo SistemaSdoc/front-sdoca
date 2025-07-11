@@ -3,10 +3,9 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
-
-// hook de carregar documentos
+// hook para carregar todos os documentos
 export function useDocuments() {
-  const { data = [], isLoading, isError, error, refetch } = useQuery({
+  const { data: documents = [], isLoading, isError, error, refetch } = useQuery({
     queryKey: ['documents'],
     queryFn: async function () {
       const response = await axios.get('/documentos')
@@ -20,7 +19,7 @@ export function useDocuments() {
   })
 
   return {
-    documents: data,
+    documents,
     isLoading,
     isError,
     error,
@@ -28,7 +27,7 @@ export function useDocuments() {
   }
 }
 
-// hook para carregar um documento
+// hook para carregar um único documento
 export function useDocument(id) {
   const { data = {}, isLoading, isError, error, refetch } = useQuery({
     queryKey: ['document', id],
@@ -44,7 +43,7 @@ export function useDocument(id) {
   })
 
   return {
-    documento: data,
+    document: data,
     isLoading,
     isError,
     error,
@@ -59,8 +58,8 @@ export function useCreateDocument() {
 
   const mutation = useMutation({
     mutationFn: async function (formData) {
-      const request = await axios.post('/documentos', formData)
-      return request.data
+      const response = await axios.post('/documentos', formData)
+      return response.data
     },
     onSuccess: () => {
       toast.success('Documento criado com sucesso!')
@@ -82,11 +81,11 @@ export function useUpdateDocument() {
 
   const mutation = useMutation({
     mutationFn: async function ({ id, formData }) {
-      const request = await axios.put(`/documentos/${id}`, formData)
-      return request.data
+      const response = await axios.put(`/documentos/${id}`, formData)
+      return response.data
     },
     onSuccess: () => {
-      toast.success('Documento actualizado com sucesso!')
+      toast.success('Documento atualizado com sucesso!')
       queryClient.invalidateQueries({ queryKey: ['documents'] })
       navigate('/dashboard/documents')
     },
@@ -105,8 +104,8 @@ export function useDeleteDocument() {
 
   const mutation = useMutation({
     mutationFn: async function (id) {
-      const request = await axios.delete(`/documentos/${id}`)
-      return request.data
+      const response = await axios.delete(`/documentos/${id}`)
+      return response.data
     },
     onSuccess: () => {
       toast.success('Documento apagado com sucesso!')
