@@ -13,32 +13,25 @@ import {
   VideoIcon,
   XIcon,
 } from "lucide-react"
-
-import { formatBytes, useFileUpload } from "@/hooks/use-file-upload";
+import { formatBytes, useFileUpload } from "@/hooks/use-file-upload"
 import { Button } from "@/components/ui/button"
+import { Viewer, Worker } from "@react-pdf-viewer/core"
+import "@react-pdf-viewer/core/lib/styles/index.css"
 
-// Create some dummy initial files
 const initialFiles = [
+  {
+    name: "example.pdf",
+    size: 102400,
+    type: "application/pdf",
+    url: "https://example.com/example.pdf",
+    id: "example-123",
+  },
   {
     name: "intro.zip",
     size: 252873,
     type: "application/zip",
     url: "https://example.com/intro.zip",
     id: "intro.zip-1744638436563-8u5xuls",
-  },
-  {
-    name: "image-01.jpg",
-    size: 1528737,
-    type: "image/jpeg",
-    url: "https://picsum.photos/1000/800?grayscale&random=1",
-    id: "image-01-123456789",
-  },
-  {
-    name: "audio.mp3",
-    size: 1528737,
-    type: "audio/mpeg",
-    url: "https://example.com/audio.mp3",
-    id: "audio-123456789",
   },
 ]
 
@@ -87,146 +80,94 @@ const getFileIcon = (file) => {
 
   for (const { icon: Icon, conditions } of Object.values(iconMap)) {
     if (conditions(fileType, fileName)) {
-      return <Icon className="size-5 opacity-60" />;
+      return <Icon className="size-5 opacity-60" />
     }
   }
 
-  return <FileIcon className="size-5 opacity-60" />;
+  return <FileIcon className="size-5 opacity-60" />
 }
 
-const getFilePreview = (file) => {
-  const fileType = file.file instanceof File ? file.file.type : file.file.type
-  const fileName = file.file instanceof File ? file.file.name : file.file.name
-
-  const renderImage = (src) => (
-    <img
-      src={src}
-      alt={fileName}
-      className="size-full rounded-t-[inherit] object-cover" />
-  )
-
-  return (
-    <div
-      className="bg-accent flex aspect-square items-center justify-center overflow-hidden rounded-t-[inherit]">
-      {fileType.startsWith("image/") ? (
-        file.file instanceof File ? (
-          (() => {
-            const previewUrl = URL.createObjectURL(file.file)
-            return renderImage(previewUrl);
-          })()
-        ) : file.file.url ? (
-          renderImage(file.file.url)
-        ) : (
-          <ImageIcon className="size-5 opacity-60" />
-        )
-      ) : (
-        getFileIcon(file)
-      )}
-    </div>
-  );
-}
-
-// Function to simulate file upload with more realistic timing and progress
-const simulateUpload = (
-  totalBytes,
-  onProgress,
-  onComplete
-) => {
+const simulateUpload = (totalBytes, onProgress, onComplete) => {
   let timeoutId
   let uploadedBytes = 0
   let lastProgressReport = 0
 
   const simulateChunk = () => {
-    // Simulate variable network conditions with random chunk sizes
     const chunkSize = Math.floor(Math.random() * 300000) + 2000
     uploadedBytes = Math.min(totalBytes, uploadedBytes + chunkSize)
 
-    // Calculate progress percentage (0-100)
     const progressPercent = Math.floor((uploadedBytes / totalBytes) * 100)
 
-    // Only report progress if it's changed by at least 1%
     if (progressPercent > lastProgressReport) {
       lastProgressReport = progressPercent
       onProgress(progressPercent)
     }
 
-    // Continue simulation if not complete
     if (uploadedBytes < totalBytes) {
-      // Variable delay between 50ms and 500ms to simulate network fluctuations (reduced for faster uploads)
       const delay = Math.floor(Math.random() * 450) + 50
-
-      // Occasionally add a longer pause to simulate network congestion (5% chance, shorter duration)
       const extraDelay = Math.random() < 0.05 ? 500 : 0
-
       timeoutId = setTimeout(simulateChunk, delay + extraDelay)
     } else {
-      // Upload complete
       onComplete()
     }
   }
 
-  // Start the simulation
   timeoutId = setTimeout(simulateChunk, 100)
 
-  // Return a cleanup function to cancel the simulation
   return () => {
     if (timeoutId) {
       clearTimeout(timeoutId)
     }
-  };
+  }
 }
 
-export default function DocumentUploader() {
+export default function DocumentUploader({onPreviewPdf }) {
   const maxSizeMB = 5
-  const maxSize = maxSizeMB * 1024 * 1024 // 5MB default
+  const maxSize = maxSizeMB * 1024 * 1024
   const maxFiles = 6
 
-  // State to track upload progress for each file
   const [uploadProgress, setUploadProgress] = useState([])
+  const [selectedPdfUrl, setSelectedPdfUrl] = useState(null)
 
-  // Function to handle newly added files
   const handleFilesAdded = (addedFiles) => {
-    // Initialize progress tracking for each new file
     const newProgressItems = addedFiles.map((file) => ({
       fileId: file.id,
       progress: 0,
       completed: false,
     }))
-
-    // Add new progress items to state
     setUploadProgress((prev) => [...prev, ...newProgressItems])
 
-    // Store cleanup functions
     const cleanupFunctions = []
 
-    // Start simulated upload for each file
     addedFiles.forEach((file) => {
-      const fileSize =
-        file.file instanceof File ? file.file.size : file.file.size
+      const fileSize = file.file instanceof File ? file.file.size : file.file.size
 
-      // Start the upload simulation and store the cleanup function
-      const cleanup = simulateUpload(fileSize, // Progress callback
-      (progress) => {
-        setUploadProgress((prev) =>
-          prev.map((item) =>
-            item.fileId === file.id ? { ...item, progress } : item))
-      }, // Complete callback
-      () => {
-        setUploadProgress((prev) =>
-          prev.map((item) =>
-            item.fileId === file.id ? { ...item, completed: true } : item))
-      })
+      const cleanup = simulateUpload(
+        fileSize,
+        (progress) => {
+          setUploadProgress((prev) =>
+            prev.map((item) =>
+              item.fileId === file.id ? { ...item, progress } : item
+            )
+          )
+        },
+        () => {
+          setUploadProgress((prev) =>
+            prev.map((item) =>
+              item.fileId === file.id ? { ...item, completed: true } : item
+            )
+          )
+        }
+      )
 
       cleanupFunctions.push(cleanup)
     })
 
-    // Return a cleanup function that cancels all animations
     return () => {
       cleanupFunctions.forEach((cleanup) => cleanup())
-    };
+    }
   }
 
-  // Remove the progress tracking for the file
   const handleFileRemoved = (fileId) => {
     setUploadProgress((prev) => prev.filter((item) => item.fileId !== fileId))
   }
@@ -252,8 +193,7 @@ export default function DocumentUploader() {
   })
 
   return (
-    <div className="flex flex-col gap-2">
-      {/* Drop area */}
+    <div className="flex flex-col gap-4">
       <div
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
@@ -261,8 +201,9 @@ export default function DocumentUploader() {
         onDrop={handleDrop}
         data-dragging={isDragging || undefined}
         data-files={files.length > 0 || undefined}
-        className="border-input data-[dragging=true]:bg-accent/50 has-[input:focus]:border-ring has-[input:focus]:ring-ring/50 relative flex min-h-52 flex-col items-center overflow-hidden rounded-xl border border-dashed p-4 transition-colors not-data-[files]:justify-center has-[input:focus]:ring-[3px]">
-        <input {...getInputProps()} className="sr-only" aria-label="Upload image file" />
+        className="border-input data-[dragging=true]:bg-accent/50 relative flex min-h-52 flex-col items-center overflow-hidden rounded-xl border border-dashed p-4 transition-colors"
+      >
+        <input {...getInputProps()} className="sr-only" aria-label="Upload file" />
         {files.length > 0 ? (
           <div className="flex flex-col w-full gap-3">
             <div className="flex items-center justify-between gap-2">
@@ -271,119 +212,104 @@ export default function DocumentUploader() {
               </h3>
               <div className="flex gap-2">
                 <Button variant="outline" type="button" size="sm" onClick={openFileDialog}>
-                  <UploadIcon className="-ms-0.5 size-3.5 opacity-60" aria-hidden="true" />
-                  Adicionar ficheiros
+                  <UploadIcon className="mr-1 size-4" />
+                  Adicionar
                 </Button>
                 <Button
                   variant="outline"
                   size="sm"
                   type="button"
                   onClick={() => {
-                    // Clear all progress tracking
                     setUploadProgress([])
                     clearFiles()
-                  }}>
-                  <Trash2Icon className="-ms-0.5 size-3.5 opacity-60" aria-hidden="true" />
+                    setSelectedPdfUrl(null)
+                  }}
+                >
+                  <Trash2Icon className="mr-1 size-4" />
                   Remover tudo
                 </Button>
               </div>
             </div>
 
-            <div className="w-full space-y-2">
+            <div className="space-y-2">
               {files.map((file) => {
-                // Find the upload progress for this file once to avoid repeated lookups
                 const fileProgress = uploadProgress.find((p) => p.fileId === file.id)
                 const isUploading = fileProgress && !fileProgress.completed
+                const fileUrl =
+                  file.file instanceof File
+                    ? URL.createObjectURL(file.file)
+                    : file.file.url
 
                 return (
                   <div
                     key={file.id}
-                    data-uploading={isUploading || undefined}
-                    className="flex flex-col gap-1 p-2 transition-opacity duration-300 border rounded-lg bg-background pe-3">
-                    <div className="flex items-center justify-between gap-2">
-                      <div
-                        className="flex items-center gap-3 overflow-hidden in-data-[uploading=true]:opacity-50">
-                        <div
-                          className="flex items-center justify-center border rounded aspect-square size-10 shrink-0">
-                          {getFileIcon(file)}
-                        </div>
-                        <div className="flex min-w-0 flex-col gap-0.5">
-                          <p className="truncate text-[13px] font-medium">
-                            {file.file instanceof File
-                              ? file.file.name
-                              : file.file.name}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            {formatBytes(file.file instanceof File
-                              ? file.file.size
-                              : file.file.size)}
-                          </p>
-                        </div>
+                    className="flex items-center justify-between gap-2 p-2 border rounded-md bg-background"
+                  >
+                    <div className="flex items-center gap-3 overflow-hidden">
+                      <div className="p-1 border rounded">{getFileIcon(file)}</div>
+                      <div className="flex flex-col text-sm">
+                        <span className="truncate max-w-[200px] font-medium">
+                          {file.file.name}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          {formatBytes(file.file.size)}
+                        </span>
                       </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {file.file.type.includes("pdf") && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          type="button"
+                          onClick={() => onPreviewPdf(fileUrl)}
+                        >
+                          Visualizar
+                        </Button>
+                      )}
                       <Button
                         size="icon"
                         variant="ghost"
                         type="button"
-                        className="text-muted-foreground/80 hover:text-foreground -me-2 size-8 hover:bg-transparent"
                         onClick={() => {
                           handleFileRemoved(file.id)
                           removeFile(file.id)
                         }}
-                        aria-label="Remove file">
-                        <XIcon className="size-4" aria-hidden="true" />
+                      >
+                        <XIcon className="size-4" />
                       </Button>
                     </div>
-                    {/* Upload progress bar */}
-                    {fileProgress &&
-                      (() => {
-                        const progress = fileProgress.progress || 0
-                        const completed = fileProgress.completed || false
-
-                        if (completed) return null
-
-                        return (
-                          <div className="flex items-center gap-2 mt-1">
-                            <div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-100">
-                              <div
-                                className="h-full transition-all duration-300 ease-out bg-primary"
-                                style={{ width: `${progress}%` }} />
-                            </div>
-                            <span className="w-10 text-xs text-muted-foreground tabular-nums">
-                              {progress}%
-                            </span>
-                          </div>
-                        );
-                      })()}
                   </div>
-                );
+                )
               })}
             </div>
           </div>
         ) : (
-          <div
-            className="flex flex-col items-center justify-center px-4 py-3 text-center">
-            <div
-              className="flex items-center justify-center mb-2 border rounded-full bg-background size-11 shrink-0"
-              aria-hidden="true">
-              <FileText className="size-4 opacity-60" />
-            </div>
-            <p className="mb-1.5 text-sm font-medium">Arraste seus ficheiros aqui</p>
-            <p className="text-xs text-muted-foreground">
-              No Máximo {maxFiles} ficheiros ∙ Até {maxSizeMB}MB
-            </p>
-            <Button variant="outline" type="button" className="mt-4" onClick={openFileDialog}>
-              <UploadIcon className="-ms-1 opacity-60" aria-hidden="true" />
+          <div className="py-4 text-center">
+            <FileText className="mx-auto mb-2 size-6 text-muted-foreground" />
+            <p>Arraste os ficheiros aqui ou clique abaixo:</p>
+            <Button variant="outline" type="button" className="mt-3" onClick={openFileDialog}>
+              <UploadIcon className="mr-1 size-4" />
               Selecionar ficheiros
             </Button>
           </div>
         )}
       </div>
+
       {errors.length > 0 && (
-        <div className="flex items-center gap-1 text-xs text-destructive" role="alert">
-          <AlertCircleIcon className="size-3 shrink-0" />
-          <span>{errors[0]}</span>
+        <div className="flex items-center gap-2 text-sm text-red-600">
+          <AlertCircleIcon className="size-4" />
+          {errors[0]}
+        </div>
+      )}
+
+      {selectedPdfUrl && (
+        <div className="mt-6 border rounded-lg overflow-hidden h-[80vh]">
+          <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
+            <Viewer fileUrl={selectedPdfUrl} />
+          </Worker>
         </div>
       )}
     </div>
-  );
+  )
 }

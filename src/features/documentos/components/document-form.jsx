@@ -16,6 +16,7 @@ export function DocumentForm({
   doc_types = [],
   areas = [],
   isEdit = false,
+  onPreviewPdf
 }) {
   return (
     <form
@@ -27,7 +28,7 @@ export function DocumentForm({
           <div className="flex flex-col gap-5">
             {/* doc uploader */}
             <div className="*:not-first:mt-2">
-              <DocumentUploader name='anexo_docs[]' />
+              <DocumentUploader name='anexo_docs[]' onPreviewPdf={onPreviewPdf}/>
             </div>
 
             {/* título */}
