@@ -39,10 +39,10 @@ export function DocumentsTable({ documents = [] }) {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="px-4">Nome</TableHead>
-                <TableHead className="px-4">Email</TableHead>
-                <TableHead className="px-4">Área pertencente</TableHead>
-                <TableHead className="px-4">Papel no sistema</TableHead>
+                <TableHead className="px-4">Título</TableHead>
+                <TableHead className="px-4">Tipo</TableHead>
+                <TableHead className="px-4">Área de origem</TableHead>
+                <TableHead className="px-4">Área de destino</TableHead>
                 <TableHead className="px-4">Criado em</TableHead>
                 <TableHead className="w-[50px] px-4"></TableHead>
               </TableRow>
@@ -50,18 +50,10 @@ export function DocumentsTable({ documents = [] }) {
             <TableBody>
               {documents.map((doc) => (
                 <TableRow key={doc.id}>
-                  <TableCell className="px-4">
-                    <div className="flex items-center space-x-3 font-medium">
-                      <Avatar className="w-8 h-8">
-                        <AvatarImage src={`http://localhost:8000/storage/${doc.profile_photo_path}`} alt={doc.name} />
-                        <AvatarFallback>{doc.name?.slice(0, 1).toUpperCase() || "?"}</AvatarFallback>
-                      </Avatar>
-                      <span>{doc.name}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="px-4">{doc.email}</TableCell>
-                  <TableCell className="px-4">{doc.area}</TableCell>
-                  <TableCell className="px-4">{doc.role || "-"}</TableCell>
+                  <TableCell className="px-4">{doc.titulo_doc}</TableCell>
+                  <TableCell className="px-4">{doc.tipo}</TableCell>
+                  <TableCell className="px-4">{doc.area_origem}</TableCell>
+                  <TableCell className="px-4">{doc.area_destino}</TableCell>
                   <TableCell className="px-4">{doc.created_at || "-"}</TableCell>
                   <TableCell className="px-4">
                     <DropdownMenu>
@@ -73,7 +65,7 @@ export function DocumentsTable({ documents = [] }) {
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem onClick={() => navigate(`/dashboard/documents/${doc.encrypted_id}`)}>
                           <Eye className="w-4 h-4" />
-                          Visualizar
+                          Ver anexos
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => navigate(`/dashboard/documents/edit/${doc.encrypted_id}`)}>
                           <Edit3 className="w-4 h-4" />

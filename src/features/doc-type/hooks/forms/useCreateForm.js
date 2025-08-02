@@ -1,15 +1,16 @@
 import { useForm } from "react-hook-form"
 import { useCreateTipoDocumento } from "@/features/doc-type/hooks/doc-typeHooks"
-import { useClassificacoes } from "@/features/classification/hooks/classificationHooks"
+import { useTemporalidades } from "@/features/temporalidade/hooks/temporalidadeHooks"
 
 export function useCreateForm() {
-  const { classificacoes, isLoading } = useClassificacoes()
+  const { temporalidades, isLoading } = useTemporalidades()
   const mutation = useCreateTipoDocumento()
 
   const form = useForm({
     defaultValues: {
       nome: "",
-      classificacao_id: "",
+      nivel: "",
+      temporalidade_id: "",
       descricao: "",
     }
   })
@@ -23,6 +24,6 @@ export function useCreateForm() {
     isPending: mutation.isPending,
     onSubmit,
     ...form,
-    classificacoes
+    temporalidades
   }
 }

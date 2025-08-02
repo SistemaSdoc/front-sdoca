@@ -1,24 +1,24 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
-import { useDeleteTemporalidade } from "@/features/temporalidade/hooks/temporalidadeHooks"
-import { Eye, MoreHorizontal, Edit3, Trash2, Users, Loader2, FileClock, Clock2 } from "lucide-react"
+import { useDeleteCabinet } from "@/features/cabinet/hooks/cabinetHooks"
+import { MoreHorizontal, Edit3, Trash2, Loader2, Tags } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
 
-export function TemporalidadesTable({ temporalidades = [] }) {
+export function CabinetsTable({ cabinets = [] }) {
   const navigate = useNavigate()
-  const deleteMutation = useDeleteTemporalidade()
-  const [tempId, setTempId] = useState(null)
+  const deleteMutation = useDeleteCabinet()
+  const [cabinetId, setCabinetId] = useState(null)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
 
   function confirmDelete() {
-    if (tempId) {
-      deleteMutation.mutate(tempId, {
+    if (cabinetId) {
+      deleteMutation.mutate(cabinetId, {
         onSuccess: () => {
           setShowDeleteDialog(false)
-          setTempId(null)
+          setCabinetId(null)
         },
       })
     }
@@ -26,10 +26,10 @@ export function TemporalidadesTable({ temporalidades = [] }) {
 
   return (
     <>
-      {temporalidades.length === 0 ? (
+      {cabinets.length === 0 ? (
         <div className="py-12 text-center">
-          <FileClock className="w-12 h-12 mx-auto text-muted-foreground" />
-          <h3 className="mt-4 text-lg font-semibold">Nenhuma Temporalidade encontrada</h3>
+          <Tags className="w-12 h-12 mx-auto text-muted-foreground" />
+          <h3 className="mt-4 text-lg font-semibold">Nenhum armário encontrada</h3>
           <p className="text-muted-foreground">Tente ajustar os filtros de busca.</p>
         </div>
       ) : (
@@ -37,20 +37,18 @@ export function TemporalidadesTable({ temporalidades = [] }) {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="px-4">Nome da fase</TableHead>
-                <TableHead className="px-4">Prazo de guarda</TableHead>
-                <TableHead className="px-4">Destino final</TableHead>
+                <TableHead className="px-4">Número do Armário</TableHead>
+                <TableHead className="px-4">Número de gavetas</TableHead>
                 <TableHead className="px-4">Criado em</TableHead>
                 <TableHead className="w-[50px] px-4"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {temporalidades.map((temporalidade) => (
-                <TableRow key={temporalidade.id}>
-                  <TableCell className="px-4">{temporalidade.nome_fase}</TableCell>
-                  <TableCell className="px-4">{temporalidade.prazo_guarda}</TableCell>
-                  <TableCell className="px-4">{temporalidade.destino_final}</TableCell>
-                  <TableCell className="px-4">{temporalidade.created_at || "-"}</TableCell>
+              {cabinets.map((cabinet) => (
+                <TableRow key={cabinet.id}>
+                  <TableCell className="px-4">{cabinet.num_armario}</TableCell>
+                  <TableCell className="px-4">{cabinet.num_gavetas}</TableCell>
+                  <TableCell className="px-4">{cabinet.created_at || "-"}</TableCell>
                   <TableCell className="px-4">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -59,17 +57,13 @@ export function TemporalidadesTable({ temporalidades = [] }) {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => navigate(`/dashboard/temps/${temporalidade.encrypted_id}`)}>
-                          <Eye className="w-4 h-4" />
-                          Visualizar
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate(`/dashboard/temps/edit/${temporalidade.encrypted_id}`)}>
+                        <DropdownMenuItem onClick={() => navigate(`/dashboard/cabinets/edit/${cabinet.encrypted_id}`)}>
                           <Edit3 className="w-4 h-4" />
                           Editar
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => {
-                            setTempId(temporalidade.id)
+                            setCabinetId(cabinet.id)
                             setShowDeleteDialog(true)
                           }}
                         >
@@ -90,9 +84,9 @@ export function TemporalidadesTable({ temporalidades = [] }) {
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Apagar Temporalidade</AlertDialogTitle>
+            <AlertDialogTitle>Apagar armário</AlertDialogTitle>
             <AlertDialogDescription>
-              Tem certeza que deseja apagar esta temporalidade? Essa acção é irreversível.
+              Tem certeza que deseja apagar este armário? Essa acção é irreversível.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

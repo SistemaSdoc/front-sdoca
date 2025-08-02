@@ -40,6 +40,7 @@ export function DocTypesTable({ docs_types = [] }) {
             <TableHeader>
               <TableRow>
                 <TableHead className="px-4">Nome</TableHead>
+                <TableHead className="px-4">Nível</TableHead>
                 <TableHead className="px-4">Descrição</TableHead>
                 <TableHead className="px-4">Criado em</TableHead>
                 <TableHead className="w-[50px] px-4"></TableHead>
@@ -49,6 +50,7 @@ export function DocTypesTable({ docs_types = [] }) {
               {docs_types.map((docs_type) => (
                 <TableRow key={docs_type.id}>
                   <TableCell className="px-4">{docs_type.nome}</TableCell>
+                  <TableCell className="px-4">{docs_type.nivel}</TableCell>
                   <TableCell className="px-4">{docs_type.descricao}</TableCell>
                   <TableCell className="px-4">{docs_type.created_at || "-"}</TableCell>
                   <TableCell className="px-4">

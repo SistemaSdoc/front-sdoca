@@ -68,7 +68,7 @@ export function AreaForm({
             <div className="*:not-first:mt-2">
               <Label htmlFor="org_id">Organização Pertencente</Label>
               <Select
-                defaultValue={String(area.org_id)}
+                defaultValue={area?.org_id ? String(area.org_id) : ""}
                 onValueChange={(value) => setValue("org_id", value)}>
                 <SelectTrigger id="org_id" className="w-full">
                   <SelectValue

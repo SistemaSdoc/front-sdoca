@@ -1,20 +1,17 @@
-// components/AreaForm.jsx
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Loader2 } from "lucide-react"
 
-export function TemporalidadeForm({
+export function CabinetForm({
   register,
   handleSubmit,
   onSubmit,
   isPending,
   isEdit = false,
 }) {
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -24,29 +21,22 @@ export function TemporalidadeForm({
         <CardContent className="p-6 pt-1 pb-1">
           <div className="flex flex-col gap-5">
             <div className="*:not-first:mt-2">
-              <Label htmlFor="nome_fase">Nome da Fase</Label>
+              <Label htmlFor="num_armario">Número do armário</Label>
               <Input
-                id="nome_fase"
-                placeholder="Ex: Corrente"
-                {...register("nome_fase")}
+                type='number'
+                id="num_armario"
+                placeholder="Ex: 5"
+                {...register("num_armario")}
               />
             </div>
 
             <div className="*:not-first:mt-2">
-              <Label htmlFor="prazo_guarda">Prazo de Guarda</Label>
+              <Label htmlFor="num_gavetas">Número de gavetas</Label>
               <Input
-                id="prazo_guarda"
-                placeholder="Ex: 5 anos"
-                {...register("prazo_guarda")}
-              />
-            </div>
-
-            <div className="*:not-first:mt-2">
-              <Label htmlFor="destino_final">Destino Final</Label>
-              <Input
-                id="destino_final"
-                placeholder="Ex: arquivo"
-                {...register("destino_final")}
+                type='number'
+                id="num_gavetas"
+                placeholder="Ex: 5"
+                {...register("num_gavetas")}
               />
             </div>
 
@@ -54,9 +44,9 @@ export function TemporalidadeForm({
               {isPending ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               ) : isEdit ? (
-                "Atualizar Temporalidade"
+                "Atualizar Armário"
               ) : (
-                "Criar Temporalidade"
+                "Criar Armário"
               )}
             </Button>
           </div>

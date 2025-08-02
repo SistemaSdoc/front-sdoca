@@ -49,24 +49,6 @@ const data = {
       icon: FileText,
       permissions: ["user-post"],
     },
-    {
-      title: "Temporalidades",
-      url: "/dashboard/temps",
-      icon: FileClock,
-      permissions: ["super-admin-post"],
-    },
-    {
-      title: "Classificações",
-      url: "/dashboard/classifications",
-      icon: Tags,
-      permissions: ["super-admin-post"],
-    },
-    {
-      title: "Tipo de documentos",
-      url: "/dashboard/doc-types",
-      icon: FileType,
-      permissions: ["super-admin-post"],
-    },
   ],
 }
 

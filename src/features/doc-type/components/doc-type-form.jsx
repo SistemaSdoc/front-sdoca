@@ -8,74 +8,82 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Loader2 } from "lucide-react"
 
 export function DocTypeForm({
-	register,
-	handleSubmit,
-	onSubmit,
-	isPending,
-	setValue,
-	classifications = [],
-	doc_type = null,
-	isEdit = false,
+  register,
+  handleSubmit,
+  onSubmit,
+  isPending,
+  setValue,
+  temporalidades = [],
+  doc_type = null,
+  isEdit = false,
 }) {
-	return (
-		<form
-			onSubmit={handleSubmit(onSubmit)}
-			className="w-full max-w-3xl mx-auto rounded-xl bg-muted/50"
-		>
-			<Card className="shadow-none">
-				<CardContent className="p-6 pt-1 pb-1">
-					<div className="flex flex-col gap-5">
-						<div className="*:not-first:mt-2">
-							<Label htmlFor="nome">Nome</Label>
-							<Input
-								id="nome"
-								placeholder="Ex: certificado"
-								{...register("nome")}
-							/>
-						</div>
+  return (
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-full max-w-3xl mx-auto rounded-xl bg-muted/50"
+    >
+      <Card className="shadow-none">
+        <CardContent className="p-6 pt-1 pb-1">
+          <div className="flex flex-col gap-5">
+            <div className="*:not-first:mt-2">
+              <Label htmlFor="nome">Nome</Label>
+              <Input
+                id="nome"
+                placeholder="Ex: certificado"
+                {...register("nome")}
+              />
+            </div>
 
-						<div className="*:not-first:mt-2">
-							<Label htmlFor="classificacao_id">Classificação</Label>
-							<Select
-								defaultValue={doc_type?.classificacao_id ? String(doc_type?.classificacao_id) : ""}
-								onValueChange={(value) => setValue("classificacao_id", value)}>
-								<SelectTrigger id="classificacao_id" className="w-full">
-									<SelectValue
-										placeholder="Selecione a classificação deste tipo"
-									/>
-								</SelectTrigger>
-								<SelectContent>
-									{classifications.map((classification) => (
-										<SelectItem key={classification.id} value={String(classification.id)}>
-											{classification.codigo} - {classification.descricao}
+            <div className="*:not-first:mt-2">
+              <Label htmlFor="nivel">Nível</Label>
+              <Input
+                id="nivel"
+                placeholder="Ex: nivel 1"
+                {...register("nivel")}
+              />
+            </div>
 
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
-						</div>
+            <div className="*:not-first:mt-2">
+              <Label htmlFor="temporalidade_id">Temporalidade</Label>
+              <Select
+                defaultValue={doc_type?.temporalidade_id ? String(doc_type?.temporalidade_id) : ""}
+                onValueChange={(value) => setValue("temporalidade_id", value)}>
+                <SelectTrigger id="temporalidade_id" className="w-full">
+                  <SelectValue
+                    placeholder="Selecione a temporalidade deste tipo"
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  {temporalidades.map((temporalidade) => (
+                    <SelectItem key={temporalidade.id} value={String(temporalidade.id)}>
+                      {temporalidade.nome_fase} - {temporalidade.prazo_guarda}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
-						<div className="*:not-first:mt-2">
-							<Label htmlFor="descricao">Descrição</Label>
-							<Textarea
-								id="descricao"
-								placeholder="Ex: xxxx..."
-								{...register("descricao")}
-							/>
-						</div>
+            <div className="*:not-first:mt-2">
+              <Label htmlFor="descricao">Descrição</Label>
+              <Textarea
+                id="descricao"
+                placeholder="Ex: xxxx..."
+                {...register("descricao")}
+              />
+            </div>
 
-						<Button type="submit" className="w-full" disabled={isPending}>
-							{isPending ? (
-								<Loader2 className="w-4 h-4 mr-2 animate-spin" />
-							) : isEdit ? (
-								"Atualizar Tipo de Documento"
-							) : (
-								"Criar Tipo de Documento"
-							)}
-						</Button>
-					</div>
-				</CardContent>
-			</Card>
-		</form>
-	)
+            <Button type="submit" className="w-full" disabled={isPending}>
+              {isPending ? (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              ) : isEdit ? (
+                "Atualizar Tipo de Documento"
+              ) : (
+                "Criar Tipo de Documento"
+              )}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </form>
+  )
 }

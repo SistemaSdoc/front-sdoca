@@ -6,6 +6,7 @@ export function useCreateForm() {
 
   const form = useForm({
     defaultValues: {
+      nome_fase: "",
       prazo_guarda: "",
       destino_final: "",
     }

@@ -1,16 +1,17 @@
 import { useForm } from "react-hook-form"
 import { useTipoDocumento, useUpdateTipoDocumento } from "@/features/doc-type/hooks/doc-typeHooks"
-import { useClassificacoes } from "@/features/classification/hooks/classificationHooks"
+import { useTemporalidades } from "@/features/temporalidade/hooks/temporalidadeHooks"
 
 export function useEditForm(id) {
-  const { classificacoes } = useClassificacoes()
+  const { temporalidades } = useTemporalidades()
   const { tipoDocumento, isLoading } = useTipoDocumento(id)
   const mutation = useUpdateTipoDocumento(id)
 
   const form = useForm({
     values: tipoDocumento?.nome ? {
       nome: tipoDocumento.nome,
-      classificacao_id: String(tipoDocumento.temporalidade_id),
+      nivel: tipoDocumento.nivel,
+      temporalidade_id: String(tipoDocumento.temporalidade_id),
       descricao: tipoDocumento.descricao,
     } : undefined
   })
@@ -25,6 +26,6 @@ export function useEditForm(id) {
     onSubmit,
     ...form,
     tipoDocumento,
-    classificacoes
+    temporalidades
   }
 }

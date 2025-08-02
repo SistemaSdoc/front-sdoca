@@ -15,7 +15,7 @@ export default function EditDocType() {
     isPending,
     isLoading,
     tipoDocumento,
-    classificacoes
+    temporalidades
   } = useEditForm(id)
 
   if (isLoading) {
@@ -54,7 +54,7 @@ export default function EditDocType() {
         onSubmit={onSubmit}
         isPending={isPending}
         doc_type={tipoDocumento}
-        classifications={classificacoes}
+        temporalidades={temporalidades}
         isEdit={true}
       />
     </>

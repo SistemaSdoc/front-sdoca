@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { ChevronLeftIcon, Loader2, Tags } from "lucide-react"
-import { useCreateForm } from "@/features/classification/hooks/forms/useCreateForm"
-import { ClassificationForm } from "@/features/classification/components/classification-form"
+import { useEditForm } from "@/features/cabinet/hooks/forms/useEditForm"
+import { CabinetForm } from "@/features/cabinet/components/cabinet-form"
 
-export default function NewClassification() {
+export default function EditCabinet() {
+  const { id } = useParams()
+
   const {
     register,
     handleSubmit,
@@ -12,8 +14,8 @@ export default function NewClassification() {
     onSubmit,
     isPending,
     isLoading,
-    temporalidades
-  } = useCreateForm()
+    cabinet,
+  } = useEditForm(id)
 
   if (isLoading) {
     return (
@@ -26,7 +28,7 @@ export default function NewClassification() {
   return (
     <>
       <div className="pt-2 pl-4">
-        <Link to='/dashboard/classifications'>
+        <Link to='/dashboard/cabinets'>
           <Button variant="link" className="gap-1">
             <ChevronLeftIcon className="opacity-60" size={16} />
             Voltar
@@ -36,26 +38,22 @@ export default function NewClassification() {
 
       <div className="space-y-2 text-center">
         <div className="flex items-center justify-center space-x-2">
-          <Tags className="w-8 h-8 text-primary" />
-          <h1 className="text-3xl font-medium">Criar Nova Classificação</h1>
+          <h1 className="text-3xl font-medium">Editar Armário</h1>
         </div>
         <p className="text-muted-foreground">
-          Preencha os dados abaixo para registrar uma nova classificação no sistema
+          Actualize os dados abaixo para editar o armário no sistema
         </p>
       </div>
 
-      <ClassificationForm
+      <CabinetForm
         register={register}
         handleSubmit={handleSubmit}
         setValue={setValue}
         onSubmit={onSubmit}
         isPending={isPending}
-        temporalidades={temporalidades}
+        cabinet={cabinet}
+        isEdit={true}
       />
     </>
   )
 }
-
-
-
-

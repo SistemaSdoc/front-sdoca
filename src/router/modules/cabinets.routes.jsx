@@ -1,31 +1,31 @@
-import Classifications from '@/features/classification/pages/index'
-import NewClassification from '@/features/classification/pages/new'
-import EditClassification from '@/features/classification/pages/edit'
+import Cabinets from '@/features/cabinet/pages/index'
+import NewCabinet from '@/features/cabinet/pages/new'
+import EditCabinet from '@/features/cabinet/pages/edit'
 // import ViewClassification from '@/features/classification/pages/view'
 import PermissionRoute from '../guards/PermissionRoute'
 
-export const classificationRoutes = [
+export const cabinetsRoutes = [
 	{
-		path: 'classifications',
+		path: 'cabinets',
 		element: (
 			<PermissionRoute permissions={['admin-post']}>
-				<Classifications />
+				<Cabinets />
 			</PermissionRoute>
 		),
 	},
 	{
-		path: 'classifications/new',
+		path: 'cabinets/new',
 		element: (
 			<PermissionRoute permissions={['admin-post']}>
-				<NewClassification />
+				<NewCabinet />
 			</PermissionRoute>
 		),
 	},
 	{
-		path: 'classifications/edit/:id',
+		path: 'cabinets/edit/:id',
 		element: (
 			<PermissionRoute permissions={['admin-post']}>
-				<EditClassification />
+				<EditCabinet />
 			</PermissionRoute>
 		),
 	},

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
-import { ChevronLeftIcon, Loader2, FileType } from "lucide-react"
-import { useCreateForm } from "@/features/doc-type/hooks/forms/useCreateForm"
-import { DocTypeForm } from "@/features/doc-type/components/doc-type-form"
+import { ChevronLeftIcon, Loader2, Tags } from "lucide-react"
+import { useCreateForm } from "@/features/drawer/hooks/forms/useCreateForm"
+import { DrawerForm } from "@/features/drawer/components/drawer-form"
 
-export default function NewDocType() {
+export default function NewDrawer() {
   const {
     register,
     handleSubmit,
@@ -12,7 +12,7 @@ export default function NewDocType() {
     onSubmit,
     isPending,
     isLoading,
-    temporalidades
+    cabinets
   } = useCreateForm()
 
   if (isLoading) {
@@ -26,7 +26,7 @@ export default function NewDocType() {
   return (
     <>
       <div className="pt-2 pl-4">
-        <Link to='/dashboard/doc-types'>
+        <Link to='/dashboard/drawers'>
           <Button variant="link" className="gap-1">
             <ChevronLeftIcon className="opacity-60" size={16} />
             Voltar
@@ -36,21 +36,20 @@ export default function NewDocType() {
 
       <div className="space-y-2 text-center">
         <div className="flex items-center justify-center space-x-2">
-          <FileType className="w-8 h-8 text-primary" />
-          <h1 className="text-3xl font-medium">Criar Novo Tipo de Documento</h1>
+          <h1 className="text-3xl font-medium">Nova Gaveta</h1>
         </div>
         <p className="text-muted-foreground">
-          Preencha os dados abaixo para registrar um novo tipo de documento no sistema
+          Preencha os dados abaixo para adicionar uma nova gaveta ao armário
         </p>
       </div>
 
-      <DocTypeForm
+      <DrawerForm
         register={register}
         handleSubmit={handleSubmit}
         setValue={setValue}
         onSubmit={onSubmit}
         isPending={isPending}
-        temporalidades={temporalidades}
+        cabinets={cabinets}
       />
     </>
   )

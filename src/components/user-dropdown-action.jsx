@@ -23,10 +23,12 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { useAuth } from "@/context/AuthContext"
+import { useNavigate } from "react-router-dom"
 
 export function UserNav() {
   const [showLogoutDialog, setShowLogoutDialog] = React.useState(false)
   const { Logout } = useAuth()
+  const navigate = useNavigate()
 
   return (
     <>
@@ -42,7 +44,7 @@ export function UserNav() {
             <User className="w-4 h-4 mr-2" />
             <span>Visualizar perfil</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate('/dashboard/settings')}>
             <Settings className="w-4 h-4 mr-2" />
             <span>Configurações</span>
           </DropdownMenuItem>

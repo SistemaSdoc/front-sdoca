@@ -6,7 +6,8 @@ export function useEditForm(id) {
   const mutation = useUpdateTemporalidade(id)
 
   const form = useForm({
-    values: temporalidade?.prazo_guarda ? {
+    values: temporalidade?.nome_fase ? {
+      nome_fase: temporalidade.nome_fase,
       prazo_guarda: temporalidade.prazo_guarda,
       destino_final: temporalidade.destino_final,
     } : undefined

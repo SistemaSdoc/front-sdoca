@@ -1,12 +1,10 @@
-import { useParams, Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { ChevronLeftIcon, Loader2, Tags } from "lucide-react"
-import { useEditForm } from "@/features/classification/hooks/forms/useEditForm"
-import { ClassificationForm } from "@/features/classification/components/classification-form"
+import { useCreateForm } from "@/features/cabinet/hooks/forms/useCreateForm"
+import { CabinetForm } from "@/features/cabinet/components/cabinet-form"
 
-export default function EditClassification() {
-  const { id } = useParams()
-
+export default function NewCabinet() {
   const {
     register,
     handleSubmit,
@@ -14,9 +12,7 @@ export default function EditClassification() {
     onSubmit,
     isPending,
     isLoading,
-    classificacao,
-    temporalidades
-  } = useEditForm(id)
+  } = useCreateForm()
 
   if (isLoading) {
     return (
@@ -29,7 +25,7 @@ export default function EditClassification() {
   return (
     <>
       <div className="pt-2 pl-4">
-        <Link to='/dashboard/classifications'>
+        <Link to='/dashboard/cabinets'>
           <Button variant="link" className="gap-1">
             <ChevronLeftIcon className="opacity-60" size={16} />
             Voltar
@@ -39,24 +35,24 @@ export default function EditClassification() {
 
       <div className="space-y-2 text-center">
         <div className="flex items-center justify-center space-x-2">
-          <Tags className="w-8 h-8 text-primary" />
-          <h1 className="text-3xl font-medium">Editar Classificação</h1>
+          <h1 className="text-3xl font-medium">Novo Armário</h1>
         </div>
         <p className="text-muted-foreground">
-          Atualize os dados abaixo para editar a classificação no sistema
+          Preencha os dados abaixo para registrar um novo armário no sistema
         </p>
       </div>
 
-      <ClassificationForm
+      <CabinetForm
         register={register}
         handleSubmit={handleSubmit}
         setValue={setValue}
         onSubmit={onSubmit}
         isPending={isPending}
-        temporalidades={temporalidades}
-        classification={classificacao}
-        isEdit={true}
       />
     </>
   )
 }
+
+
+
+

@@ -121,7 +121,7 @@ const simulateUpload = (totalBytes, onProgress, onComplete) => {
   }
 }
 
-export default function DocumentUploader({onPreviewPdf }) {
+export default function DocumentUploader({ onPreviewPdf, onChange }) {
   const maxSizeMB = 5
   const maxSize = maxSizeMB * 1024 * 1024
   const maxFiles = 6
@@ -136,6 +136,15 @@ export default function DocumentUploader({onPreviewPdf }) {
       completed: false,
     }))
     setUploadProgress((prev) => [...prev, ...newProgressItems])
+
+    // ✅ CHAVE: envia todos os arquivos para o React Hook Form de uma vez
+    if (onChange) {
+      const fileList = addedFiles
+        .map((f) => (f.file instanceof File ? f.file : null))
+        .filter(Boolean)
+
+      onChange(fileList)
+    }
 
     const cleanupFunctions = []
 
@@ -223,6 +232,7 @@ export default function DocumentUploader({onPreviewPdf }) {
                     setUploadProgress([])
                     clearFiles()
                     setSelectedPdfUrl(null)
+                    if (onChange) onChange([])
                   }}
                 >
                   <Trash2Icon className="mr-1 size-4" />

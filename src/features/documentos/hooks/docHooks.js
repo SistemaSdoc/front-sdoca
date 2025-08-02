@@ -3,19 +3,20 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
-// hook para carregar todos os documentos
-export function useDocuments() {
+// hook para carregar documentos com base no filtro
+export function useDocuments(filtro = "entradas", areaId) {
+  const queryKey = ["documents", filtro, areaId] // ← inclui a área
+
   const { data: documents = [], isLoading, isError, error, refetch } = useQuery({
-    queryKey: ['documents'],
+    queryKey,
     queryFn: async function () {
-      const response = await axios.get('/documentos')
-      console.log(response.data)
+      const response = await axios.get(`/documentos?filtro=${filtro}`)
       return response.data.documentos
     },
     onError: () => {
-      toast.error('Erro ao carregar documentos')
+      toast.error("Erro ao carregar documentos")
     },
-    staleTime: 1000 * 60 * 5
+    staleTime: 0, // força refetch sempre que entra na página
   })
 
   return {
@@ -23,7 +24,7 @@ export function useDocuments() {
     isLoading,
     isError,
     error,
-    refetch
+    refetch,
   }
 }
 
@@ -32,8 +33,8 @@ export function useDocument(id) {
   const { data = {}, isLoading, isError, error, refetch } = useQuery({
     queryKey: ['document', id],
     queryFn: async function () {
-      const response = await axios.get(`/documentos/${id}`)
-      return response.data.documento
+      const response = await axios.get(`/documentos/verAnexos/${id}`)
+      return response.data.anexos
     },
     enabled: !!id,
     onError: () => {
@@ -58,7 +59,12 @@ export function useCreateDocument() {
 
   const mutation = useMutation({
     mutationFn: async function (formData) {
-      const response = await axios.post('/documentos', formData)
+      const response = await axios.post('/documentos', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // 🧠 ESSENCIAL!
+        }
+      })
+
       return response.data
     },
     onSuccess: () => {

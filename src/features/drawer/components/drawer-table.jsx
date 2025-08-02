@@ -1,26 +1,24 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
-import { useDeleteDocument } from "@/features/documentos/hooks/docHooks"
-import { Eye, MoreHorizontal, Edit3, Trash2, Users, Loader2, Tags, Clock2 } from "lucide-react"
+import { useDeleteDrawer } from "@/features/drawer/hooks/drawerHooks"
+import { MoreHorizontal, Edit3, Trash2, Loader2, Tags } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 
-
-export function ClassificationsTable({ classifications = [] }) {
+export function DrawersTable({ drawers = [] }) {
   const navigate = useNavigate()
-  const deleteMutation = useDeleteDocument()
-  const [classificationId, setClassificationId] = useState(null)
+  const deleteMutation = useDeleteDrawer()
+  const [drawerId, setDrawerId] = useState(null)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
 
   function confirmDelete() {
-    if (classificationId) {
-      deleteMutation.mutate(classificationId, {
+    if (drawerId) {
+      deleteMutation.mutate(drawerId, {
         onSuccess: () => {
           setShowDeleteDialog(false)
-          setClassificationId(null)
+          setDrawerId(null)
         },
       })
     }
@@ -28,10 +26,10 @@ export function ClassificationsTable({ classifications = [] }) {
 
   return (
     <>
-      {classifications.length === 0 ? (
+      {drawers.length === 0 ? (
         <div className="py-12 text-center">
           <Tags className="w-12 h-12 mx-auto text-muted-foreground" />
-          <h3 className="mt-4 text-lg font-semibold">Nenhuma classificações encontrada</h3>
+          <h3 className="mt-4 text-lg font-semibold">Nenhuma gaveta encontrada</h3>
           <p className="text-muted-foreground">Tente ajustar os filtros de busca.</p>
         </div>
       ) : (
@@ -39,20 +37,20 @@ export function ClassificationsTable({ classifications = [] }) {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="px-4">Código</TableHead>
-               {/*  <TableHead className="px-4">Temporalidade</TableHead> */}
-                <TableHead className="px-4">descricao</TableHead>
-                <TableHead className="px-4">Criado em</TableHead>
+                <TableHead className="px-4">Número da gaveta</TableHead>
+                <TableHead className="px-4">Armário</TableHead>
+                <TableHead className="px-4">Número de processos</TableHead>
+                <TableHead className="px-4">Criada em</TableHead>
                 <TableHead className="w-[50px] px-4"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {classifications.map((classification) => (
-                <TableRow key={classification.id}>
-                  <TableCell className="px-4">{classification.codigo}</TableCell>
-                  {/* <TableCell className="px-4">{classification.destino_final}</TableCell> */}
-                  <TableCell className="px-4">{classification.descricao}</TableCell>
-                  <TableCell className="px-4">{classification.created_at || "-"}</TableCell>
+              {drawers.map((drawer) => (
+                <TableRow key={drawer.id}>
+                  <TableCell className="px-4">{drawer.num_gaveta}</TableCell>
+                  <TableCell className="px-4">{drawer.armario_id}</TableCell>
+                  <TableCell className="px-4">{drawer.num_processos}</TableCell>
+                  <TableCell className="px-4">{drawer.created_at || "-"}</TableCell>
                   <TableCell className="px-4">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -61,17 +59,13 @@ export function ClassificationsTable({ classifications = [] }) {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => navigate(`/dashboard/classifications/${classification.encrypted_id}`)}>
-                          <Eye className="w-4 h-4" />
-                          Visualizar
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate(`/dashboard/classifications/edit/${classification.encrypted_id}`)}>
+                        <DropdownMenuItem onClick={() => navigate(`/dashboard/drawers/edit/${drawer.encrypted_id}`)}>
                           <Edit3 className="w-4 h-4" />
                           Editar
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => {
-                            setClassificationId(classification.id)
+                            setDrawerId(drawer.id)
                             setShowDeleteDialog(true)
                           }}
                         >
@@ -92,9 +86,9 @@ export function ClassificationsTable({ classifications = [] }) {
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Apagar Classificação</AlertDialogTitle>
+            <AlertDialogTitle>Apagar armário</AlertDialogTitle>
             <AlertDialogDescription>
-              Tem certeza que deseja apagar esta classificação? Essa acção é irreversível.
+              Tem certeza que deseja apagar este armário? Essa acção é irreversível.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

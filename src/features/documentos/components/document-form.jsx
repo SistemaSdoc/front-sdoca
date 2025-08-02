@@ -28,7 +28,11 @@ export function DocumentForm({
           <div className="flex flex-col gap-5">
             {/* doc uploader */}
             <div className="*:not-first:mt-2">
-              <DocumentUploader name='anexo_docs[]' onPreviewPdf={onPreviewPdf}/>
+              <DocumentUploader
+                name="anexo_docs"
+                onPreviewPdf={onPreviewPdf}
+                onChange={(files) => setValue("anexo_docs", files)}
+              />
             </div>
 
             {/* título */}
@@ -65,12 +69,12 @@ export function DocumentForm({
             {/* Origem e Destino */}
             <div className="grid grid-cols-2 gap-4">
               <div className="*:not-first:mt-2">
-                <Label htmlFor="setor_origem_id">Área de origem</Label>
+                <Label htmlFor="area_origem_id">Área de origem</Label>
                 <Select
                   defaultValue={areas?.id ? String(areas.id) : ""}
-                  onValueChange={(value) => setValue("setor_origem_id", value)}
+                  onValueChange={(value) => setValue("area_origem_id", value)}
                 >
-                  <SelectTrigger id="setor_origem_id" className="w-full">
+                  <SelectTrigger id="area_origem_id" className="w-full">
                     <SelectValue placeholder="Selecione a área de origem" />
                   </SelectTrigger>
                   <SelectContent>
@@ -84,12 +88,12 @@ export function DocumentForm({
               </div>
 
               <div className="*:not-first:mt-2">
-                <Label htmlFor="setor_destino_id">Área de destino</Label>
+                <Label htmlFor="area_destino_id">Área de destino</Label>
                 <Select
                   defaultValue={areas?.id ? String(areas.id) : ""}
-                  onValueChange={(value) => setValue("setor_destino_id", value)}
+                  onValueChange={(value) => setValue("area_destino_id", value)}
                 >
-                  <SelectTrigger id="setor_destino_id" className="w-full">
+                  <SelectTrigger id="area_destino_id" className="w-full">
                     <SelectValue placeholder="Selecione a área de destino" />
                   </SelectTrigger>
                   <SelectContent>

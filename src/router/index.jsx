@@ -9,8 +9,10 @@ import { userRoutes } from "./modules/users.routes"
 import { documentRoutes } from "./modules/docs.routes"
 import { temporalidadeRoutes } from "./modules/temporalidades.routes"
 import { docTypeRoutes } from "./modules/doc-types.routes"
-import { classificationRoutes } from "./modules/classifications.routes"
+import { cabinetsRoutes } from "./modules/cabinets.routes"
 import { areaRoutes } from "./modules/areas.routes"
+import { Settingss } from "@/features/settings/pages"
+import { drawersRoutes } from "./modules/drawers.routes"
 
 
 import PrivateRoute from "./guards/PrivateRoutes"
@@ -29,13 +31,15 @@ const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <Home /> },
+      { path: "settings", element: <Settingss /> },
       ...orgRoutes,
       ...userRoutes,
       ...documentRoutes,
       ...temporalidadeRoutes,
-      ...classificationRoutes,
+      ...cabinetsRoutes,
       ...docTypeRoutes,
-      ...areaRoutes
+      ...areaRoutes,
+      ...drawersRoutes
     ],
   },
 ])

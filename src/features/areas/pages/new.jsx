@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
-import { ChevronLeftIcon, Loader2, Users } from "lucide-react"
+import { ChevronLeftIcon, Loader2, Layers } from "lucide-react"
 import { useCreateAreaForm } from "@/features/areas/hooks/forms/useCreateForm"
 import { AreaForm } from "@/features/areas/components/area-form"
 
-export default function NewUser() {
+export default function NewArea() {
   const {
     register,
     handleSubmit,
@@ -26,7 +26,7 @@ export default function NewUser() {
   return (
     <>
       <div className="pt-2 pl-4">
-        <Link to='/dashboard/users'>
+        <Link to='/dashboard/areas'>
           <Button variant="link" className="gap-1">
             <ChevronLeftIcon className="opacity-60" size={16} />
             Voltar
@@ -36,11 +36,11 @@ export default function NewUser() {
 
       <div className="space-y-2 text-center">
         <div className="flex items-center justify-center space-x-2">
-          <Users className="w-8 h-8 text-primary" />
-          <h1 className="text-3xl font-medium">Criar Novo Usuário</h1>
+          <Layers className="w-8 h-8 text-primary" />
+          <h1 className="text-3xl font-medium">Criar Nova Área</h1>
         </div>
         <p className="text-muted-foreground">
-          Preencha os dados abaixo para registrar um novo usuário no sistema
+          Preencha os dados abaixo para registrar uma nova área no sistema
         </p>
       </div>
 
