@@ -11,6 +11,11 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@/components/ui/toggle-group"
+import { Monitor, Sun, Moon } from "lucide-react"
+import {
   Card,
   CardContent,
   CardDescription,
@@ -24,9 +29,12 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import { useNavigate } from "react-router-dom"
+import { Switch } from "@/components/ui/switch"
+import { useTheme } from "@/context/theme-context"
 
 export function Settingss() {
   const navigate = useNavigate()
+  const { theme, setTheme } = useTheme()
 
   return (
     <div className="space-y-6">
@@ -160,22 +168,48 @@ export function Settingss() {
 
         {/* Tab: Outras Configurações */}
         <TabsContent value="others" className="space-y-6">
-          <Card className='shadow-none'>
+          <Card className="shadow-none">
             <CardHeader>
               <CardTitle>Outras Configurações</CardTitle>
               <CardDescription>
                 Configurações gerais do sistema
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-6">
+              {/* Linha de Modo Escuro */}
+              <div className="flex items-center justify-between px-4 py-3 border rounded-lg">
+                <div className="space-y-0.5">
+                  <p className="text-sm font-medium">Modo Escuro</p>
+                  <p className="text-sm text-muted-foreground">
+                    Ative para usar o tema escuro em toda a aplicação.
+                  </p>
+                </div>
+                <ToggleGroup
+                  type="single"
+                  className="justify-center w-full"
+                  value={theme}
+                  onValueChange={(value) => value && setTheme(value)}
+                >
+                  <ToggleGroupItem value="light" aria-label="Modo Claro">
+                    <Sun className="w-4 h-4 mr-2" />
+                    Claro
+                  </ToggleGroupItem>
+                  <ToggleGroupItem value="system" aria-label="Modo Sistema">
+                    <Monitor className="w-4 h-4 mr-2" />
+                    Sistema
+                  </ToggleGroupItem>
+                  <ToggleGroupItem value="dark" aria-label="Modo Escuro">
+                    <Moon className="w-4 h-4 mr-2" />
+                    Escuro
+                  </ToggleGroupItem>
+                </ToggleGroup>
+              </div>
+
+              {/* Conteúdo em breve */}
               <div className="py-12 text-center">
                 <Settings className="w-12 h-12 mx-auto mb-4 text-icon-foreground" />
-                <h3 className="mb-2 text-lg font-semibold">
-                  Em breve
-                </h3>
-                <p className="text-muted-foreground">
-                  Outras opções estarão disponíveis aqui.
-                </p>
+                <h3 className="mb-2 text-lg font-semibold">Mais configurações em breve</h3>
+                <p className="text-muted-foreground">Fica ligado 👀</p>
               </div>
             </CardContent>
           </Card>
