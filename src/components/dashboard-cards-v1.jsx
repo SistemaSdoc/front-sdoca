@@ -35,7 +35,7 @@ export function DashboardCards() {
 
   return (
     <div
-      className="grid grid-cols-1 gap-6 py-10 mx-auto md:grid-cols-2 lg:grid-cols-4 max-w-7xl">
+      className="grid grid-cols-1 gap-6 py-10 md:grid-cols-2 lg:grid-cols-4">
       {stats.map((stat, index) => (
         <StatCard key={stat.title} {...stat} index={index} />
       ))}

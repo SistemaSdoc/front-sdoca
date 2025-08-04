@@ -17,7 +17,7 @@ export default function DashboardDemo() {
   )
   return (
     <>
-      <div className="mx-auto max-w-7xl">
+      <>
         {/* Cards de Estatísticas */}
         <DashboardCards />
 
@@ -29,7 +29,7 @@ export default function DashboardDemo() {
           <DocumentosBarChart />
           <TempoRespostaChart />
         </div>
-      </div>
+      </>
     </>
   )
 }
