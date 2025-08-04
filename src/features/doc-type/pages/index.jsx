@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { useSearch } from "@/context/SearchContext"
 import { useTiposDocumentos } from "@/features/doc-type/hooks/doc-typeHooks"
 import { DocTypesTable } from "@/features/doc-type/components/doc-type-table"
+import ListContent from "@/components/List-content"
 
 export default function DocTypes() {
   const { searchTerm } = useSearch()
@@ -15,16 +16,17 @@ export default function DocTypes() {
   )
 
   return (
-    <div className="relative space-y-6">
-      <h1 className="text-2xl font-semibold">Tipo de Documentos</h1>
+    <div className="relative space-y-4">
+      <h1 className="text-2xl font-semibold">Tipo Documentais</h1>
 
-      {isLoading ? (
-        <div className="flex justify-center py-10">
-          <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
-        </div>
-      ) : (
+      <ListContent
+        isLoading={isLoading}
+        data={tiposDocumentos}
+        filtered={filtered}
+        resource="tipo documental"
+      >
         <DocTypesTable docs_types={filtered} />
-      )}
+      </ListContent>
 
       <Link to="/dashboard/doc-types/new" className="fixed z-50 bottom-6 right-6 group">
         <Button

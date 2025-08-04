@@ -62,7 +62,7 @@ export function Settingss() {
               <Card className='shadow-none'>
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
-                    <Clock className="w-5 h-5" />
+                    <Clock className="w-5 h-5 text-icon-foreground" />
                     <span>Temporalidades</span>
                   </CardTitle>
                   <CardDescription>
@@ -80,7 +80,7 @@ export function Settingss() {
               <Card className='shadow-none'>
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
-                    <FileText className="w-5 h-5" />
+                    <FileText className="w-5 h-5 text-icon-foreground" />
                     <span>Tipos de Documentos</span>
                   </CardTitle>
                   <CardDescription>
@@ -105,7 +105,7 @@ export function Settingss() {
               <Card className='shadow-none'>
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
-                    <Boxes className="w-5 h-5" />
+                    <Boxes className="w-5 h-5 text-icon-foreground" />
                     <span>Armários</span>
                   </CardTitle>
                   <CardDescription>
@@ -123,7 +123,7 @@ export function Settingss() {
               <Card className='shadow-none'>
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
-                    <Archive className="w-5 h-5" />
+                    <Archive className="w-5 h-5 text-icon-foreground" />
                     <span>Gavetas</span>
                   </CardTitle>
                   <CardDescription>
@@ -141,7 +141,7 @@ export function Settingss() {
               <Card className='shadow-none'>
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
-                    <FolderOpen className="w-5 h-5" />
+                    <FolderOpen className="w-5 h-5 text-icon-foreground" />
                     <span>Capas de Processo</span>
                   </CardTitle>
                   <CardDescription>
@@ -169,7 +169,7 @@ export function Settingss() {
             </CardHeader>
             <CardContent>
               <div className="py-12 text-center">
-                <Settings className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                <Settings className="w-12 h-12 mx-auto mb-4 text-icon-foreground" />
                 <h3 className="mb-2 text-lg font-semibold">
                   Em breve
                 </h3>

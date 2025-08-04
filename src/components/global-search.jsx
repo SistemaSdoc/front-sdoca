@@ -2,12 +2,9 @@
 
 import * as React from "react"
 import { Search, X } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-
 import { useSearch } from "@/context/SearchContext"
-// ...
 
 export function GlobalSearch({ placeholder = "Buscar..." }) {
   const { searchTerm, setSearchTerm } = useSearch()
@@ -50,11 +47,6 @@ export function GlobalSearch({ placeholder = "Buscar..." }) {
               onChange={(e) => handleSearch(e.target.value)}
               className="w-64 pl-8"
             />
-            {searchTerm && (
-              <Button variant="ghost" size="icon" className="absolute w-6 h-6 right-1 top-1" onClick={clearSearch}>
-                <X className="w-3 h-3" />
-              </Button>
-            )}
           </div>
           <Button variant="ghost" size="icon" className="w-8 h-8" onClick={toggleExpanded}>
             <X className="w-4 h-4" />

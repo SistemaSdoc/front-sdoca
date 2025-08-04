@@ -39,7 +39,7 @@ const router = createBrowserRouter([
       ...cabinetsRoutes,
       ...docTypeRoutes,
       ...areaRoutes,
-      ...drawersRoutes
+      ...drawersRoutes,
     ],
   },
 ])

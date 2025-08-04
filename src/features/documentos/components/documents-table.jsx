@@ -28,67 +28,60 @@ export function DocumentsTable({ documents = [] }) {
 
   return (
     <>
-      {documents.length === 0 ? (
-        <div className="py-12 text-center">
-          <FileText className="w-12 h-12 mx-auto text-muted-foreground" />
-          <h3 className="mt-4 text-lg font-semibold">Nenhum documento encontrado</h3>
-          <p className="text-muted-foreground">Tente ajustar os filtros de busca.</p>
-        </div>
-      ) : (
-        <div className="border rounded-md">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="px-4">Título</TableHead>
-                <TableHead className="px-4">Tipo</TableHead>
-                <TableHead className="px-4">Área de origem</TableHead>
-                <TableHead className="px-4">Área de destino</TableHead>
-                <TableHead className="px-4">Criado em</TableHead>
-                <TableHead className="w-[50px] px-4"></TableHead>
+
+      <div className="border rounded-md">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="px-4">Título</TableHead>
+              <TableHead className="px-4">Tipo</TableHead>
+              <TableHead className="px-4">Área de origem</TableHead>
+              <TableHead className="px-4">Área de destino</TableHead>
+              <TableHead className="px-4">Criado em</TableHead>
+              <TableHead className="w-[50px] px-4"></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {documents.map((doc) => (
+              <TableRow key={doc.id}>
+                <TableCell className="px-4">{doc.titulo_doc}</TableCell>
+                <TableCell className="px-4">{doc.tipo}</TableCell>
+                <TableCell className="px-4">{doc.area_origem}</TableCell>
+                <TableCell className="px-4">{doc.area_destino}</TableCell>
+                <TableCell className="px-4">{doc.created_at || "-"}</TableCell>
+                <TableCell className="px-4">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" className="w-8 h-8 p-0">
+                        <MoreHorizontal className="w-4 h-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem onClick={() => navigate(`/dashboard/documents/${doc.encrypted_id}`)}>
+                        <Eye className="w-4 h-4" />
+                        Ver anexos
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => navigate(`/dashboard/documents/edit/${doc.encrypted_id}`)}>
+                        <Edit3 className="w-4 h-4" />
+                        Editar
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => {
+                          setDocId(doc.id)
+                          setShowDeleteDialog(true)
+                        }}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                        Apagar
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
               </TableRow>
-            </TableHeader>
-            <TableBody>
-              {documents.map((doc) => (
-                <TableRow key={doc.id}>
-                  <TableCell className="px-4">{doc.titulo_doc}</TableCell>
-                  <TableCell className="px-4">{doc.tipo}</TableCell>
-                  <TableCell className="px-4">{doc.area_origem}</TableCell>
-                  <TableCell className="px-4">{doc.area_destino}</TableCell>
-                  <TableCell className="px-4">{doc.created_at || "-"}</TableCell>
-                  <TableCell className="px-4">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="w-8 h-8 p-0">
-                          <MoreHorizontal className="w-4 h-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => navigate(`/dashboard/documents/${doc.encrypted_id}`)}>
-                          <Eye className="w-4 h-4" />
-                          Ver anexos
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => navigate(`/dashboard/documents/edit/${doc.encrypted_id}`)}>
-                          <Edit3 className="w-4 h-4" />
-                          Editar
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() => {
-                            setDocId(doc.id)
-                            setShowDeleteDialog(true)
-                          }}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                          Apagar
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-      )}
+            ))}
+          </TableBody>
+        </Table>
+      </div>
 
       {/* ALERT MODAL */}
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>

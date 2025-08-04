@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { useSearch } from "@/context/SearchContext"
 import { useDrawers } from "@/features/drawer/hooks/drawerHooks"
 import { DrawersTable } from "@/features/drawer/components/drawer-table"
+import ListContent from "@/components/List-content"
 
 export default function Drawers() {
   const { searchTerm } = useSearch()
@@ -15,16 +16,17 @@ export default function Drawers() {
   )
 
   return (
-    <div className="relative space-y-6">
+    <div className="relative space-y-4">
       <h1 className="text-2xl font-semibold">Gavetas</h1>
 
-      {isLoading ? (
-        <div className="flex justify-center py-10">
-          <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
-        </div>
-      ) : (
+      <ListContent
+        isLoading={isLoading}
+        data={drawers}
+        filtered={filtered}
+        resource="gaveta"
+      >
         <DrawersTable drawers={filtered} />
-      )}
+      </ListContent>
 
       <Link to="/dashboard/drawers/new" className="fixed z-50 bottom-6 right-6 group">
         <Button

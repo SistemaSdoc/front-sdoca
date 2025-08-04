@@ -1,19 +1,35 @@
 import { useAuth } from '@/context/AuthContext'
 import { Loader2 } from 'lucide-react'
 
-export default function Home() {
-    const { user, loading } = useAuth()
 
-    if (loading) return (
-        <div className="fixed inset-0 flex items-center justify-center bg-white">
-            <Loader2 className="w-8 h-8 text-gray-500 animate-spin" />
-        </div>
-    )
+import { DashboardCards } from "@/components/dashboard-cards-v1"
+import { PerformanceTable } from "@/components/performance-table"
+import { DocumentosBarChart } from '@/components/charts/DocumentosBarChart'
+import { TempoRespostaChart } from '@/components/charts/TempoRespostaChart'
 
-    return (
-        <div>
-            {user && <p>Olá, {user.name}</p>}
-            <p>Home da dashboard</p>
+export default function DashboardDemo() {
+  const { loading } = useAuth()
+
+  if (loading) return (
+    <div className="fixed inset-0 flex items-center justify-center bg-white">
+      <Loader2 className="w-8 h-8 text-gray-500 animate-spin" />
+    </div>
+  )
+  return (
+    <>
+      <div className="mx-auto max-w-7xl">
+        {/* Cards de Estatísticas */}
+        <DashboardCards />
+
+        {/* Tabela de Desempenho */}
+        <PerformanceTable />
+
+        {/* Gráficos */}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <DocumentosBarChart />
+          <TempoRespostaChart />
         </div>
-    )
+      </div>
+    </>
+  )
 }

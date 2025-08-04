@@ -52,7 +52,7 @@ export function UsersTable({ users = [] }) {
                 <TableRow key={user.id}>
                   <TableCell className="px-4">
                     <div className="flex items-center space-x-3 font-medium">
-                      <Avatar className="w-8 h-8">
+                      <Avatar>
                         <AvatarImage src={`http://localhost:8000/storage/${user.profile_photo_path}`} alt={user.name} />
                         <AvatarFallback>{user.name?.slice(0, 1).toUpperCase() || "?"}</AvatarFallback>
                       </Avatar>

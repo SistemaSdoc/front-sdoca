@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { useSearch } from "@/context/SearchContext"
 import { useCabinets } from "@/features/cabinet/hooks/cabinetHooks"
 import { CabinetsTable } from "@/features/cabinet/components/cabinet-table"
+import ListContent from "@/components/List-content"
 
 export default function Cabinets() {
   const { searchTerm } = useSearch()
@@ -15,16 +16,18 @@ export default function Cabinets() {
   )
 
   return (
-    <div className="relative space-y-6">
+    <div className="relative space-y-4">
       <h1 className="text-2xl font-semibold">Armários</h1>
 
-      {isLoading ? (
-        <div className="flex justify-center py-10">
-          <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
-        </div>
-      ) : (
+      <ListContent
+        isLoading={isLoading}
+        data={cabinets}
+        filtered={filtered}
+        resource="armário"
+      >
         <CabinetsTable cabinets={filtered} />
-      )}
+      </ListContent>
+
 
       <Link to="/dashboard/cabinets/new" className="fixed z-50 bottom-6 right-6 group">
         <Button

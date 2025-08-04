@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { useSearch } from "@/context/SearchContext"
 import { useTemporalidades } from "@/features/temporalidade/hooks/temporalidadeHooks"
 import { TemporalidadesTable } from "@/features/temporalidade/components/temporalidades-table"
+import ListContent from "@/components/List-content"
 
 export default function Temporalidades() {
   const { searchTerm } = useSearch()
@@ -15,16 +16,17 @@ export default function Temporalidades() {
   )
 
   return (
-    <div className="relative space-y-6">
+    <div className="relative space-y-4">
       <h1 className="text-2xl font-semibold">Temporalidades</h1>
 
-      {isLoading ? (
-        <div className="flex justify-center py-10">
-          <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
-        </div>
-      ) : (
+      <ListContent
+        isLoading={isLoading}
+        data={temporalidades}
+        filtered={filtered}
+        resource="temporalidade"
+      >
         <TemporalidadesTable temporalidades={filtered} />
-      )}
+      </ListContent>
 
       <Link to="/dashboard/temps/new" className="fixed z-50 bottom-6 right-6 group">
         <Button

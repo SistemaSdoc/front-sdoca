@@ -41,16 +41,16 @@ export function UserNav() {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end" forceMount>
           <DropdownMenuItem>
-            <User className="w-4 h-4 mr-2" />
-            <span>Visualizar perfil</span>
+            <User className="w-4 h-4 mr-1 " />
+            <span>Meu perfil</span>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => navigate('/dashboard/settings')}>
-            <Settings className="w-4 h-4 mr-2" />
+            <Settings className="w-4 h-4 mr-1 " />
             <span>Configurações</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setShowLogoutDialog(true)}>
-            <LogOut className="w-4 h-4 mr-2" />
+            <LogOut className="w-4 h-4 mr-1 " />
             <span>Terminar sessão</span>
           </DropdownMenuItem>
         </DropdownMenuContent>

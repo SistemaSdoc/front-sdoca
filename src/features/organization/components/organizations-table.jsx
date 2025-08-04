@@ -44,9 +44,15 @@ export function OrganizationsTable({ organizations = [] }) {
                 <TableRow key={org.id}>
                   <TableCell className="px-4">
                     <div className="flex items-center space-x-3 font-medium">
-                      <Avatar className="w-8 h-8">
-                        <AvatarImage src={`http://localhost:8000/storage/${org.logo_org}`} alt={org.name_org} />
-                        <AvatarFallback>{org.name_org?.slice(0, 1).toUpperCase() || "?"}</AvatarFallback>
+                      <Avatar>
+                        <AvatarImage
+                          src={`http://localhost:8000/storage/${org.logo_org}`}
+                          alt={org.name_org}
+                          className="object-cover"
+                        />
+                        <AvatarFallback>
+                          {org.name_org?.slice(0, 1).toUpperCase() || "?"}
+                        </AvatarFallback>
                       </Avatar>
                       <span>{org.name_org}</span>
                     </div>
