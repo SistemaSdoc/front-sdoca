@@ -6,7 +6,6 @@ import {
   Clock,
   FileText,
   FolderOpen,
-  Layers,
   Settings,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -29,7 +28,6 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import { useNavigate } from "react-router-dom"
-import { Switch } from "@/components/ui/switch"
 import { useTheme } from "@/context/theme-context"
 
 export function Settingss() {

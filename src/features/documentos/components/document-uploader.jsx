@@ -18,22 +18,7 @@ import { Button } from "@/components/ui/button"
 import { Viewer, Worker } from "@react-pdf-viewer/core"
 import "@react-pdf-viewer/core/lib/styles/index.css"
 
-const initialFiles = [
-  {
-    name: "example.pdf",
-    size: 102400,
-    type: "application/pdf",
-    url: "https://example.com/example.pdf",
-    id: "example-123",
-  },
-  {
-    name: "intro.zip",
-    size: 252873,
-    type: "application/zip",
-    url: "https://example.com/intro.zip",
-    id: "intro.zip-1744638436563-8u5xuls",
-  },
-]
+
 
 const getFileIcon = (file) => {
   const fileType = file.file instanceof File ? file.file.type : file.file.type
@@ -121,7 +106,7 @@ const simulateUpload = (totalBytes, onProgress, onComplete) => {
   }
 }
 
-export default function DocumentUploader({ onPreviewPdf, onChange }) {
+export default function DocumentUploader({ onPreviewPdf, onChange, initialFiles = []}) {
   const maxSizeMB = 5
   const maxSize = maxSizeMB * 1024 * 1024
   const maxFiles = 6

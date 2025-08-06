@@ -30,7 +30,8 @@ export default function NewDocument() {
     isPending,
     isLoading,
     areas,
-    tiposDocumentos
+    tiposDocumentos,
+    watch
   } = useCreateForm()
 
   if (isLoading) {
@@ -88,6 +89,7 @@ export default function NewDocument() {
         areas={areas}
         doc_types={tiposDocumentos}
         onPreviewPdf={setSelectedPdfUrl}
+        watch={watch}
       />
     </>
   )
