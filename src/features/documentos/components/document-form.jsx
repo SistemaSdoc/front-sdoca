@@ -6,20 +6,20 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Loader2 } from "lucide-react"
 import { useScanMutation } from "@/lib/scan"
+import { Loader2 } from "lucide-react"
 
 export function DocumentForm({
-  register,
-  handleSubmit,
-  setValue,
   watch,
+  register,
+  setValue,
   onSubmit,
   isPending,
+  handleSubmit,
+  onPreviewPdf,
   areas = [],
   doc_types = [],
-  isEdit = false,
-  onPreviewPdf
+  isEdit = false
 }) {
   const currentFiles = watch("anexo_docs") || []
   const { mutate, isPending: isScanning } = useScanMutation({ currentFiles, setValue })
@@ -95,13 +95,73 @@ export function DocumentForm({
                   </div>
 
                   <div className="*:not-first:mt-2">
-                    <Label htmlFor="area_destino_id">Área de destino</Label>
+                    <Label htmlFor="area_destino_id">Gaveta</Label>
                     <Select
                       defaultValue={areas?.id ? String(areas.id) : ""}
                       onValueChange={(value) => setValue("area_destino_id", value)}
                     >
                       <SelectTrigger id="area_destino_id" className="w-full">
-                        <SelectValue placeholder="Selecione a área de destino" />
+                        <SelectValue placeholder="Selecione a Gaveta" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {areas.map((area) => (
+                          <SelectItem key={area.id} value={String(area.id)}>
+                            {area.name_area}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* Mapeamento Físico */}
+                <div className="grid gap-4 md:grid-cols-3">
+                  <div className="*:not-first:mt-2">
+                    <Label htmlFor="area_origem_id">Armário</Label>
+                    <Select
+                      defaultValue={areas?.id ? String(areas.id) : ""}
+                      onValueChange={(value) => setValue("area_origem_id", value)}
+                    >
+                      <SelectTrigger id="area_origem_id" className="w-full">
+                        <SelectValue placeholder="Selecione o armário" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {areas.map((area) => (
+                          <SelectItem key={area.id} value={String(area.id)}>
+                            {area.name_area}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="*:not-first:mt-2">
+                    <Label htmlFor="area_destino_id">Gaveta</Label>
+                    <Select
+                      defaultValue={areas?.id ? String(areas.id) : ""}
+                      onValueChange={(value) => setValue("area_destino_id", value)}
+                    >
+                      <SelectTrigger id="area_destino_id" className="w-full">
+                        <SelectValue placeholder="Selecione a gaveta" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {areas.map((area) => (
+                          <SelectItem key={area.id} value={String(area.id)}>
+                            {area.name_area}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="*:not-first:mt-2">
+                    <Label htmlFor="area_destino_id">Capa de Processo</Label>
+                    <Select
+                      defaultValue={areas?.id ? String(areas.id) : ""}
+                      onValueChange={(value) => setValue("area_destino_id", value)}
+                    >
+                      <SelectTrigger id="area_destino_id" className="w-full">
+                        <SelectValue placeholder="Selecione a capa" />
                       </SelectTrigger>
                       <SelectContent>
                         {areas.map((area) => (
@@ -172,9 +232,7 @@ export function DocumentForm({
                 {/* Document uploader */}
                 <div className="*:not-first:mt-2">
                   <DocumentUploader
-                    key={JSON.stringify(currentFiles.map(f => f.name))}
                     name="anexo_docs"
-                    initialFiles={currentFiles}
                     onPreviewPdf={onPreviewPdf}
                     onChange={(newFiles) => {
                       const updated = [...currentFiles, ...newFiles]

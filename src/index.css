@@ -28,10 +28,6 @@
   /* equivalente ao border-border */
 }
 
-* {
-  box-sizing: border-box;
-}
-
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

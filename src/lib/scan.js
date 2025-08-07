@@ -26,8 +26,7 @@ export function useScanMutation({ currentFiles, setValue }) {
 
       const updatedFiles = [...currentFiles, scannedFile]
       const deduplicated = Array.from(new Map(updatedFiles.map(f => [f.name, f])).values())
-
-      setValue('anexo_docs', deduplicated)
+      setValue("anexo_docs", deduplicated)
 
       toast.success("Documento escaneado com sucesso!")
     },

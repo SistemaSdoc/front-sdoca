@@ -14,11 +14,12 @@ import { areaRoutes } from "./modules/areas.routes"
 import { Settingss } from "@/features/settings/pages"
 import { drawersRoutes } from "./modules/drawers.routes"
 
-
 import PrivateRoute from "./guards/PrivateRoutes"
 import { AuthProvider } from "@/context/AuthContext"
+import Landing from "@/pages/Landing"
 
 const router = createBrowserRouter([
+  { path: "/", element: <Landing /> },
   ...authRoutes,
   {
     path: "/dashboard",
