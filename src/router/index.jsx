@@ -16,7 +16,7 @@ import { drawersRoutes } from "./modules/drawers.routes"
 
 import PrivateRoute from "./guards/PrivateRoutes"
 import { AuthProvider } from "@/context/AuthContext"
-import Landing from "@/pages/Landing"
+import Landing from "@/features/landing/pages/Landing"
 
 const router = createBrowserRouter([
   { path: "/", element: <Landing /> },
