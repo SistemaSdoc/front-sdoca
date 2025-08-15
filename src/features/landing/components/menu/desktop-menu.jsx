@@ -1,0 +1,84 @@
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu"
+import { navigationLinks } from "./navigation-links-data"
+import { cn } from "@/lib/utils"
+
+const ListItem = ({ className, label, description, icon: Icon, ...props }) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
+            "hover:bg-accent hover:text-accent-foreground",
+            "focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="flex items-center gap-2">
+            {Icon && <Icon className="w-4 h-4" />}
+            <div className="text-sm font-medium leading-none">{label}</div>
+          </div>
+          {description && (
+            <p className="text-sm leading-snug line-clamp-2 text-muted-foreground">
+              {description}
+            </p>
+          )}
+        </a>
+      </NavigationMenuLink>
+    </li>
+  )
+}
+
+export default function DesktopMenu() {
+  return (
+    <NavigationMenu className="max-md:hidden">
+      <NavigationMenuList>
+        {navigationLinks.map((link) => (
+          <NavigationMenuItem key={link.label}>
+            {/* Link simples */}
+            {!link.submenu ? (
+              <NavigationMenuLink
+                href={link.href}
+                className="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md group w-max bg-background hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+              >
+                {link.label}
+              </NavigationMenuLink>
+            ) : (
+              <>
+                <NavigationMenuTrigger>{link.label}</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul
+                    className={cn(
+                      "grid gap-3 p-2",
+                      link.items.length > 3
+                        ? "md:w-[500px] lg:w-[600px] md:grid-cols-2"
+                        : "md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]"
+                    )}
+                  >
+                    {link.items.map((item) => (
+                      <ListItem
+                        key={item.label}
+                        href={item.href}
+                        label={item.label}
+                        description={item.description}
+                        icon={item.icon}
+                      />
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </>
+            )}
+          </NavigationMenuItem>
+        ))}
+      </NavigationMenuList>
+    </NavigationMenu>
+  )
+}

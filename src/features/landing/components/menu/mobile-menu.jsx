@@ -1,21 +1,26 @@
 import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu"
-import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuLink,
+} from "@/components/ui/navigation-menu"
+import { navigationLinks } from "./navigation-links-data"
 
-export default function MobileMenu({ navigationLinks = [] }) {
+export default function MobileMenu() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button className="group size-8 md:hidden" variant="ghost" size="icon" aria-label="Abrir menu">
+        <Button
+          className="group size-8 md:hidden"
+          variant="ghost"
+          size="icon"
+        >
           <svg
             className="pointer-events-none"
             width={16}
@@ -25,20 +30,30 @@ export default function MobileMenu({ navigationLinks = [] }) {
             stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
-            strokeLinejoin="round">
-            <path d="M4 12L20 12" className="origin-center -translate-y-[7px] transition-all duration-300 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[315deg]" />
-            <path d="M4 12H20" className="transition-all duration-300 origin-center group-aria-expanded:rotate-45" />
-            <path d="M4 12H20" className="origin-center translate-y-[7px] transition-all duration-300 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[135deg]" />
+            strokeLinejoin="round"
+          >
+            <path
+              d="M4 12L20 12"
+              className="origin-center -translate-y-[7px] transition-all duration-300 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[315deg]"
+            />
+            <path
+              d="M4 12H20"
+              className="transition-all duration-300 origin-center group-aria-expanded:rotate-45"
+            />
+            <path
+              d="M4 12H20"
+              className="origin-center translate-y-[7px] transition-all duration-300 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[135deg]"
+            />
           </svg>
         </Button>
       </PopoverTrigger>
 
       <PopoverContent align="start" className="w-64 p-1 md:hidden">
         <NavigationMenu className="max-w-none *:w-full">
-          <NavigationMenuList className="flex-col items-start gap-0">
+          <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
             {navigationLinks.map((link, index) => (
               <NavigationMenuItem key={index} className="w-full">
-                {link.submenu ? (
+                {link.items ? (
                   <>
                     <div className="text-muted-foreground px-2 py-1.5 text-xs font-medium">
                       {link.label}
@@ -46,7 +61,10 @@ export default function MobileMenu({ navigationLinks = [] }) {
                     <ul>
                       {link.items.map((item, itemIndex) => (
                         <li key={itemIndex}>
-                          <NavigationMenuLink href={item.href} className="py-1.5">
+                          <NavigationMenuLink
+                            href={item.href}
+                            className="py-1.5"
+                          >
                             {item.label}
                           </NavigationMenuLink>
                         </li>
@@ -60,7 +78,11 @@ export default function MobileMenu({ navigationLinks = [] }) {
                 )}
 
                 {index < navigationLinks.length - 1 && (
-                  <div role="separator" className="w-full h-px my-1 -mx-1 bg-border" />
+                  <div
+                    role="separator"
+                    aria-orientation="horizontal"
+                    className="w-full h-px my-1 -mx-1 bg-border"
+                  />
                 )}
               </NavigationMenuItem>
             ))}
