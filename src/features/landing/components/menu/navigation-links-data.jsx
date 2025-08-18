@@ -1,45 +1,52 @@
-import { 
-  BarChart3Icon, 
-  HelpCircleIcon, 
-  ShieldCheckIcon, 
-  FileTextIcon, 
-  UsersIcon, 
-  SettingsIcon 
+import {
+  BarChart3Icon,
+  HelpCircleIcon,
+  ShieldCheckIcon,
+  FileTextIcon,
+  UsersIcon,
+  SettingsIcon,
+  SearchIcon,
+  LockIcon,
+  WorkflowIcon
 } from "lucide-react"
 
 export const navigationLinks = [
   { href: "/", label: "Home" },
+
+  { href: "/prices", label: "Planos" },
+
   {
-    label: "Documentos",
+    label: "Funcionalidades",
     submenu: true,
     type: "icon",
     items: [
       {
-        href: "/",
-        label: "Gestão Documental",
+        href: "/funcionalidades/gestao-documentos",
+        label: "Gestão de Documentos",
         icon: FileTextIcon,
-        description: "Sistema completo para organização e controle de documentos empresariais."
+        description: "Faça upload, organize e mantenha versões de documentos de forma simples."
       },
       {
-        href: "/docs",
-        label: "Meus Documentos",
-        icon: FileTextIcon,
-        description: "Visualize e gerencie seus documentos pessoais com controle de versão."
+        href: "/funcionalidades/controle-acesso",
+        label: "Controle de Acesso",
+        icon: LockIcon,
+        description: "Gerencie usuários, permissões e níveis de acesso com segurança."
       },
       {
-        href: "/docs/installation",
-        label: "Documentos Compartilhados",
-        icon: UsersIcon,
-        description: "Acesse documentos compartilhados pela equipe com permissões específicas."
+        href: "/funcionalidades/busca-inteligente",
+        label: "Busca Inteligente",
+        icon: SearchIcon,
+        description: "Encontre documentos rapidamente por nome, tag ou conteúdo."
       },
       {
-        href: "/docs/primitives/typography",
-        label: "Arquivo Morto",
-        icon: SettingsIcon,
-        description: "Documentos arquivados e histórico completo de alterações."
+        href: "/funcionalidades/workflow-aprovacao",
+        label: "Workflow de Aprovação",
+        icon: WorkflowIcon, // se não tiver, pode usar CheckSquareIcon ou ClipboardCheckIcon
+        description: "Defina fluxos de aprovação e assinatura para documentos importantes."
       }
     ]
   },
+
   {
     label: "Workflows",
     submenu: true,

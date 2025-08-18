@@ -27,14 +27,14 @@ export default function NavBarMenu() {
   return (
     <>
       <header className="px-4 md:px-6">
-        <div className="flex items-center justify-between h-16 gap-4">
+        <div className="flex items-center md:justify-around justify-between h-16 gap-10">
           {/* Left side */}
           <div className="flex items-center gap-2">
             {/* Mobile menu */}
             <MobileMenu />
 
             {/* Logo and navigation menu*/}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-10">
               {/* Logo */}
               <a href="#" className="flex items-center gap-2 text-primary hover:text-primary/90 group">
                 <div className="transition-transform duration-200 group-hover:scale-105">

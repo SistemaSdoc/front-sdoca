@@ -46,13 +46,13 @@ export default function DesktopMenu() {
           <NavigationMenuItem key={link.label}>
             {/* Link simples */}
             {!link.submenu ? (
-              <NavigationMenuLink href={link.href}>
+              <NavigationMenuLink href={link.href} className='bg-transparent'>
                 {link.label}
               </NavigationMenuLink>
             ) : (
               <>
-              {/* Link drop */}
-                <NavigationMenuTrigger>{link.label}</NavigationMenuTrigger>
+                {/* Link drop */}
+                <NavigationMenuTrigger className='bg-transparent'>{link.label}</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul
                     className={cn(

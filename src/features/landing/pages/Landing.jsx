@@ -40,14 +40,15 @@ export default function Landing() {
 
       {/* Conteúdo acima do pattern */}
       <div className="relative z-10 flex flex-col">
-        <NavBarMenu />
         {/* Header */}
+        <NavBarMenu />
 
         <div className="container mx-auto">
           <div className="flex gap-8 py-20 lg:py-20 items-center justify-center flex-col">
             <div className="flex gap-4 flex-col">
               <h1 className="text-5xl md:text-7xl max-w-2xl tracking-tighter text-center font-regular">
                 <span className="text-secondary-foreground">Gestão documental</span>
+
                 <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
                   &nbsp;
                   {titles.map((title, index) => (
@@ -81,10 +82,11 @@ export default function Landing() {
               </p>
             </div>
 
-            <div className="flex flex-row gap-3">
+            <div className="flex md:flex-row flex-col w-full p-2 md:w-auto md:p-0 gap-3">
               <Button size="lg" className="gap-4" variant="outline">
                 Agendar demonstração
               </Button>
+
               <Button size="lg" className="gap-4">
                 Começar agora <ChevronRight className="" />
               </Button>
@@ -123,7 +125,6 @@ export default function Landing() {
           </div>
         </section>
 
-        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         {/* Footer */}
         <footer className="py-10 text-center text-gray-500 text-sm">
           © {new Date().getFullYear()} DocFlow. Todos os direitos reservados.
