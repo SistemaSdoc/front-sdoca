@@ -98,7 +98,7 @@ const Feature = ({ title, description, icon, index }) => {
 export default function FeaturesContent() {
   return (
     <div id="features"
-      className="relative z-10 grid grid-cols-1 py-10 mx-auto md:grid-cols-2 lg:grid-cols-4 max-w-7xl">
+      className="relative z-10 grid grid-cols-1 py-10 mx-auto md:grid-cols-2 lg:grid-cols-4 container">
       {featuresData.map((feature, index) => (
         <Feature key={feature.title} {...feature} index={index} />
       ))}

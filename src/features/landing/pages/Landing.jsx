@@ -4,10 +4,7 @@ import { cn } from "@/lib/utils"
 import { AnimatedGridPattern } from "@/components/magicui/animated-grid-pattern"
 import FeaturesContent from "../components/features-content"
 import { Badge } from "@/components/ui/badge"
-
-const PricingCardData = [
-
-]
+import PlansContent from "../components/pricing-content"
 
 export default function Landing() {
   return (
@@ -31,7 +28,7 @@ export default function Landing() {
         <HeroContent />
 
         {/* Features */}
-        <div className="flex flex-col items-center justify-center min-h-screen gap-4 text-center">
+        <div className="flex flex-col items-center justify-center min-h-screen gap-4 text-center w-full pt-20 lg:pt-40">
           <Badge className='bg-accent-foreground'>Recursos</Badge>
 
           <div className="flex flex-col items-center justify-center gap-2 text-center">
@@ -48,6 +45,21 @@ export default function Landing() {
         </div>
 
         {/* Pricing */}
+        <div className="flex flex-col items-center justify-center min-h-screen gap-4 text-center w-full  pt-20 lg:pt-40">
+          <Badge className='bg-accent-foreground'>Pacotes</Badge>
+
+          <div className="flex flex-col items-center justify-center gap-2 text-center">
+            <h2 className="text-3xl tracking-tighter md:text-5xl font-regular text-secondary-foreground">
+              Preços que fazem sentido!
+            </h2>
+
+            <p className="max-w-xl text-lg leading-relaxed text-center text-muted-foreground">
+              Planos que cabem no bolso de todos
+            </p>
+          </div>
+
+          <PlansContent />
+        </div>
 
         {/* Footer */}
         <footer className="py-10 text-sm text-center text-gray-500">
