@@ -8,13 +8,16 @@ import {
 } from "@/components/ui/navigation-menu"
 import { navigationLinks } from "./navigation-links-data"
 import { cn } from "@/lib/utils"
-import { Link } from "react-router-dom"
+import { Link as ScrollLink } from "react-scroll"
 
-const ListItem = ({ className, label, description, icon: Icon, ...props }) => {
+const ListItem = ({ className, label, url, description, icon: Icon, ...props }) => {
   return (
     <li>
       <NavigationMenuLink asChild>
-        <Link
+        <ScrollLink
+          to={url}
+          smooth={true}
+          duration={500}
           className={cn(
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
             "hover:bg-accent hover:text-accent-foreground",
@@ -32,7 +35,7 @@ const ListItem = ({ className, label, description, icon: Icon, ...props }) => {
               {description}
             </p>
           )}
-        </Link>
+        </ScrollLink>
       </NavigationMenuLink>
     </li>
   )
@@ -65,7 +68,7 @@ export default function DesktopMenu() {
                     {link.items.map((item) => (
                       <ListItem
                         key={item.label}
-                        to={item.href}
+                        url={item.href}
                         label={item.label}
                         description={item.description}
                         icon={item.icon}

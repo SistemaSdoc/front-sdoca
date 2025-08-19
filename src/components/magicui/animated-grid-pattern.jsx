@@ -125,7 +125,7 @@ export function AnimatedGridPattern({
             height={height - 1}
             x={x * width + 1}
             y={y * height + 1}
-            fill="currentColor"
+            fill="#113155"
             strokeWidth="0"
           />
         ))}

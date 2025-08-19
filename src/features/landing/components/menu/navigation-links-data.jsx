@@ -13,35 +13,39 @@ import {
 export const navigationLinks = [
   { href: "/", label: "Home" },
 
-  { href: "/prices", label: "Planos" },
+  { href: "prices", label: "Planos" },
 
-  {
+  { href: "features", label: "Funcionalidades" },
+
+  /* { href: "/prices", label: "Planos" }, */
+
+/*   {
     label: "Funcionalidades",
     submenu: true,
     type: "icon",
     items: [
       {
-        href: "/funcionalidades/gestao-documentos",
+        href: "gestao-documentos",
         label: "Gestão de Documentos",
         icon: FileTextIcon,
         description: "Faça upload, organize e mantenha versões de documentos de forma simples."
       },
       {
-        href: "/funcionalidades/controle-acesso",
+        href: "controle-acesso",
         label: "Controle de Acesso",
         icon: LockIcon,
         description: "Gerencie usuários, permissões e níveis de acesso com segurança."
       },
       {
-        href: "/funcionalidades/busca-inteligente",
+        href: "busca-inteligente",
         label: "Busca Inteligente",
         icon: SearchIcon,
         description: "Encontre documentos rapidamente por nome, tag ou conteúdo."
       },
       {
-        href: "/funcionalidades/workflow-aprovacao",
+        href: "workflow-aprovacao",
         label: "Workflow de Aprovação",
-        icon: WorkflowIcon, // se não tiver, pode usar CheckSquareIcon ou ClipboardCheckIcon
+        icon: WorkflowIcon,
         description: "Defina fluxos de aprovação e assinatura para documentos importantes."
       }
     ]
@@ -74,6 +78,7 @@ export const navigationLinks = [
       }
     ]
   },
+
   {
     label: "Relatórios",
     submenu: true,
@@ -98,5 +103,5 @@ export const navigationLinks = [
         description: "Central de ajuda, tutoriais e documentação do sistema."
       }
     ]
-  }
+  } */
 ]
