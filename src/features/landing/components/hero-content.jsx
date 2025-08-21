@@ -23,7 +23,7 @@ export default function HeroContent() {
 
   return (
     <div className="container mx-auto">
-      <div className="flex flex-col items-center justify-center gap-8 py-20 lg:py-20">
+      <div className="flex flex-col items-center justify-center gap-8 py-40 lg:py-50">
         <div className="flex flex-col gap-4">
           <h1 className="max-w-2xl text-5xl tracking-tighter text-center md:text-7xl font-regular">
             <span className="text-secondary-foreground">Gestão documental</span>

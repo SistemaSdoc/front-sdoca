@@ -57,11 +57,23 @@ const Feature = ({ title, description, icon, index }) => {
   return (
     <div
       className={cn(
-        "flex flex-col lg:border-r  py-10 relative group/feature",
-        (index === 0 || index === 4) && "lg:border-l",
-        index < 4 && "lg:border-b"
-      )}>
+        "flex flex-col py-10 relative group/feature",
 
+        // MOBILE (1 col) → lista
+        "border-b first:border-t-0 border-x last:border-b-0 mx-4",
+
+        // TABLET (2 cols)
+        "md:mx-0 md:border-0 md:py-10 md:border-r",
+        index < 6 && "md:border-b",        // só até linha 3 no md
+        index % 2 === 0 && "md:border-l",  // col da esquerda no md
+
+        // DESKTOP (4 cols)
+        "lg:mx-0 lg:py-10 lg:border-r",
+        index < 4 && "lg:border-b",        // só linha de cima
+        index >= 4 && "lg:border-b-0",     // força tirar borda da linha de baixo
+        index % 4 === 0 && "lg:border-l"   // col da esquerda
+      )}
+    >
       {index < 4 && (
         <div
           className="absolute inset-0 w-full h-full transition duration-200 opacity-0 pointer-events-none group-hover/feature:opacity-100 bg-gradient-to-t from-[#f8941f]/15 to-transparent" />
@@ -88,7 +100,7 @@ const Feature = ({ title, description, icon, index }) => {
         </span>
       </div>
 
-      <p className="relative z-10 max-w-xs px-10 text-sm text-muted-foreground">
+      <p className="relative z-10 px-2 text-sm text-muted-foreground">
         {description}
       </p>
     </div>
@@ -98,7 +110,7 @@ const Feature = ({ title, description, icon, index }) => {
 export default function FeaturesContent() {
   return (
     <div id="features"
-      className="relative z-10 grid grid-cols-1 py-10 mx-auto md:grid-cols-2 lg:grid-cols-4 container">
+      className="container relative z-10 grid grid-cols-1 py-10 mx-auto md:grid-cols-2 lg:grid-cols-4">
       {featuresData.map((feature, index) => (
         <Feature key={feature.title} {...feature} index={index} />
       ))}

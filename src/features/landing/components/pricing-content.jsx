@@ -1,5 +1,6 @@
 import { Check, Minus, MoveRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const plans = [
   {
@@ -52,29 +53,134 @@ export default function PlanContent() {
   return (
     <>
       {/* versão mobile */}
-      <div className="grid gap-6 lg:hidden">
-        {plans.map(plan => (
-          <div className="border rounded-2xl p-4">
-            <h2 className="text-xl font-bold">{plan.name}</h2>
-            <p className="text-muted-foreground">{plan.description}</p>
-            <p className="text-2xl mt-2">AOA {plan.price} / mês</p>
+      <div className="container flex flex-col w-full px-4 pt-10 md:hidden">
+        {plans.map((plan, planIndex) => (
+          <div
+            key={plan.name}
+            className={cn(
+              "flex flex-col py-10 relative border-x border-b first:border-t-0 last:border-b-0",
+              planIndex === 0 && "mt-0",
+            )}
+          >
+            {/* Cabeçalho do plano */}
+            <div className="gap-2 px-4 ">
+              <p className="text-2xl text-accent-foreground">{plan.name}</p>
+              <p className="text-sm text-muted-foreground">{plan.description}</p>
+              <p className="flex items-center justify-center gap-2 mt-4 text-xl">
+                <span className="text-3xl font-semibold text-secondary-foreground">
+                  AOA {plan.price}
+                </span>
+                <span className="text-sm text-muted-foreground">/ mês</span>
+              </p>
+            </div>
 
-            <div className="mt-4 space-y-2">
-              {plan.features.map(f => (
-                <div className="flex items-center justify-between">
-                  <span>{f.name}</span>
-                  {f.value === true && <Check className="w-4 h-4 text-primary" />}
-                  {f.value === false && <Minus className="w-4 h-4 text-muted-foreground" />}
-                  {typeof f.value === 'number' && <span>{f.value} members</span>}
-                </div>
-              ))}
+            {/* Lista de features */}
+            <div className="px-2 mt-6">
+              {featuresList.map((featureName, idx) => {
+                const feature = plan.features.find(f => f.name === featureName)
+
+                return (
+                  <div
+                    key={featureName}
+                    className={cn(
+                      "flex justify-between items-center px-4 py-3 border-",
+                      idx === featuresList.length - 1 && "border-b-" // remove borda no último
+                    )}
+                  >
+                    <span className="text-sm text-secondary-foreground">
+                      {featureName}
+                    </span>
+
+                    {feature?.value === true && (
+                      <Check className="w-4 h-4 text-accent-foreground" />
+                    )}
+
+                    {feature?.value === false && (
+                      <Minus className="w-4 h-4 text-primary" />
+                    )}
+
+                    {typeof feature?.value === "number" && (
+                      <p className="text-sm text-muted-foreground">
+                        {feature.value} membros
+                      </p>
+                    )}
+                  </div>
+                )
+              })}
+
+              <Button variant="outline" className="w-full mt-6">
+                Assinar agora <MoveRight className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* versão middle */}
+      <div className="container hidden gap-6 px-4 pt-20 md:grid-cols-3 md:grid lg:hidden">
+        {plans.map((plan) => (
+          <div
+            key={plan.name}
+            className={cn(
+              "flex flex-col py-10 relative border-x first:border-t-0 last:border-b-0"
+            )}
+          >
+            {/* Cabeçalho do plano */}
+            <div className="gap-2 px-4 ">
+              <p className="text-2xl text-accent-foreground">{plan.name}</p>
+              <p className="text-sm text-muted-foreground">{plan.description}</p>
+              <p className="flex items-center justify-center gap-2 mt-4 text-xl">
+                <span className="text-3xl font-semibold text-secondary-foreground">
+                  AOA {plan.price}
+                </span>
+                <span className="text-sm text-muted-foreground">/ mês</span>
+              </p>
+            </div>
+
+            {/* Lista de features */}
+            <div className="px-2 mt-6">
+              {featuresList.map((featureName, idx) => {
+                const feature = plan.features.find(f => f.name === featureName)
+
+                return (
+                  <div
+                    key={featureName}
+                    className={cn(
+                      "flex justify-between items-center px-4 py-3",
+                      idx === featuresList.length - 1 && "border-b-0"
+                    )}
+                  >
+                    <span className="text-sm text-secondary-foreground">
+                      {featureName}
+                    </span>
+
+                    {feature?.value === true && (
+                      <Check className="w-4 h-4 text-accent-foreground" />
+                    )}
+
+                    {feature?.value === false && (
+                      <Minus className="w-4 h-4 text-primary" />
+                    )}
+
+                    {typeof feature?.value === "number" && (
+                      <p className="text-sm text-muted-foreground">
+                        {feature.value} membros
+                      </p>
+                    )}
+                  </div>
+                )
+              })}
+
+              <Button variant="outline" className="w-full mt-6">
+                Assinar agora <MoveRight className="w-4 h-4" />
+              </Button>
             </div>
           </div>
         ))}
       </div>
 
       {/* versão desktop */}
-      <div className="hidden md:grid w-full grid-cols-3 pt-20 text-left divide-x lg:grid-cols-4 container">
+      <div className="container hidden w-full pt-20 text-left divide-x lg:grid lg:grid-cols-4">
         <div className="col-span-3 lg:col-span-1"></div>
 
         {plans.map((plan) => (
@@ -126,6 +232,5 @@ export default function PlanContent() {
         ))}
       </div>
     </>
-
   );
 }

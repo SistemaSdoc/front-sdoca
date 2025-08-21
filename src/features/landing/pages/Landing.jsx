@@ -5,6 +5,7 @@ import { AnimatedGridPattern } from "@/components/magicui/animated-grid-pattern"
 import FeaturesContent from "../components/features-content"
 import { Badge } from "@/components/ui/badge"
 import PlansContent from "../components/pricing-content"
+import CTAContent from "../components/cta-content"
 
 export default function Landing() {
   return (
@@ -28,7 +29,7 @@ export default function Landing() {
         <HeroContent />
 
         {/* Features */}
-        <div className="flex flex-col items-center justify-center min-h-screen gap-4 text-center w-full pt-20 lg:pt-40">
+        <div className="flex flex-col items-center justify-center w-full min-h-screen gap-4 pt-20 text-center">
           <Badge className='bg-accent-foreground'>Recursos</Badge>
 
           <div className="flex flex-col items-center justify-center gap-2 text-center">
@@ -45,7 +46,7 @@ export default function Landing() {
         </div>
 
         {/* Pricing */}
-        <div className="flex flex-col items-center justify-center min-h-screen gap-4 text-center w-full  pt-20 lg:pt-40">
+        <div className="flex flex-col items-center justify-center w-full min-h-screen gap-4 pt-20 text-center ">
           <Badge className='bg-accent-foreground'>Pacotes</Badge>
 
           <div className="flex flex-col items-center justify-center gap-2 text-center">
@@ -54,12 +55,15 @@ export default function Landing() {
             </h2>
 
             <p className="max-w-xl text-lg leading-relaxed text-center text-muted-foreground">
-              Planos que cabem no bolso de todos
+              Pacotes que cabem no bolso de todos
             </p>
           </div>
 
           <PlansContent />
         </div>
+
+        {/* CTA */}
+        <CTAContent/>
 
         {/* Footer */}
         <footer className="py-10 text-sm text-center text-gray-500">
