@@ -1,10 +1,10 @@
 import { useParams, Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { ChevronLeftIcon, Loader2, Tags } from "lucide-react"
-import { useEditForm } from "@/features/drawer/hooks/forms/useEditForm"
-import { DrawerForm } from "@/features/drawer/components/drawer-form"
+import { useEditForm } from "@/features/process-cover/hooks/forms/useEditForm"
+import { PeocessCoverForm } from "@/features/process-cover/components/process-cover-form"
 
-export default function EditDrawer() {
+export default function EditProcessCover() {
   const { id } = useParams()
 
   const {
@@ -14,8 +14,9 @@ export default function EditDrawer() {
     onSubmit,
     isPending,
     isLoading,
-    drawer,
-    cabinets,
+    processCover,
+    drawers,
+    tiposDocumentos,
   } = useEditForm(id)
 
   if (isLoading) {
@@ -29,7 +30,7 @@ export default function EditDrawer() {
   return (
     <>
       <div className="pt-2 pl-4">
-        <Link to='/dashboard/drawers'>
+        <Link to='/dashboard/process-covers'>
           <Button variant="link" className="gap-1">
             <ChevronLeftIcon className="opacity-60" size={16} />
             Voltar
@@ -39,21 +40,22 @@ export default function EditDrawer() {
 
       <div className="space-y-2 text-center">
         <div className="flex items-center justify-center space-x-2">
-          <h1 className="text-3xl font-medium">Editar Gaveta</h1>
+          <h1 className="text-3xl font-medium">Editar Capa de processo</h1>
         </div>
         <p className="text-muted-foreground">
-          Actualize os dados abaixo para editar a gaveta neste armário
+          Actualize os dados abaixo para editar a capa nesta gaveta
         </p>
       </div>
 
-      <DrawerForm
+      <PeocessCoverForm
         register={register}
         handleSubmit={handleSubmit}
         setValue={setValue}
         onSubmit={onSubmit}
         isPending={isPending}
-        cabinets={cabinets}
-        drawer={drawer}
+        processCover={processCover}
+        docTypes={tiposDocumentos}
+        drawers={drawers}
         isEdit={true}
       />
     </>

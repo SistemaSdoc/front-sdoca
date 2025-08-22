@@ -13,6 +13,7 @@ import { cabinetsRoutes } from "./modules/cabinets.routes"
 import { areaRoutes } from "./modules/areas.routes"
 import { Settingss } from "@/features/settings/pages"
 import { drawersRoutes } from "./modules/drawers.routes"
+import { processCoversRoutes } from "./modules/process-covers.routes"
 
 import PrivateRoute from "./guards/PrivateRoutes"
 import { AuthProvider } from "@/context/AuthContext"
@@ -41,6 +42,7 @@ const router = createBrowserRouter([
       ...docTypeRoutes,
       ...areaRoutes,
       ...drawersRoutes,
+      ...processCoversRoutes
     ],
   },
 ])

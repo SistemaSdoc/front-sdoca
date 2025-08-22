@@ -155,7 +155,7 @@ export function Settingss() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Button onClick={() => navigate("/dashboard/capas-processo")}>
+                  <Button onClick={() => navigate("/dashboard/process-covers")}>
                     Gerenciar
                   </Button>
                 </CardContent>

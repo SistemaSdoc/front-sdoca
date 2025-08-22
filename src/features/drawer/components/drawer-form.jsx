@@ -11,9 +11,11 @@ export function DrawerForm({
   onSubmit,
   isPending,
   setValue,
+  drawer = null,
   cabinets = [],
   isEdit = false,
 }) {
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}
       className="w-full max-w-3xl mx-auto rounded-xl bg-muted/50"
@@ -24,7 +26,7 @@ export function DrawerForm({
             <div className="*:not-first:mt-2">
               <Label htmlFor="armario_id">Armário</Label>
               <Select
-                defaultValue={cabinets?.armario_id ? String(cabinets?.armario_id) : ""}
+                defaultValue={drawer?.armario_id ? String(drawer?.armario_id) : ""}
                 onValueChange={(value) => setValue("armario_id", value)}>
                 <SelectTrigger id="armario_id" className="w-full">
                   <SelectValue
@@ -39,6 +41,16 @@ export function DrawerForm({
                   ))}
                 </SelectContent>
               </Select>
+            </div>
+
+            <div className="*:not-first:mt-2">
+              <Label htmlFor="titulo">Título</Label>
+              <Input
+                type='text'
+                id="titulo"
+                placeholder="Ex: xxxx"
+                {...register("titulo")}
+              />
             </div>
 
             <div className="*:not-first:mt-2">

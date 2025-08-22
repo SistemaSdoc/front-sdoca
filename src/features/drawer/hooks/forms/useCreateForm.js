@@ -8,6 +8,7 @@ export function useCreateForm() {
 
   const form = useForm({
     defaultValues: {
+      titulo: "",
       armario_id: "",
       num_gaveta: "",
       num_processos: "",

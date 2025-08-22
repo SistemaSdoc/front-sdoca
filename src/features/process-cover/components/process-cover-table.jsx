@@ -1,24 +1,24 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
-import { useDeleteDrawer } from "@/features/drawer/hooks/drawerHooks"
 import { MoreHorizontal, Edit3, Trash2, Loader2, Tags } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
+import { useDeleteProcessCover } from "../hooks/process-coverHooks"
 
-export function DrawersTable({ drawers = [] }) {
+export function ProcessCoversTable({ processCovers = [] }) {
   const navigate = useNavigate()
-  const deleteMutation = useDeleteDrawer()
-  const [drawerId, setDrawerId] = useState(null)
+  const deleteMutation = useDeleteProcessCover()
+  const [processCoverId, setProcessCoverId] = useState(null)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
 
   function confirmDelete() {
-    if (drawerId) {
-      deleteMutation.mutate(drawerId, {
+    if (processCoverId) {
+      deleteMutation.mutate(processCoverId, {
         onSuccess: () => {
           setShowDeleteDialog(false)
-          setDrawerId(null)
+          setProcessCoverId(null)
         },
       })
     }
@@ -26,10 +26,10 @@ export function DrawersTable({ drawers = [] }) {
 
   return (
     <>
-      {drawers.length === 0 ? (
+      {processCovers.length === 0 ? (
         <div className="py-12 text-center">
           <Tags className="w-12 h-12 mx-auto text-muted-foreground" />
-          <h3 className="mt-4 text-lg font-semibold">Nenhuma gaveta encontrada</h3>
+          <h3 className="mt-4 text-lg font-semibold">Nenhuma capa encontrada</h3>
           <p className="text-muted-foreground">Tente ajustar os filtros de busca.</p>
         </div>
       ) : (
@@ -37,22 +37,22 @@ export function DrawersTable({ drawers = [] }) {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="px-4">Título</TableHead>
+                <TableHead className="px-4">Número da capa de processo</TableHead>
                 <TableHead className="px-4">Número da gaveta</TableHead>
-                <TableHead className="px-4">Armário</TableHead>
-                <TableHead className="px-4">Número de processos</TableHead>
-                <TableHead className="px-4">Criada em</TableHead>
+                <TableHead className="px-4">Tipo de documento</TableHead>
+                <TableHead className="px-4">Número de documentos</TableHead>
+                <TableHead className="px-4">Ano</TableHead>
                 <TableHead className="w-[50px] px-4"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {drawers.map((drawer) => (
-                <TableRow key={drawer.id}>
-                  <TableCell className="px-4">{drawer.titulo}</TableCell>
-                  <TableCell className="px-4">{drawer.num_gaveta}</TableCell>
-                  <TableCell className="px-4">{drawer.armario_id}</TableCell>
-                  <TableCell className="px-4">{drawer.num_processos}</TableCell>
-                  <TableCell className="px-4">{drawer.created_at || "-"}</TableCell>
+              {processCovers.map((processCover) => (
+                <TableRow key={processCover.id}>
+                  <TableCell className="px-4">{processCover.num_capa_processo}</TableCell>
+                  <TableCell className="px-4">{processCover.gaveta_id}</TableCell>
+                  <TableCell className="px-4">{processCover.nome_tipo}</TableCell>
+                  <TableCell className="px-4">{processCover.num_documentos}</TableCell>
+                  <TableCell className="px-4">{processCover.ano || "-"}</TableCell>
                   <TableCell className="px-4">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -61,13 +61,13 @@ export function DrawersTable({ drawers = [] }) {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => navigate(`/dashboard/process-covers/edit/${drawer.encrypted_id}`)}>
+                        <DropdownMenuItem onClick={() => navigate(`/dashboard/process-covers/edit/${processCover.encrypted_id}`)}>
                           <Edit3 className="w-4 h-4" />
                           Editar
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => {
-                            setDrawerId(drawer.id)
+                            setProcessCoverId(processCover.id)
                             setShowDeleteDialog(true)
                           }}
                         >
@@ -88,9 +88,9 @@ export function DrawersTable({ drawers = [] }) {
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Apagar armário</AlertDialogTitle>
+            <AlertDialogTitle>Apagar capa de processo</AlertDialogTitle>
             <AlertDialogDescription>
-              Tem certeza que deseja apagar este armário? Essa acção é irreversível.
+              Tem certeza que deseja apagar esta capa de processo? Essa acção é irreversível.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -99,13 +99,7 @@ export function DrawersTable({ drawers = [] }) {
               onClick={confirmDelete}
               disabled={deleteMutation.isPending}
             >
-              {deleteMutation.isPending ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                </>
-              ) : (
-                "Apagar"
-              )}
+              {deleteMutation.isPending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : "Apagar"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

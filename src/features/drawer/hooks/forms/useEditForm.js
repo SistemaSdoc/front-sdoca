@@ -9,6 +9,7 @@ export function useEditForm(id) {
 
   const form = useForm({
     values: drawer?.num_gaveta ? {
+      titulo: drawer.titulo,
       armario_id: drawer.armario_id,
       num_gaveta: drawer.num_gaveta,
       num_processos: drawer.num_processos,
@@ -24,6 +25,7 @@ export function useEditForm(id) {
     isPending,
     onSubmit,
     ...form,
+    drawer,
     cabinets,
   }
 }

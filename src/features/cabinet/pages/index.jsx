@@ -10,10 +10,13 @@ export default function Cabinets() {
   const { searchTerm } = useSearch()
   const { cabinets, isLoading } = useCabinets()
 
-  const filtered = cabinets.filter((cabinet) =>
-    cabinet.num_armario?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    cabinet.num_gavetas?.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  const filtered = cabinets.filter((cabinet) => {
+    const numArmario = String(cabinet.num_armario || "");
+    const numGavetas = String(cabinet.num_gavetas || "");
+
+    return numArmario.includes(searchTerm) || numGavetas.includes(searchTerm)
+  });
+
 
   return (
     <div className="relative space-y-4">

@@ -39,6 +39,7 @@ export function CabinetsTable({ cabinets = [] }) {
               <TableRow>
                 <TableHead className="px-4">Número do Armário</TableHead>
                 <TableHead className="px-4">Número de gavetas</TableHead>
+                <TableHead className="px-4">Área pertencente</TableHead>
                 <TableHead className="px-4">Criado em</TableHead>
                 <TableHead className="w-[50px] px-4"></TableHead>
               </TableRow>
@@ -48,6 +49,7 @@ export function CabinetsTable({ cabinets = [] }) {
                 <TableRow key={cabinet.id}>
                   <TableCell className="px-4">{cabinet.num_armario}</TableCell>
                   <TableCell className="px-4">{cabinet.num_gavetas}</TableCell>
+                  <TableCell className="px-4">{cabinet.name_area}</TableCell>
                   <TableCell className="px-4">{cabinet.created_at || "-"}</TableCell>
                   <TableCell className="px-4">
                     <DropdownMenu>
