@@ -61,7 +61,7 @@ export function DrawersTable({ drawers = [] }) {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => navigate(`/dashboard/process-covers/edit/${drawer.encrypted_id}`)}>
+                        <DropdownMenuItem onClick={() => navigate(`/dashboard/drawers/edit/${drawer.encrypted_id}`)}>
                           <Edit3 className="w-4 h-4" />
                           Editar
                         </DropdownMenuItem>

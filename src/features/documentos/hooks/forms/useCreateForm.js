@@ -2,9 +2,15 @@ import { useForm } from "react-hook-form"
 import { useAreas } from "@/features/areas/hooks/areasHooks"
 import { useTiposDocumentos } from "@/features/doc-type/hooks/doc-typeHooks"
 import { useCreateDocument } from "@/features/documentos/hooks/docHooks"
+import { useCabinets } from "@/features/cabinet/hooks/cabinetHooks"
+import { useDrawers } from "@/features/drawer/hooks/drawerHooks"
+import { useProcessCovers } from "@/features/process-cover/hooks/process-coverHooks"
 
 export function useCreateForm() {
   const { tiposDocumentos } = useTiposDocumentos()
+  const { cabinets } = useCabinets()
+  const { drawers } = useDrawers()
+  const { processCovers } = useProcessCovers()
   const { areas, isLoading } = useAreas()
   const mutation = useCreateDocument()
 
@@ -28,12 +34,21 @@ export function useCreateForm() {
     data.append("area_origem_id", formData.area_origem_id)
     data.append("area_destino_id", formData.area_destino_id)
     data.append("descricao_doc", formData.descricao_doc)
+    data.append("capa_processo_id", Number(formData.capa_processo_id))
 
     // ficheiros
     if (formData.anexo_docs?.length > 0) {
       formData.anexo_docs.forEach((file) => {
         data.append("anexo_docs[]", file)
       })
+    }
+
+    // 🚨 log bonito pra debug
+    console.log("FORM DATA RAW:", formData)
+
+    // ver o que foi montado no FormData
+    for (const [key, value] of data.entries()) {
+      console.log(key, value)
     }
 
     mutation.mutate(data)
@@ -45,6 +60,9 @@ export function useCreateForm() {
     onSubmit,
     ...form,
     areas,
-    tiposDocumentos
+    tiposDocumentos,
+    cabinets,
+    drawers,
+    processCovers
   }
 }

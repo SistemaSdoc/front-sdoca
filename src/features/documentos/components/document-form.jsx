@@ -19,10 +19,26 @@ export function DocumentForm({
   onPreviewPdf,
   areas = [],
   doc_types = [],
+  cabinets = [],
+  drawers = [],
+  processCovers = [],
   isEdit = false
 }) {
   const currentFiles = watch("anexo_docs") || []
   const { mutate, isPending: isScanning } = useScanMutation({ currentFiles, setValue })
+
+  const selectedCabinet = watch('armario_id')
+
+  const filteredDrawers = drawers.filter((drawer) => {
+    return String(drawer.armario_id) === String(selectedCabinet)
+  })
+
+  const selectedDrawer = watch('gaveta_id')
+
+  const filteredProcessCovers = processCovers.filter((cover) => {
+    return String(cover.gaveta_id) === String(selectedDrawer)
+  })
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-3xl mx-auto rounded-xl bg-muted/50">
@@ -38,7 +54,7 @@ export function DocumentForm({
         </TabsList>
 
         {/* Tab doc data */}
-        <TabsContent value='info'>
+        <TabsContent value='info' forceMount>
           <Card className="shadow-none">
             <CardContent className="p-6 pt-1 pb-1">
               <div className="flex flex-col gap-5">
@@ -95,13 +111,13 @@ export function DocumentForm({
                   </div>
 
                   <div className="*:not-first:mt-2">
-                    <Label htmlFor="area_destino_id">Gaveta</Label>
+                    <Label htmlFor="area_destino_id">Área de destino</Label>
                     <Select
                       defaultValue={areas?.id ? String(areas.id) : ""}
                       onValueChange={(value) => setValue("area_destino_id", value)}
                     >
                       <SelectTrigger id="area_destino_id" className="w-full">
-                        <SelectValue placeholder="Selecione a Gaveta" />
+                        <SelectValue placeholder="Selecione a área de destino" />
                       </SelectTrigger>
                       <SelectContent>
                         {areas.map((area) => (
@@ -117,56 +133,87 @@ export function DocumentForm({
                 {/* Mapeamento Físico */}
                 <div className="grid gap-4 md:grid-cols-3">
                   <div className="*:not-first:mt-2">
-                    <Label htmlFor="area_origem_id">Armário</Label>
+                    <Label htmlFor="armario_id">Armário</Label>
                     <Select
-                      defaultValue={areas?.id ? String(areas.id) : ""}
-                      onValueChange={(value) => setValue("area_origem_id", value)}
+                      defaultValue={document?.armario_id ? String(document.armario_id) : ""}
+                      onValueChange={(value) => {
+                        setValue("armario_id", value)
+                        setValue("gaveta_id", "")
+                        setValue("capa_processo_id", "")
+                      }}
                     >
-                      <SelectTrigger id="area_origem_id" className="w-full">
+                      <SelectTrigger id="armario_id" className="w-full">
                         <SelectValue placeholder="Selecione o armário" />
                       </SelectTrigger>
                       <SelectContent>
-                        {areas.map((area) => (
-                          <SelectItem key={area.id} value={String(area.id)}>
-                            {area.name_area}
+                        {cabinets.map((cabinet) => (
+                          <SelectItem key={cabinet.id} value={String(cabinet.id)}>
+                            Armário {cabinet.num_armario}
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   </div>
 
+                  {/* gaveta */}
                   <div className="*:not-first:mt-2">
-                    <Label htmlFor="area_destino_id">Gaveta</Label>
+                    <Label htmlFor="gaveta_id">Gaveta</Label>
                     <Select
-                      defaultValue={areas?.id ? String(areas.id) : ""}
-                      onValueChange={(value) => setValue("area_destino_id", value)}
+                      defaultValue={document?.gaveta_id ? String(document.gaveta_id) : ""}
+                      value={watch("gaveta_id") || ""}
+                      onValueChange={(value) => {
+                        setValue("gaveta_id", value);
+                        setValue("capa_processo_id", ""); // reset capa ao trocar gaveta
+                      }}
+                      disabled={!selectedCabinet || filteredDrawers.length === 0} // só habilita se escolheu armário
                     >
-                      <SelectTrigger id="area_destino_id" className="w-full">
-                        <SelectValue placeholder="Selecione a gaveta" />
+                      <SelectTrigger id="gaveta_id" className="w-full">
+                        <SelectValue
+                          placeholder={
+                            !selectedCabinet
+                              ? "Selecione um armário primeiro"
+                              : filteredDrawers.length === 0
+                                ? "Nenhuma gaveta disponível"
+                                : "Selecione a gaveta"
+                          }
+                        />
                       </SelectTrigger>
+
                       <SelectContent>
-                        {areas.map((area) => (
-                          <SelectItem key={area.id} value={String(area.id)}>
-                            {area.name_area}
+                        {filteredDrawers.map((drawer) => (
+                          <SelectItem key={drawer.id} value={String(drawer.id)}>
+                            Gaveta {drawer.num_gaveta} - {drawer.titulo}
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   </div>
 
+                  {/* capa */}
                   <div className="*:not-first:mt-2">
-                    <Label htmlFor="area_destino_id">Capa de Processo</Label>
+                    <Label htmlFor="capa_processo_id">Capa de Processo</Label>
                     <Select
-                      defaultValue={areas?.id ? String(areas.id) : ""}
-                      onValueChange={(value) => setValue("area_destino_id", value)}
+                      defaultValue={document?.capa_processo_id ? String(document.capa_processo_id) : ""}
+                      value={watch("capa_processo_id") || ""}
+                      onValueChange={(value) => setValue("capa_processo_id", value)}
+                      disabled={!selectedDrawer || filteredProcessCovers.length === 0} // só habilita se escolheu gaveta
                     >
-                      <SelectTrigger id="area_destino_id" className="w-full">
-                        <SelectValue placeholder="Selecione a capa" />
+                      <SelectTrigger id="capa_processo_id" className="w-full">
+                        <SelectValue
+                          placeholder={
+                            !selectedDrawer
+                              ? "Selecione uma gaveta primeiro"
+                              : filteredProcessCovers.length === 0
+                                ? "Nenhuma capa disponível"
+                                : "Selecione a capa"
+                          }
+                        />
                       </SelectTrigger>
+
                       <SelectContent>
-                        {areas.map((area) => (
-                          <SelectItem key={area.id} value={String(area.id)}>
-                            {area.name_area}
+                        {filteredProcessCovers.map((cover) => (
+                          <SelectItem key={cover.id} value={String(cover.id)}>
+                            {cover.num_capa_processo} - {cover.nome_tipo}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -201,7 +248,7 @@ export function DocumentForm({
         </TabsContent>
 
         {/* Tab doc files uploader */}
-        <TabsContent value='uploads'>
+        <TabsContent value='uploads' forceMount>
           <Card className="shadow-none">
             <CardContent className="p-6 pt-1 pb-1">
               <div className="flex flex-col gap-5">

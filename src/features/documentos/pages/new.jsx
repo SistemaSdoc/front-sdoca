@@ -31,6 +31,9 @@ export default function NewDocument() {
     isLoading,
     areas,
     tiposDocumentos,
+    cabinets,
+    drawers,
+    processCovers,
     watch
   } = useCreateForm()
 
@@ -88,6 +91,9 @@ export default function NewDocument() {
         isPending={isPending}
         areas={areas}
         doc_types={tiposDocumentos}
+        cabinets={cabinets}
+        drawers={drawers}
+        processCovers={processCovers}
         onPreviewPdf={setSelectedPdfUrl}
         watch={watch}
       />

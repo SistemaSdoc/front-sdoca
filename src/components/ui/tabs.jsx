@@ -45,15 +45,17 @@ function TabsTrigger({
   );
 }
 
-function TabsContent({
-  className,
-  ...props
-}) {
+function TabsContent({ className, ...props }) {
   return (
     <TabsPrimitive.Content
       data-slot="tabs-content"
-      className={cn("flex-1 outline-none", className)}
-      {...props} />
+      className={cn(
+        "flex-1 outline-none",
+        "data-[state=inactive]:hidden", // <- isso aqui garante esconder
+        className
+      )}
+      {...props}
+    />
   );
 }
 

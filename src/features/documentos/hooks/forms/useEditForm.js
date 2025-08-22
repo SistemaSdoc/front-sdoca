@@ -2,10 +2,16 @@ import { useForm } from "react-hook-form"
 import { useAreas } from "@/features/areas/hooks/areasHooks"
 import { useTiposDocumentos } from "@/features/doc-type/hooks/doc-typeHooks"
 import { useDocument, useUpdateDocument } from "@/features/documentos/hooks/docHooks"
+import { useCabinets } from "@/features/cabinet/hooks/cabinetHooks"
+import { useDrawers } from "@/features/drawer/hooks/drawerHooks"
+import { useProcessCovers } from "@/features/process-cover/hooks/process-coverHooks"
 
 export function useEditForm(id) {
   const { areas } = useAreas()
   const { tiposDocumentos } = useTiposDocumentos()
+  const { cabinets } = useCabinets()
+  const { drawers } = useDrawers()
+  const { processCovers } = useProcessCovers()
   const { document, isLoading } = useDocument(id)
   const mutation = useUpdateDocument(id)
 
@@ -30,6 +36,9 @@ export function useEditForm(id) {
     ...form,
     document,
     areas,
-    tiposDocumentos
+    tiposDocumentos,
+    cabinets,
+    drawers,
+    processCovers
   }
 }
