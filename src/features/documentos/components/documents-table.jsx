@@ -84,11 +84,8 @@ export function DocumentsTable({ documents = [] }) {
         <TransferDialog
           showDialog={isOpen}
           onOpenChange={(v) => (v ? null : close())}
-          onConfirm={() =>
-            deleteMutation.mutate(data, { onSuccess: () => close() })
-          }
           featureID={data}
-          isPending={deleteMutation.isPending}
+          isPending={false}
           featureName="documento"
         />
       )}

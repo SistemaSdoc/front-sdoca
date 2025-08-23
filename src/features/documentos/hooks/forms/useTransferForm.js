@@ -3,29 +3,44 @@ import { useTranferData, useCreateTransfer } from "@/features/documentos/hooks/d
 import { useAreas } from "@/features/areas/hooks/areasHooks"
 import { useTiposDocumentos } from "@/features/doc-type/hooks/doc-typeHooks"
 import { useAuth } from "@/context/AuthContext"
+import { useEffect } from "react"
 
 export function useTransferForm(id) {
-  const { data, isLoading } = useTranferData(id)
-  const { areas } = useAreas()
+  const { data, isLoading: isLoadingData } = useTranferData(id)
+  const { areas, isLoading: isLoadingAreas } = useAreas()
   const { user } = useAuth()
-  console.log('dados user: ', user)
-  const { tiposDocumentos } = useTiposDocumentos()
-  const { mutate, isPending } = useCreateTransfer(id)
+  const { tiposDocumentos, isLoading: isLoadingTipos } = useTiposDocumentos()
+  const { mutate, isPending } = useCreateTransfer()
 
   const form = useForm({
-    defaultValues: data?.documento ? {
-      titulo_doc: data.documento.titulo_doc,
-      tipo_doc_id: String(data.documento.tipo_doc_id),
-      area_origem_id: String(user?.id_area),
+    defaultValues: {
+      titulo_doc: "",
+      tipo_doc_id: "",
+      area_origem_id: user?.id_area ? String(user.id_area) : "",
       area_destino_id: "",
-      descricao_doc: data.documento.descricao_doc,
-    } : {}
+      descricao_doc: "",
+    }
   })
   
+  // Atualiza os valores do formulário quando os dados são carregados
+  useEffect(() => {
+    if (data?.documento) {
+      form.reset({
+        titulo_doc: data.documento.titulo_doc,
+        tipo_doc_id: String(data.documento.tipo_doc_id),
+        area_origem_id: String(user?.id_area),
+        area_destino_id: "",
+        descricao_doc: data.documento.descricao_doc,
+      })
+    }
+  }, [data, user, form])
 
   const onSubmit = form.handleSubmit((formData) => {
     mutate({ id, formData })
   })
+
+  // Combinando todos os estados de carregamento
+  const isLoading = isLoadingData || isLoadingAreas || isLoadingTipos
 
   return {
     isLoading,

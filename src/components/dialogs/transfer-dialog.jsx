@@ -25,12 +25,21 @@ export default function TransferDialog({
 
   const {
     register,
+    handleSubmit,
     areas,
     tiposDocumentos,
     setValue,
     data,
-    user
+    user,
+    isLoading,
+    onSubmit,
+    watch
   } = useTransferForm(featureID)
+
+  // Observa os valores do formulário para uso nos componentes Select
+  const watchTipoDoc = watch("tipo_doc_id")
+  const watchAreaOrigem = watch("area_origem_id")
+  const watchAreaDestino = watch("area_destino_id")
 
   return (
     <AlertDialog open={showDialog} onOpenChange={onOpenChange}>
@@ -42,99 +51,109 @@ export default function TransferDialog({
           </AlertDialogDescription>
         </AlertDialogHeader>
 
-        <form /* onSubmit={handleSubmit(onSubmit)} */ className="w-full">
-          <div className="flex flex-col gap-5">
-            {/* título */}
-            <div className="*:not-first:mt-2">
-              <Label htmlFor="titulo_doc">Título do documento</Label>
-              <Input
-                readOnly
-                {...register("titulo_doc")}
-                id="titulo_doc"
-                placeholder="Ex: Relatório de estágio"
-              />
-            </div>
-
-            {/* tipo de documento */}
-            <div className="*:not-first:mt-2">
-              <Label htmlFor="tipo_doc_id">Tipo de documento</Label>
-              <Select
-                defaultValue={data.documento?.tipo_doc_id ? String(data.documento.tipo_doc_id) : ""}
-                onValueChange={(value) => setValue("tipo_doc_id", value)}
-              >
-                <SelectTrigger id="tipo_doc_id" className="w-full">
-                  <SelectValue placeholder="Selecione o tipo de documento" />
-                </SelectTrigger>
-                <SelectContent>
-                  {tiposDocumentos.map((doc_type) => (
-                    <SelectItem key={doc_type.id} value={String(doc_type.id)}>
-                      {doc_type.nome}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-
-            {/* origem e destino */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="*:not-first:mt-2">
-                <Label htmlFor="area_origem_id">Área de origem</Label>
-                <Select
-                  defaultValue={user?.id_area ? String(user.id_area) : ""}
-                  onValueChange={(value) => setValue("area_origem_id", value)}
-                >
-                  <SelectTrigger id="area_origem_id" className="w-full">
-                    <SelectValue placeholder="Selecione a área de origem" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {areas.map((area) => (
-                      <SelectItem key={area.id} value={String(area.id)}>
-                        {area.name_area}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="*:not-first:mt-2">
-                <Label htmlFor="area_destino_id">Área de destino</Label>
-                <Select
-                  defaultValue={areas?.id ? String(areas.id) : ""}
-                  onValueChange={(value) => setValue("area_destino_id", value)}
-                >
-                  <SelectTrigger id="area_destino_id" className="w-full">
-                    <SelectValue placeholder="Selecione a área de destino" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {areas.map((area) => (
-                      <SelectItem key={area.id} value={String(area.id)}>
-                        {area.name_area}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            {/* descrição */}
-            <div className="*:not-first:mt-2">
-              <Label htmlFor="descricao_doc">Descrição</Label>
-              <Textarea
-                {...register("descricao_doc")}
-                id="descricao_doc"
-                placeholder="Ex: relatório do estágio de Stelvio Marques"
-              />
-            </div>
+        {isLoading ? (
+          <div className="flex justify-center items-center py-8">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <span className="ml-2">Carregando dados...</span>
           </div>
-        </form>
+        ) : (
+          <form onSubmit={onSubmit} className="w-full">
+            <div className="flex flex-col gap-5">
+              {/* título */}
+              <div className="*:not-first:mt-2">
+                <Label htmlFor="titulo_doc">Título do documento</Label>
+                <Input
+                  readOnly
+                  {...register("titulo_doc")}
+                  id="titulo_doc"
+                  placeholder="Ex: Relatório de estágio"
+                />
+              </div>
+
+              {/* tipo de documento */}
+              <div className="*:not-first:mt-2">
+                <Label htmlFor="tipo_doc_id">Tipo de documento</Label>
+                <Select
+                  value={watchTipoDoc}
+                  onValueChange={(value) => setValue("tipo_doc_id", value)}
+                  disabled={tiposDocumentos.length === 0}
+                >
+                  <SelectTrigger id="tipo_doc_id" className="w-full">
+                    <SelectValue placeholder="Selecione o tipo de documento" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {tiposDocumentos.map((doc_type) => (
+                      <SelectItem key={doc_type.id} value={String(doc_type.id)}>
+                        {doc_type.nome}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+
+              {/* origem e destino */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="*:not-first:mt-2">
+                  <Label htmlFor="area_origem_id">Área de origem</Label>
+                  <Select
+                    value={watchAreaOrigem}
+                    onValueChange={(value) => setValue("area_origem_id", value)}
+                    disabled={areas.length === 0}
+                  >
+                    <SelectTrigger id="area_origem_id" className="w-full">
+                      <SelectValue placeholder="Selecione a área de origem" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {areas.map((area) => (
+                        <SelectItem key={area.id} value={String(area.id)}>
+                          {area.name_area}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="*:not-first:mt-2">
+                  <Label htmlFor="area_destino_id">Área de destino</Label>
+                  <Select
+                    value={watchAreaDestino}
+                    onValueChange={(value) => setValue("area_destino_id", value)}
+                    disabled={areas.length === 0}
+                  >
+                    <SelectTrigger id="area_destino_id" className="w-full">
+                      <SelectValue placeholder="Selecione a área de destino" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {areas.map((area) => (
+                        <SelectItem key={area.id} value={String(area.id)}>
+                          {area.name_area}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* descrição */}
+              <div className="*:not-first:mt-2">
+                <Label htmlFor="descricao_doc">Descrição</Label>
+                <Textarea
+                  {...register("descricao_doc")}
+                  id="descricao_doc"
+                  placeholder="Ex: relatório do estágio de Stelvio Marques"
+                />
+              </div>
+            </div>
+          </form>
+        )}
 
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isPending}>Cancelar</AlertDialogCancel>
+          <AlertDialogCancel disabled={isPending || isLoading}>Cancelar</AlertDialogCancel>
 
-          <AlertDialogAction onClick={onConfirm} disabled={isPending}>
+          <AlertDialogAction onClick={handleSubmit(onSubmit)} disabled={isPending || isLoading}>
             {isPending
-              ? <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Transferindo...</>
               : "Transferir"
             }
           </AlertDialogAction>

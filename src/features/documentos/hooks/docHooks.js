@@ -156,14 +156,17 @@ export function useCreateTransfer() {
 
   const mutation = useMutation({
     mutationFn: async function ({ id, formData }) {
-      const response = await axios.post(`/documentos/transferi/${id}`, formData)
+      const response = await axios.post(`/documentos/transferir/${id}`, formData)
       return response.data
     },
     onSuccess: () => {
       toast.success('Documento transferido com sucesso!')
       queryClient.invalidateQueries({ queryKey: ['documents'] })
+      // Invalidar também os dados de transferência para atualizar a UI
+      queryClient.invalidateQueries({ queryKey: ['transfer-data'] })
     },
-    onError: () => {
+    onError: (error) => {
+      console.error('Erro na transferência:', error)
       toast.error('Erro ao transferir documento!')
     },
   })
