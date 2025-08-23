@@ -18,7 +18,6 @@ import {
 export default function TransferDialog({
   showDialog = false,
   onOpenChange,
-  onConfirm,
   isPending = false,
   featureID,
 }) {
@@ -29,8 +28,6 @@ export default function TransferDialog({
     areas,
     tiposDocumentos,
     setValue,
-    data,
-    user,
     isLoading,
     onSubmit,
     watch
@@ -43,7 +40,7 @@ export default function TransferDialog({
 
   return (
     <AlertDialog open={showDialog} onOpenChange={onOpenChange}>
-      <AlertDialogContent>
+      <AlertDialogContent className='md:max-w-3xl'>
         <AlertDialogHeader>
           <AlertDialogTitle>Transferência</AlertDialogTitle>
           <AlertDialogDescription>
@@ -52,48 +49,49 @@ export default function TransferDialog({
         </AlertDialogHeader>
 
         {isLoading ? (
-          <div className="flex justify-center items-center py-8">
+          <div className="flex items-center justify-center py-8">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
-            <span className="ml-2">Carregando dados...</span>
           </div>
         ) : (
           <form onSubmit={onSubmit} className="w-full">
             <div className="flex flex-col gap-5">
-              {/* título */}
-              <div className="*:not-first:mt-2">
-                <Label htmlFor="titulo_doc">Título do documento</Label>
-                <Input
-                  readOnly
-                  {...register("titulo_doc")}
-                  id="titulo_doc"
-                  placeholder="Ex: Relatório de estágio"
-                />
-              </div>
-
-              {/* tipo de documento */}
-              <div className="*:not-first:mt-2">
-                <Label htmlFor="tipo_doc_id">Tipo de documento</Label>
-                <Select
-                  value={watchTipoDoc}
-                  onValueChange={(value) => setValue("tipo_doc_id", value)}
-                  disabled={tiposDocumentos.length === 0}
-                >
-                  <SelectTrigger id="tipo_doc_id" className="w-full">
-                    <SelectValue placeholder="Selecione o tipo de documento" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {tiposDocumentos.map((doc_type) => (
-                      <SelectItem key={doc_type.id} value={String(doc_type.id)}>
-                        {doc_type.nome}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-
-              {/* origem e destino */}
               <div className="grid grid-cols-2 gap-4">
+                {/* título */}
+                <div className="*:not-first:mt-2">
+                  <Label htmlFor="titulo_doc">Título do documento</Label>
+                  <Input
+                    readOnly
+                    {...register("titulo_doc")}
+                    id="titulo_doc"
+                    placeholder="Ex: Relatório de estágio"
+                  />
+                </div>
+
+                {/* tipo de documento */}
+                <div className="*:not-first:mt-2">
+                  <Label htmlFor="tipo_doc_id">Tipo de documento</Label>
+                  <Select
+                    value={watchTipoDoc}
+                    onValueChange={(value) => setValue("tipo_doc_id", value)}
+                    disabled={tiposDocumentos.length === 0}
+                  >
+                    <SelectTrigger id="tipo_doc_id" className="w-full">
+                      <SelectValue placeholder="Selecione o tipo de documento" />
+                    </SelectTrigger>
+
+                    <SelectContent>
+                      {tiposDocumentos.map((doc_type) => (
+                        <SelectItem key={doc_type.id} value={String(doc_type.id)}>
+                          {doc_type.nome}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                {/* origem */}
                 <div className="*:not-first:mt-2">
                   <Label htmlFor="area_origem_id">Área de origem</Label>
                   <Select
@@ -114,6 +112,7 @@ export default function TransferDialog({
                   </Select>
                 </div>
 
+                {/* destino */}
                 <div className="*:not-first:mt-2">
                   <Label htmlFor="area_destino_id">Área de destino</Label>
                   <Select
@@ -124,6 +123,7 @@ export default function TransferDialog({
                     <SelectTrigger id="area_destino_id" className="w-full">
                       <SelectValue placeholder="Selecione a área de destino" />
                     </SelectTrigger>
+
                     <SelectContent>
                       {areas.map((area) => (
                         <SelectItem key={area.id} value={String(area.id)}>
@@ -141,6 +141,7 @@ export default function TransferDialog({
                 <Textarea
                   {...register("descricao_doc")}
                   id="descricao_doc"
+                  rows={4}
                   placeholder="Ex: relatório do estágio de Stelvio Marques"
                 />
               </div>

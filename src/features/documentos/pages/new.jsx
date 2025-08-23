@@ -4,23 +4,10 @@ import { Button } from "@/components/ui/button"
 import { ChevronLeftIcon, FileText, Loader2 } from "lucide-react"
 import { useCreateForm } from "@/features/documentos/hooks/forms/useCreateForm"
 import { DocumentForm } from "@/features/documentos/components/document-form"
-import { Viewer } from '@react-pdf-viewer/core';
-import '@react-pdf-viewer/core/lib/styles/index.css';
-import { renderToolbar } from '@/features/documentos/components/pdf/CustomPdfToolbar.jsx'
-import { renderSidebarTabs } from '@/features/documentos/components/pdf/CustomPdfSidebar.jsx'
-import { RemoveScroll } from 'react-remove-scroll';
-
-// layout padrão plugin
-import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+import PdfViewer from "@/components/pdf-viewer"
 
 export default function NewDocument() {
   const [selectedPdfUrl, setSelectedPdfUrl] = useState(null)
-
-  const defaultLayoutPluginInstance = defaultLayoutPlugin({
-    renderToolbar: (Toolbar) => renderToolbar(Toolbar, () => setSelectedPdfUrl(null)),
-    sidebarTabs: renderSidebarTabs
-  });
 
   const {
     register,
@@ -48,21 +35,7 @@ export default function NewDocument() {
   return (
     <>
       {/* PDF Viewer em tela cheia */}
-      {selectedPdfUrl && (
-        <RemoveScroll>
-          <div className="fixed inset-0 z-50 flex bg-background">
-            <div className="flex-1 h-full overflow-hidden bg-white shadow">
-              <Viewer
-                fileUrl={selectedPdfUrl}
-                defaultScale="PageFit"
-                initialPage={0}
-                theme="light"
-                plugins={[defaultLayoutPluginInstance]}
-              />
-            </div>
-          </div>
-        </RemoveScroll>
-      )}
+      <PdfViewer selectedPdfUrl={selectedPdfUrl} setSelectedPdfUrl={setSelectedPdfUrl} />
 
       <div className="pt-2 pl-4">
         <Link to='/dashboard/documents'>
