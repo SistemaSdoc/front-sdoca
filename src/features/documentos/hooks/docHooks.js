@@ -33,8 +33,8 @@ export function useDocument(id) {
   const { data = {}, isLoading, isError, error, refetch } = useQuery({
     queryKey: ['document', id],
     queryFn: async function () {
-      const response = await axios.get(`/documentos/verAnexos/${id}`)
-      return response.data.anexos
+      const response = await axios.get(`/documentos/${id}`)
+      return response.data
     },
     enabled: !!id,
     onError: () => {
@@ -44,7 +44,7 @@ export function useDocument(id) {
   })
 
   return {
-    document: data,
+    data,
     isLoading,
     isError,
     error,
@@ -120,6 +120,51 @@ export function useDeleteDocument() {
     },
     onError: () => {
       toast.error('Erro ao apagar documento!')
+    },
+  })
+
+  return mutation
+}
+
+// hook para carregar dados para transferência da entrada
+export function useTranferData(id) {
+  const { data = {}, isLoading, isError, error, refetch } = useQuery({
+    queryKey: ['transfer-data', id],
+    queryFn: async function () {
+      const response = await axios.get(`/documentos/transferir/${id}`)
+      console.log("📦 Dados da API (useTranferData):", response.data)
+      return response.data
+    },
+    enabled: !!id,
+    onError: () => {
+      toast.error('Erro ao carregar dados para transferência.')
+    },
+    staleTime: 1000 * 60 * 5
+  })
+
+  return {
+    data,
+    isLoading,
+    isError,
+    error,
+    refetch
+  }
+}
+
+export function useCreateTransfer() {
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation({
+    mutationFn: async function ({ id, formData }) {
+      const response = await axios.post(`/documentos/transferi/${id}`, formData)
+      return response.data
+    },
+    onSuccess: () => {
+      toast.success('Documento transferido com sucesso!')
+      queryClient.invalidateQueries({ queryKey: ['documents'] })
+    },
+    onError: () => {
+      toast.error('Erro ao transferir documento!')
     },
   })
 

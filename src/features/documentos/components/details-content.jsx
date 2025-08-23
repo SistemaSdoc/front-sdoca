@@ -1,0 +1,48 @@
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+
+export default function DetailsContent({ data }) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Informações da entrada</CardTitle>
+        <CardDescription>Detalhes completos do registro desta entrada de documento</CardDescription>
+      </CardHeader>
+
+      <CardContent className="space-y-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div>
+            <p className="text-sm font-medium text-foreground">Código</p>
+            <p className="text-sm text-muted-foreground">{data.codigo_documento}</p>
+          </div>
+
+          <div>
+            <p className="text-sm font-medium text-foreground">Tipo</p>
+            <p className="text-sm text-muted-foreground">{data.nome_tipo}</p>
+          </div>
+
+          <div>
+            <p className="text-sm font-medium text-foreground">Data de Entrada</p>
+            <p className="text-sm text-muted-foreground">{data.created_at}</p>
+          </div>
+
+          <div>
+            <p className="text-sm font-medium text-foreground">Processo</p>
+            <p className="text-sm text-muted-foreground">Capa {data.num_capa_processo}</p>
+          </div>
+
+          <div>
+            <p className="text-sm font-medium text-foreground">Localização</p>
+            <p className="text-sm text-muted-foreground">
+              Armário {data.num_armario}, Gaveta {data.num_gaveta}
+            </p>
+          </div>
+
+          <div>
+            <p className="text-sm font-medium text-foreground">Documentos no processo</p>
+            <p className="text-sm text-muted-foreground">{data.num_documentos}</p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}

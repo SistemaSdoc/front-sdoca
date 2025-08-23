@@ -13,7 +13,7 @@ import {
 } from 'phosphor-react'
 
 // Função para retornar o ícone conforme a extensão
-const getFileIcon = (ext) => {
+/* const getFileIcon = (ext) => {
   const f = ext?.toLowerCase()
 
   if (f === 'pdf') return <FilePdf className="text-red-500" size={22} weight="light" />
@@ -24,6 +24,8 @@ const getFileIcon = (ext) => {
 
   return <File className="text-gray-500" size={22} weight="light" />
 }
+ */
+
 
 export function AnexosTable({ Anexos = [] }) {
   const navigate = useNavigate()
@@ -33,29 +35,22 @@ export function AnexosTable({ Anexos = [] }) {
       {Anexos.length === 0 ? (
         <div className="py-12 text-center">
           <FileText className="w-12 h-12 mx-auto text-muted-foreground" />
-          <h3 className="mt-4 text-lg font-semibold">Nenhum ficheiro anexado ao documento</h3>
-          <p className="text-muted-foreground">Tente ajustar os filtros de busca.</p>
+          <h3 className="mt-4 text-lg font-semibold">Nenhum ficheiro anexado nesta entrada.</h3>
         </div>
       ) : (
         <div className="border rounded-md">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="px-4">Formato</TableHead>
                 <TableHead className="px-4">Nome do ficheiro</TableHead>
-                <TableHead className="px-4">Criado em</TableHead>
-                <TableHead className="w-[50px] px-4"></TableHead>
+                <TableHead className="px-4 text-end">Acções</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {Anexos.map((doc) => (
                 <TableRow key={doc.id}>
-                  <TableCell className="flex items-center gap-2 px-4">
-                    {getFileIcon(doc.formato)}
-                  </TableCell>
                   <TableCell className="px-4">{doc.nome}</TableCell>
-                  <TableCell className="px-4">{doc.created_at || "-"}</TableCell>
-                  <TableCell className="px-4">
+                  <TableCell className="px-4 text-end">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="w-8 h-8 p-0">

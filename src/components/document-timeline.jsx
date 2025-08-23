@@ -9,7 +9,7 @@ import {
   TimelineTitle,
 } from "@/components/ui/timeline"
 
-const items = [
+/* const items = [
   {
     id: 1,
     date: "Mar 15, 2024",
@@ -38,20 +38,20 @@ const items = [
     description:
       "Quality assurance testing, performance optimization, and production deployment preparation.",
   },
-]
+] */
 
-export default function DocumentTimeline() {
+export default function DocumentTimeline({historical}) {
   return (
     <Timeline defaultValue={3}>
-      {items.map((item) => (
-        <TimelineItem key={item.id} step={item.id}>
+      {historical.tramites.map((history) => (
+        <TimelineItem key={history.id} step={history.id}>
           <TimelineHeader>
             <TimelineSeparator />
-            <TimelineDate>{item.date}</TimelineDate>
-            <TimelineTitle>{item.title}</TimelineTitle>
+            <TimelineDate>{history.created_at}</TimelineDate>
+            <TimelineTitle>{history.nome_user}</TimelineTitle>
             <TimelineIndicator />
           </TimelineHeader>
-          <TimelineContent>{item.description}</TimelineContent>
+          <TimelineContent>{history.descricao_tramitacao}</TimelineContent>
         </TimelineItem>
       ))}
     </Timeline>
