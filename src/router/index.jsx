@@ -18,9 +18,11 @@ import { processCoversRoutes } from "./modules/process-covers.routes"
 import PrivateRoute from "./guards/PrivateRoutes"
 import { AuthProvider } from "@/context/AuthContext"
 import Landing from "@/features/landing/pages/Landing"
+import QrCodePage from "@/pages/QrCodePage"
 
 const router = createBrowserRouter([
   { path: "/", element: <Landing /> },
+  { path: "/qrcode/:token", element: <QrCodePage /> }, 
   ...authRoutes,
   {
     path: "/dashboard",
