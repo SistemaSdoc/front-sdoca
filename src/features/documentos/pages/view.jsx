@@ -3,23 +3,15 @@ import { Loader2, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { AnexosTable } from "@/features/documentos/components/anexos-table"
 import { useDocument } from "@/features/documentos/hooks/docHooks"
-
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Download, Eye, FileText, Calendar, User, Building, Tag, Archive } from "lucide-react"
 import QRCode from "@/components/qr-code"
 import DetailsContent from "../components/details-content"
 import HistoryContent from "../components/history-content"
-import { useState } from "react"
-import PdfViewer from "@/components/pdf-viewer"
 
 export default function ViewAnexos() {
   const { id } = useParams()
   const { data, isLoading } = useDocument(id)
-  /*   const [selectedPdfUrl, setSelectedPdfUrl] = useState(null) */
 
   return (
     <div className="relative space-y-6">
