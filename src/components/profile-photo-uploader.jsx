@@ -24,7 +24,7 @@ export default function PhotoUploader({ setValue }) {
         <Button
           type="button"
           variant="outline"
-          className="relative p-0 overflow-hidden shadow-none size-26"
+          className="relative p-0 overflow-hidden rounded-full shadow-none size-26"
           onClick={openFileDialog}
           aria-label={previewUrl ? "Change image" : "Upload image"}>
           {previewUrl ? (

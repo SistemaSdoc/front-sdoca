@@ -29,7 +29,7 @@ export function UserForm({
           <div className="flex flex-col gap-5">
             {/* Foto */}
             <div className="*:not-first:mt-2">
-              <PhotoUploader />
+              <PhotoUploader setValue={setValue} />
             </div>
 
             {/* Nome */}
@@ -134,6 +134,16 @@ export function UserForm({
                   </SelectContent>
                 </Select>
               </div>
+            </div>
+
+            <div className="*:not-first:mt-2">
+              <Label htmlFor='assinatura_path'>Imagem da assinatura</Label>
+              <Input
+                {...register("assinatura_path")}
+                id='assinatura_path'
+                className=" pe-3 file:me-3 file:border-0 file:border-e"
+                type="file"
+              />
             </div>
 
             <Button type="submit" className="w-full" disabled={isPending}>

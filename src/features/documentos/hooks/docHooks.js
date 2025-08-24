@@ -2,7 +2,7 @@ import axios from "@/lib/axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useState } from "react";
 
 // hook para carregar documentos com base no filtro
 export function useDocuments(filtro = "entradas", areaId) {
@@ -176,41 +176,46 @@ export function useCreateTransfer() {
 }
 
 // hook para visualizar um anexo
-export function useViewAttachment(anexoId) {
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['attachment', anexoId],
-    queryFn: async () => {
+export function useViewAttachment() {
+  const [fileUrl, setFileUrl] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
+
+  const viewAttachment = async (anexoId) => {
+    setIsLoading(true)
+    setError(null)
+
+    try {
       const response = await axios.get(`/documentos/anexos/${anexoId}/view`, {
         responseType: 'blob'
       })
 
-      // valida se é PDF mesmo
       if (response.data.type !== 'application/pdf') {
         throw new Error('O arquivo não é um PDF válido')
       }
 
-      return URL.createObjectURL(response.data)
-    },
-    enabled: !!anexoId,
-    onError: () => {
+      // sempre cria uma nova URL
+      const blobUrl = URL.createObjectURL(response.data)
+      setFileUrl(blobUrl)
+    } catch (err) {
+      setError(err)
       toast.error('Erro ao carregar o anexo')
-    },
-    staleTime: 1000 * 60 * 5 // 5 minutos
-  })
-
-  // cleanup do URL pra evitar memory leak
-  useEffect(() => {
-    return () => {
-      if (data) {
-        URL.revokeObjectURL(data)
-      }
+    } finally {
+      setIsLoading(false)
     }
-  }, [data])
+  }
+
+  const closeViewer = () => {
+    if (fileUrl) URL.revokeObjectURL(fileUrl) // libera memória
+    setFileUrl(null)
+  }
 
   return {
-    fileUrl: data,
+    fileUrl,
     isLoading,
-    isError,
-    error
+    error,
+    viewAttachment,
+    closeViewer,
   }
 }
+

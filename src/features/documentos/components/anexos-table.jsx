@@ -4,11 +4,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import PdfViewer from "@/components/pdf-viewer"
 import { useViewAttachment } from "../hooks/docHooks"
-import { useState } from "react"
+import useModalStore from "@/store/modalStore"
+import SolicitarCodigoDialog from "@/components/dialogs/solicitar-codigo-dialog"
 
 export function AnexosTable({ Anexos = [] }) {
-  const [selectedId, setSelectedId] = useState(null)
-  const { fileUrl, isLoading } = useViewAttachment(selectedId)
+  const { fileUrl, isLoading, viewAttachment, closeViewer } = useViewAttachment()
+  const { isOpen, modalType, data, open, close } = useModalStore()
 
   return (
     <>
@@ -40,13 +41,11 @@ export function AnexosTable({ Anexos = [] }) {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => setSelectedId(doc.id)}>
+                        <DropdownMenuItem onClick={() => viewAttachment(doc.doc_path)}>
                           <Eye className="w-4 h-4" />
                           Visualizar
                         </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() => console.log("Assinado!")}
-                        >
+                        <DropdownMenuItem onClick={() => open("solicitarCodigo", doc.id)}>
                           <Edit3 className="w-4 h-4" />
                           Assinar
                         </DropdownMenuItem>
@@ -64,7 +63,16 @@ export function AnexosTable({ Anexos = [] }) {
       {fileUrl && !isLoading && (
         <PdfViewer
           selectedPdfUrl={fileUrl}
-          setSelectedPdfUrl={() => setSelectedId(null)}
+          setSelectedPdfUrl={closeViewer}
+        />
+      )}
+
+      {modalType === "solicitarCodigo" && (
+        <SolicitarCodigoDialog
+          showDialog={isOpen}
+          onOpenChange={(v) => (v ? null : close())}
+          featureName="código"
+          documentoId={data}
         />
       )}
     </>
