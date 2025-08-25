@@ -1,10 +1,12 @@
 import { useForm } from "react-hook-form"
 import { useArea, useUpdateArea } from "@/features/areas/hooks/areasHooks"
 import { useOrganizations } from "@/features/organization/hooks/OrganizationsHooks"
+import { useDepartamentos } from "./useDepartamentos"
 
 export function useEditAreaForm(id) {
-  const { area, isLoading } = useArea(id)
+  const { area, isLoading: isLoadingArea } = useArea(id)
   const { organizations } = useOrganizations()
+  const { departamentos } = useDepartamentos()
   const mutation = useUpdateArea(id)
 
   const form = useForm({
@@ -23,11 +25,12 @@ export function useEditAreaForm(id) {
   })
 
   return {
-    isLoading,
+    isLoading: isLoadingArea,
     isPending: mutation.isPending,
     onSubmit,
     ...form,
     area,
-    organizations
+    organizations,
+    departamentos
   }
 }

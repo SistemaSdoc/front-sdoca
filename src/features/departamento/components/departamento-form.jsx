@@ -1,4 +1,3 @@
-// components/AreaForm.jsx
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -7,18 +6,16 @@ import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Loader2 } from "lucide-react"
 
-export function AreaForm({
+export function DepartamentoForm({
   register,
   handleSubmit,
   setValue,
   onSubmit,
   isPending,
   isEdit = false,
-  area = null,
-  organizations = [],
-  departamentos = []
+  departamento = null,
+  organizations = []
 }) {
-
 
   return (
     <form
@@ -30,46 +27,46 @@ export function AreaForm({
           <div className="flex flex-col gap-5">
             <div className="grid grid-cols-2 gap-4">
               <div className="*:not-first:mt-2">
-                <Label htmlFor="name_area">Nome</Label>
+                <Label htmlFor="name_departamento">Nome</Label>
                 <Input
-                  id="name_area"
-                  placeholder="Ex: área de desenvolvimento"
-                  {...register("name_area")}
+                  id="name_departamento"
+                  placeholder="Ex: departamento de desenvolvimento"
+                  {...register("name_departamento")}
                 />
               </div>
 
               <div className="*:not-first:mt-2">
-                <Label htmlFor="slogan_area">Sigla</Label>
+                <Label htmlFor="slogan_departamento">Sigla</Label>
                 <Input
-                  id="slogan_area"
-                  placeholder="Ex: AD"
-                  {...register("slogan_area")}
+                  id="slogan_departamento"
+                  placeholder="Ex: DD"
+                  {...register("slogan_departamento")}
                 />
               </div>
             </div>
 
             <div className="*:not-first:mt-2">
-              <Label htmlFor="telefone_area">Telefone</Label>
+              <Label htmlFor="telefone_departamento">Telefone</Label>
               <Input
-                id="telefone_area"
+                id="telefone_departamento"
                 placeholder="Ex: 923000000"
-                {...register("telefone_area")}
+                {...register("telefone_departamento")}
               />
             </div>
 
             <div className="*:not-first:mt-2">
-              <Label htmlFor="email_area">E-mail</Label>
+              <Label htmlFor="email_departamento">E-mail</Label>
               <Input
-                id="email_area"
-                placeholder="Ex: desenvolvimento@area.ao"
-                {...register("email_area")}
+                id="email_departamento"
+                placeholder="Ex: desenvolvimento@departamento.ao"
+                {...register("email_departamento")}
               />
             </div>
 
             <div className="*:not-first:mt-2">
               <Label htmlFor="org_id">Organização Pertencente</Label>
               <Select
-                defaultValue={area?.org_id ? String(area.org_id) : ""}
+                defaultValue={departamento?.org_id ? String(departamento.org_id) : ""}
                 onValueChange={(value) => setValue("org_id", value)}>
                 <SelectTrigger id="org_id" className="w-full">
                   <SelectValue
@@ -87,32 +84,12 @@ export function AreaForm({
             </div>
 
             <div className="*:not-first:mt-2">
-              <Label htmlFor="departamento_id">Departamento Pertencente</Label>
-              <Select
-                defaultValue={area?.departamento_id ? String(area.departamento_id) : ""}
-                onValueChange={(value) => setValue("departamento_id", value)}>
-                <SelectTrigger id="departamento_id" className="w-full">
-                  <SelectValue
-                    placeholder="Selecione o departamento"
-                  />
-                </SelectTrigger>
-                <SelectContent>
-                  {departamentos.map((departamento) => (
-                    <SelectItem key={departamento.id} value={String(departamento.id)}>
-                      {departamento.name_departamento}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="*:not-first:mt-2">
-              <Label htmlFor="descricao_area">Descrição</Label>
+              <Label htmlFor="descricao_departamento">Descrição</Label>
               <Textarea
-                id="descricao_area"
-                placeholder="Insira uma descrição sobre a área..."
+                id="descricao_departamento"
+                placeholder="Insira uma descrição sobre o departamento..."
                 rows={5}
-                {...register("descricao_area")}
+                {...register("descricao_departamento")}
               />
             </div>
 
@@ -120,9 +97,9 @@ export function AreaForm({
               {isPending ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               ) : isEdit ? (
-                "Atualizar Área"
+                "Atualizar Departamento"
               ) : (
-                "Criar Área"
+                "Criar Departamento"
               )}
             </Button>
           </div>

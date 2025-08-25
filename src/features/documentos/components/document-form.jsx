@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useScanMutation } from "@/lib/scan"
 import { Loader2 } from "lucide-react"
+import { useState, useCallback } from "react"
 
 export function DocumentForm({
   watch,
@@ -25,7 +26,32 @@ export function DocumentForm({
   isEdit = false
 }) {
   const currentFiles = watch("anexo_docs") || []
-  const { mutate, isPending: isScanning } = useScanMutation({ currentFiles, setValue })
+  const [uploaderFiles, setUploaderFiles] = useState([])
+  
+  // Função para adicionar arquivos ao uploader
+  const addFileToUploader = useCallback((file) => {
+    // Força uma atualização do estado com um novo array para garantir que o useEffect no DocumentUploader seja acionado
+    setUploaderFiles(prev => {
+      // Verifica se o arquivo já existe no array para evitar duplicatas
+      const fileExists = prev.some(f => f.name === file.name)
+      if (fileExists) return prev
+      return [...prev, file]
+    })
+  }, [])
+  
+  const { mutate, isPending: isScanning } = useScanMutation({
+    currentFiles,
+    setValue,
+    onScanComplete: (file) => {
+      // Adiciona o arquivo escaneado ao estado do uploader
+      addFileToUploader(file)
+      
+      // Atualiza o estado do React Hook Form diretamente
+      const updatedFiles = [...currentFiles, file]
+      const deduplicated = Array.from(new Map(updatedFiles.map(f => [f.name, f])).values())
+      setValue("anexo_docs", deduplicated)
+    }
+  })
 
   const selectedCabinet = watch('armario_id')
 
@@ -281,6 +307,7 @@ export function DocumentForm({
                   <DocumentUploader
                     name="anexo_docs"
                     onPreviewPdf={onPreviewPdf}
+                    initialFiles={uploaderFiles}
                     onChange={(newFiles) => {
                       const updated = [...currentFiles, ...newFiles]
                       const deduplicated = Array.from(new Map(updated.map(f => [f.name, f])).values())

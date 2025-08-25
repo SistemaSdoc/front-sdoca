@@ -11,6 +11,7 @@ import { temporalidadeRoutes } from "./modules/temporalidades.routes"
 import { docTypeRoutes } from "./modules/doc-types.routes"
 import { cabinetsRoutes } from "./modules/cabinets.routes"
 import { areaRoutes } from "./modules/areas.routes"
+import { departmentsRoutes } from "./modules/departs.routes"
 import { Settingss } from "@/features/settings/pages"
 import { drawersRoutes } from "./modules/drawers.routes"
 import { processCoversRoutes } from "./modules/process-covers.routes"
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
       ...temporalidadeRoutes,
       ...cabinetsRoutes,
       ...docTypeRoutes,
+      ...departmentsRoutes,
       ...areaRoutes,
       ...drawersRoutes,
       ...processCoversRoutes

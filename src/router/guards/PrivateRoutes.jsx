@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom"
 import { useAuth } from "@/context/AuthContext"
 import { Loader2 } from "lucide-react"
+import APPLoader from "@/components/loader"
 
 export default function PrivateRoute({ children }) {
   const { user, loading } = useAuth()
@@ -9,9 +10,7 @@ export default function PrivateRoute({ children }) {
 
   if (loading) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-white">
-        <Loader2 className="w-8 h-8 text-gray-500 animate-spin" />
-      </div>
+      <APPLoader />
     )
   }
 

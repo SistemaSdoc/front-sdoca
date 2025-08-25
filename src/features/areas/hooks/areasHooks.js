@@ -59,6 +59,7 @@ export function useCreateArea() {
 
     const mutation = useMutation({
         mutationFn: async function (formData) {
+            // Garantir que departamento_id seja enviado para o backend
             const request = await axios.post('/areas', formData)
             return request.data
         },
@@ -82,6 +83,7 @@ export function useUpdateArea() {
 
     const mutation = useMutation({
         mutationFn: async function ({ id, formData }) {
+            // Garantir que departamento_id seja enviado para o backend
             const request = await axios.put(`/areas/${id}`, formData)
             return request.data
         },

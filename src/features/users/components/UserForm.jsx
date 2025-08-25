@@ -47,7 +47,7 @@ export function UserForm({
             <div className="*:not-first:mt-2">
               <Label htmlFor="email_user">E-mail</Label>
               <Input
-                readOnly={isEdit}
+                /* readOnly={isEdit} */
                 {...register("email_user")}
                 id="email_user"
                 placeholder="Ex: user@exemplo.com"

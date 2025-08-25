@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
   AlertCircleIcon,
   FileArchiveIcon,
@@ -115,7 +115,13 @@ export default function DocumentUploader({ onPreviewPdf, onChange, initialFiles 
   const [selectedPdfUrl, setSelectedPdfUrl] = useState(null)
 
   const handleFilesAdded = (addedFiles) => {
-    const newProgressItems = addedFiles.map((file) => ({
+    // Verifica se já existem itens de progresso para os arquivos adicionados
+    const existingIds = uploadProgress.map(item => item.fileId)
+    const newFiles = addedFiles.filter(file => !existingIds.includes(file.id))
+    
+    if (newFiles.length === 0) return
+    
+    const newProgressItems = newFiles.map((file) => ({
       fileId: file.id,
       progress: 0,
       completed: false,
@@ -128,6 +134,7 @@ export default function DocumentUploader({ onPreviewPdf, onChange, initialFiles 
         .map((f) => (f.file instanceof File ? f.file : null))
         .filter(Boolean)
 
+      // Adiciona apenas os novos arquivos ao React Hook Form
       onChange(fileList)
     }
 
@@ -177,14 +184,30 @@ export default function DocumentUploader({ onPreviewPdf, onChange, initialFiles 
       removeFile,
       clearFiles,
       getInputProps,
+      addFiles,
     },
   ] = useFileUpload({
     multiple: true,
     maxFiles,
     maxSize,
-    initialFiles,
+    initialFiles: [],
     onFilesAdded: handleFilesAdded,
   })
+  
+  // Efeito para processar arquivos iniciais quando eles mudarem
+  useEffect(() => {
+    if (initialFiles && initialFiles.length > 0) {
+      // Filtra apenas os arquivos que ainda não foram processados
+      const existingFileNames = files.map(f => f.file.name)
+      const newFiles = initialFiles.filter(file => !existingFileNames.includes(file.name))
+      
+      if (newFiles.length > 0) {
+        // Adiciona os arquivos diretamente usando a função addFiles do hook
+        addFiles(newFiles)
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialFiles.length, addFiles])
 
   return (
     <div className="flex flex-col gap-4">
