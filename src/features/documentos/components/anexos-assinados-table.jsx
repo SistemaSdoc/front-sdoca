@@ -40,7 +40,7 @@ export function AnexosAssinadosTable({ Assinados = [] }) {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => setFileUrl(`http://localhost:8000/storage/app/${assinado.file_assinado}`)}>
+                        <DropdownMenuItem onClick={() => setFileUrl(`http://localhost:8000/storage/app/public/${assinado.file_assinado}`)}>
                           <Eye className="w-4 h-4" />
                           Visualizar
                         </DropdownMenuItem>
