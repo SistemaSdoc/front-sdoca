@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import QRCode from "@/components/qr-code"
 import DetailsContent from "../components/details-content"
 import HistoryContent from "../components/history-content"
+import { AnexosAssinadosTable } from "../components/anexos-assinados-table"
 
 export default function ViewAnexos() {
   const { id } = useParams()
@@ -45,9 +46,10 @@ export default function ViewAnexos() {
 
           {/* Tabs Content */}
           <Tabs defaultValue="details" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-1 md:grid-cols-3">
+            <TabsList className="grid w-full grid-cols-1 md:grid-cols-4">
               <TabsTrigger value="details">Detalhes</TabsTrigger>
-              <TabsTrigger value="attachments">Ficheiros Anexados</TabsTrigger>
+              <TabsTrigger value="attachments">Ficheiros Primários</TabsTrigger>
+              <TabsTrigger value="assinados">Ficheiro Assinado</TabsTrigger>
               <TabsTrigger value="history">Histórico</TabsTrigger>
             </TabsList>
 
@@ -61,6 +63,10 @@ export default function ViewAnexos() {
 
             <TabsContent value="history" className="space-y-6">
               <HistoryContent data={data} />
+            </TabsContent>
+
+            <TabsContent value="assinados" className="space-y-6">
+              <AnexosAssinadosTable Assinados={data.anexos_assinados} />
             </TabsContent>
           </Tabs>
         </>
