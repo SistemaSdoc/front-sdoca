@@ -61,10 +61,10 @@ export function DocTypesTable({ docs_types = [] }) {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => navigate(`/dashboard/doc-types/${docs_type.encrypted_id}`)}>
+                       {/*  <DropdownMenuItem onClick={() => navigate(`/dashboard/doc-types/${docs_type.encrypted_id}`)}>
                           <Eye className="w-4 h-4" />
                           Visualizar
-                        </DropdownMenuItem>
+                        </DropdownMenuItem> */}
                         <DropdownMenuItem onClick={() => navigate(`/dashboard/doc-types/edit/${docs_type.encrypted_id}`)}>
                           <Edit3 className="w-4 h-4" />
                           Editar

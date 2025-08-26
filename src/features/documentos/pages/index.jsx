@@ -19,7 +19,8 @@ export default function Documents() {
   const filteredDocuments = searchTerm.trim()
     ? documents.filter((doc) =>
       (doc.titulo_doc || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (doc.tipo || "").toLowerCase().includes(searchTerm.toLowerCase())
+      (doc.tipo || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (doc.codigo_documento || "").toLowerCase().includes(searchTerm.toLowerCase())
     )
     : documents
 

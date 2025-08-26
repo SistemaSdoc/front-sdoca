@@ -42,6 +42,12 @@ export default function DetailsContent({ data }) {
             <p className="text-sm text-muted-foreground">{data.num_documentos}</p>
           </div>
         </div>
+
+        <img
+          src={`data:image/png;base64,${data.barcode_doc}`}
+          alt="Código de Barras"
+        />
+        {/*  {data.codigo_documento} */}
       </CardContent>
     </Card>
   )

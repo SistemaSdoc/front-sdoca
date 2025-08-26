@@ -45,11 +45,11 @@ export function DepartmentsTable({ departments = [] }) {
                     </DropdownMenuTrigger>
 
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => navigate(`/dashboard/departments/${depart.encrypted_id}`)}>
+                      {/* <DropdownMenuItem onClick={() => navigate(`/dashboard/departments/${depart.encrypted_id}`)}>
                         <Eye className="w-4 h-4" />
                         Ver
                       </DropdownMenuItem>
-
+                     */}
                       <DropdownMenuItem onClick={() => navigate(`/dashboard/departments/edit/${depart.encrypted_id}`)}>
                         <Edit3 className="w-4 h-4" />
                         Editar

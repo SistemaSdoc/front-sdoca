@@ -1,7 +1,7 @@
 import Departamentos from '@/features/departamento/pages/index'
 import NewDepartamentos from '@/features/departamento/pages/new'
 import EditDepartamento from '@/features/departamento/pages/edit'
-import ViewDepartamento from '@/features/departamento/pages/view'
+//import ViewDepartamento from '@/features/departaments/pages/view'
 import PermissionRoute from '../guards/PermissionRoute'
 
 export const departmentsRoutes = [
@@ -29,12 +29,12 @@ export const departmentsRoutes = [
       </PermissionRoute>
     ),
   },
-  {
+/*   {
     path: 'departments/:id',
     element: (
       <PermissionRoute permissions={['admin-post']}>
         <ViewDepartamento />
       </PermissionRoute>
     ),
-  },
+  }, */
 ]

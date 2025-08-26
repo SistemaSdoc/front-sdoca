@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { useDeleteDocument } from "@/features/documentos/hooks/docHooks"
-import { Eye, MoreHorizontal, Trash2, ArrowRightLeft } from "lucide-react"
+import { Eye, MoreHorizontal, Trash2, ArrowRightLeft, Printer } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import DeleteDialog from "@/components/dialogs/delete-dialog"
 import useModalStore from "@/store/modalStore"
 import TransferDialog from "@/components/dialogs/transfer-dialog"
+import { printProtocolo } from "@/lib/printProtocolo"
 
 export function DocumentsTable({ documents = [] }) {
   const navigate = useNavigate()
@@ -48,6 +49,11 @@ export function DocumentsTable({ documents = [] }) {
                       <DropdownMenuItem onClick={() => navigate(`/dashboard/documents/${doc.encrypted_id}`)}>
                         <Eye className="w-4 h-4" />
                         Ver anexos
+                      </DropdownMenuItem>
+
+                      <DropdownMenuItem onClick={() => printProtocolo(doc.encrypted_id)}>
+                        <Printer className="w-4 h-4" />
+                        Imprimir protocolo
                       </DropdownMenuItem>
 
                       <DropdownMenuItem onClick={() => open("transfer", doc.id)}>

@@ -18,7 +18,6 @@ import {
 export default function TransferDialog({
   showDialog = false,
   onOpenChange,
-  isPending = false,
   featureID,
 }) {
 
@@ -26,21 +25,18 @@ export default function TransferDialog({
     register,
     handleSubmit,
     areas,
-    tiposDocumentos,
     setValue,
     isLoading,
+    isPending,
     onSubmit,
     watch
   } = useTransferForm(featureID)
 
-  // Observa os valores do formulário para uso nos componentes Select
-  const watchTipoDoc = watch("tipo_doc_id")
-  const watchAreaOrigem = watch("area_origem_id")
   const watchAreaDestino = watch("area_destino_id")
 
   return (
-    <AlertDialog open={showDialog} onOpenChange={onOpenChange}>
-      <AlertDialogContent className='md:max-w-3xl'>
+    <AlertDialog open={showDialog} onOpenChange={onOpenChange && isPending}>
+      <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Transferência</AlertDialogTitle>
           <AlertDialogDescription>
@@ -55,84 +51,26 @@ export default function TransferDialog({
         ) : (
           <form onSubmit={onSubmit} className="w-full">
             <div className="flex flex-col gap-5">
-              <div className="grid grid-cols-2 gap-4">
-                {/* título */}
-                <div className="*:not-first:mt-2">
-                  <Label htmlFor="titulo_doc">Título do documento</Label>
-                  <Input
-                    readOnly
-                    {...register("titulo_doc")}
-                    id="titulo_doc"
-                    placeholder="Ex: Relatório de estágio"
-                  />
-                </div>
+              {/* destino */}
+              <div className="*:not-first:mt-2">
+                <Label htmlFor="area_destino_id">Área de destino</Label>
+                <Select
+                  value={watchAreaDestino}
+                  onValueChange={(value) => setValue("area_destino_id", value)}
+                  disabled={areas.length === 0}
+                >
+                  <SelectTrigger id="area_destino_id" className="w-full">
+                    <SelectValue placeholder="Selecione a área de destino" />
+                  </SelectTrigger>
 
-                {/* tipo de documento */}
-                <div className="*:not-first:mt-2">
-                  <Label htmlFor="tipo_doc_id">Tipo de documento</Label>
-                  <Select
-                    value={watchTipoDoc}
-                    onValueChange={(value) => setValue("tipo_doc_id", value)}
-                    disabled={tiposDocumentos.length === 0}
-                  >
-                    <SelectTrigger id="tipo_doc_id" className="w-full">
-                      <SelectValue placeholder="Selecione o tipo de documento" />
-                    </SelectTrigger>
-
-                    <SelectContent>
-                      {tiposDocumentos.map((doc_type) => (
-                        <SelectItem key={doc_type.id} value={String(doc_type.id)}>
-                          {doc_type.nome}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                {/* origem */}
-                <div className="*:not-first:mt-2">
-                  <Label htmlFor="area_origem_id">Área de origem</Label>
-                  <Select
-                    value={watchAreaOrigem}
-                    onValueChange={(value) => setValue("area_origem_id", value)}
-                    disabled={areas.length === 0}
-                  >
-                    <SelectTrigger id="area_origem_id" className="w-full">
-                      <SelectValue placeholder="Selecione a área de origem" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {areas.map((area) => (
-                        <SelectItem key={area.id} value={String(area.id)}>
-                          {area.name_area}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* destino */}
-                <div className="*:not-first:mt-2">
-                  <Label htmlFor="area_destino_id">Área de destino</Label>
-                  <Select
-                    value={watchAreaDestino}
-                    onValueChange={(value) => setValue("area_destino_id", value)}
-                    disabled={areas.length === 0}
-                  >
-                    <SelectTrigger id="area_destino_id" className="w-full">
-                      <SelectValue placeholder="Selecione a área de destino" />
-                    </SelectTrigger>
-
-                    <SelectContent>
-                      {areas.map((area) => (
-                        <SelectItem key={area.id} value={String(area.id)}>
-                          {area.name_area}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                  <SelectContent>
+                    {areas.map((area) => (
+                      <SelectItem key={area.id} value={String(area.id)}>
+                        {area.name_area}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               {/* descrição */}
@@ -142,7 +80,7 @@ export default function TransferDialog({
                   {...register("descricao_doc")}
                   id="descricao_doc"
                   rows={4}
-                  placeholder="Ex: relatório do estágio de Stelvio Marques"
+                  placeholder="Insira o motivo que o levou a tranferir documento..."
                 />
               </div>
             </div>
@@ -150,7 +88,12 @@ export default function TransferDialog({
         )}
 
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isPending || isLoading}>Cancelar</AlertDialogCancel>
+          <AlertDialogCancel
+            disabled={isPending}
+            onClick={() => onOpenChange(false)}
+          >
+            Cancelar
+          </AlertDialogCancel>
 
           <AlertDialogAction onClick={handleSubmit(onSubmit)} disabled={isPending || isLoading}>
             {isPending

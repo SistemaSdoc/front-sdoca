@@ -70,10 +70,10 @@ export function AreasTable({ areas = [] }) {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => navigate(`/dashboard/areas/${area.encrypted_id}`)}>
+                       {/*  <DropdownMenuItem onClick={() => navigate(`/dashboard/areas/${area.encrypted_id}`)}>
                           <Eye className="w-4 h-4" />
                           Visualizar
-                        </DropdownMenuItem>
+                        </DropdownMenuItem> */}
                         <DropdownMenuItem onClick={() => navigate(`/dashboard/areas/edit/${area.encrypted_id}`)}>
                           <Edit3 className="w-4 h-4" />
                           Editar

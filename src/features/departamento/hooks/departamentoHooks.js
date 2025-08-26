@@ -63,7 +63,7 @@ export function useCreateDepartamento() {
         onSuccess: () => {
             toast.success('Departamento criado com sucesso!')
             queryClient.invalidateQueries({ queryKey: ['departamentos'] })
-            navigate('/dashboard/departamentos')
+            navigate('/dashboard/departments')
         },
         onError: () => {
             toast.error('Erro ao criar departamento!')

@@ -167,8 +167,8 @@ export function useCreateTransfer() {
       queryClient.invalidateQueries({ queryKey: ['transfer-data'] })
     },
     onError: (error) => {
-      console.error('Erro na transferência:', error)
-      toast.error('Erro ao transferir documento!')
+      console.error('Erro na transferência:', error.response.data.message)
+      toast.error(`Erro ao transferir: ${error.response.data.message}` )
     },
   })
 
@@ -219,3 +219,23 @@ export function useViewAttachment() {
   }
 }
 
+// hook para pegar dados de geração de protocolo do doc
+export function useProtocoloData(id) {
+  const query = useQuery({
+    queryKey: ['protocolo-data', id],
+    queryFn: async () => {
+      try {
+        const response = await axios.get(`/documentos/${id}`);
+        return response.data;
+      } catch (error) {
+        console.error('Erro ao buscar protocolo:', error.response?.data?.message || error.message);
+        toast.error('Erro ao buscar os dados do protocolo.');
+        throw error;
+      }
+    },
+    enabled: !!id, // só roda se existir um id válido
+    staleTime: 1000 * 60 * 5, // 5 minutos de cache
+  });
+
+  return query;
+}

@@ -26,7 +26,7 @@ export default function ViewAnexos() {
           <div className="flex flex-col items-center w-full md:px-3 md:justify-between md:flex-row">
             <div className="order-2 text-center md:order-1 md:text-start">
               <h1 className="text-2xl font-medium text-accent-foreground">
-                {data.documento.titulo_doc}
+                {data.documento.titulo_doc} 
               </h1>
 
               <p className="text-sm md:max-w-3xl text-muted-foreground">

@@ -1,11 +1,9 @@
 import { useForm } from "react-hook-form"
 import { useArea, useUpdateArea } from "@/features/areas/hooks/areasHooks"
-import { useOrganizations } from "@/features/organization/hooks/OrganizationsHooks"
 import { useDepartamentos } from "./useDepartamentos"
 
 export function useEditAreaForm(id) {
-  const { area, isLoading: isLoadingArea } = useArea(id)
-  const { organizations } = useOrganizations()
+  const { area, isLoading } = useArea(id)
   const { departamentos } = useDepartamentos()
   const mutation = useUpdateArea(id)
 
@@ -15,8 +13,8 @@ export function useEditAreaForm(id) {
       slogan_area: area.slogan_area,
       telefone_area: area.telefone_area,
       email_area: area.email_area,
-      org_id: String(area.org_id),
       descricao_area: area.descricao_area,
+      depart_id: String(area.depart_id),
     } : undefined,
   })
 
@@ -25,12 +23,11 @@ export function useEditAreaForm(id) {
   })
 
   return {
-    isLoading: isLoadingArea,
+    isLoading,
     isPending: mutation.isPending,
     onSubmit,
     ...form,
     area,
-    organizations,
     departamentos
   }
 }

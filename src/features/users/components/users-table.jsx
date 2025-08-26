@@ -71,10 +71,10 @@ export function UsersTable({ users = [] }) {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => navigate(`/dashboard/users/${user.encrypted_id}`)}>
+                        {/* <DropdownMenuItem onClick={() => navigate(`/dashboard/users/${user.encrypted_id}`)}>
                           <Eye className="w-4 h-4" />
                           Visualizar
-                        </DropdownMenuItem>
+                        </DropdownMenuItem> */}
                         <DropdownMenuItem onClick={() => navigate(`/dashboard/users/edit/${user.encrypted_id}`)}>
                           <Edit3 className="w-4 h-4" />
                           Editar

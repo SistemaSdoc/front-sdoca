@@ -1,11 +1,9 @@
 import { useForm } from "react-hook-form"
-import { useOrganizations } from "@/features/organization/hooks/OrganizationsHooks"
 import { useCreateArea } from "../areasHooks"
 import { useDepartamentos } from "./useDepartamentos"
 
 export function useCreateAreaForm() {
-  const { organizations, isLoading: isLoadingOrgs } = useOrganizations()
-  const { departamentos, isLoading: isLoadingDeps } = useDepartamentos()
+  const { departamentos, isLoading } = useDepartamentos()
   const mutation = useCreateArea()
 
   const form = useForm({
@@ -15,6 +13,7 @@ export function useCreateAreaForm() {
       telefone_area: "",
       email_area: "",
       descricao_area: "",
+      depart_id: ""
     }
   })
 
@@ -23,11 +22,10 @@ export function useCreateAreaForm() {
   })
 
   return {
-    isLoading: isLoadingOrgs || isLoadingDeps,
+    isLoading,
     isPending: mutation.isPending,
     onSubmit,
     ...form,
-    organizations,
     departamentos
   }
 }

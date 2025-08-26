@@ -15,7 +15,6 @@ export function AreaForm({
   isPending,
   isEdit = false,
   area = null,
-  organizations = [],
   departamentos = []
 }) {
 
@@ -67,31 +66,11 @@ export function AreaForm({
             </div>
 
             <div className="*:not-first:mt-2">
-              <Label htmlFor="org_id">Organização Pertencente</Label>
+              <Label htmlFor="depart_id">Departamento Pertencente</Label>
               <Select
-                defaultValue={area?.org_id ? String(area.org_id) : ""}
-                onValueChange={(value) => setValue("org_id", value)}>
-                <SelectTrigger id="org_id" className="w-full">
-                  <SelectValue
-                    placeholder="Selecione a organização"
-                  />
-                </SelectTrigger>
-                <SelectContent>
-                  {organizations.map((org) => (
-                    <SelectItem key={org.id} value={String(org.id)}>
-                      {org.name_org}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="*:not-first:mt-2">
-              <Label htmlFor="departamento_id">Departamento Pertencente</Label>
-              <Select
-                defaultValue={area?.departamento_id ? String(area.departamento_id) : ""}
-                onValueChange={(value) => setValue("departamento_id", value)}>
-                <SelectTrigger id="departamento_id" className="w-full">
+                defaultValue={area?.depart_id ? String(area.depart_id) : ""}
+                onValueChange={(value) => setValue("depart_id", value)}>
+                <SelectTrigger id="depart_id" className="w-full">
                   <SelectValue
                     placeholder="Selecione o departamento"
                   />

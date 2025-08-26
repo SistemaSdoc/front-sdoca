@@ -12,7 +12,7 @@ export default function NewArea() {
     onSubmit,
     isPending,
     isLoading,
-    organizations
+    departamentos
   } = useCreateAreaForm()
 
   if (isLoading) {
@@ -50,7 +50,7 @@ export default function NewArea() {
         setValue={setValue}
         onSubmit={onSubmit}
         isPending={isPending}
-        organizations={organizations}
+        departamentos={departamentos}
       />
     </>
   )

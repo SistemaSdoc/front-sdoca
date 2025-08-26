@@ -15,12 +15,12 @@ export default function EditArea() {
     isPending,
     isLoading,
     area,
-    organizations
+    departamentos
   } = useEditAreaForm(id)
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-40">
+      <div className="flex items-center justify-center h-40"> 
         <Loader2 className="w-6 h-6 animate-spin" />
       </div>
     )
@@ -55,7 +55,7 @@ export default function EditArea() {
         isPending={isPending}
         area={area}
         isEdit={true}
-        organizations={organizations}
+        departamentos={departamentos}
       />
     </>
   )

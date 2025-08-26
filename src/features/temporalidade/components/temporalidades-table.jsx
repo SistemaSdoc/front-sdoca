@@ -59,10 +59,10 @@ export function TemporalidadesTable({ temporalidades = [] }) {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => navigate(`/dashboard/temps/${temporalidade.encrypted_id}`)}>
+                        {/* <DropdownMenuItem onClick={() => navigate(`/dashboard/temps/${temporalidade.encrypted_id}`)}>
                           <Eye className="w-4 h-4" />
                           Visualizar
-                        </DropdownMenuItem>
+                        </DropdownMenuItem> */}
                         <DropdownMenuItem onClick={() => navigate(`/dashboard/temps/edit/${temporalidade.encrypted_id}`)}>
                           <Edit3 className="w-4 h-4" />
                           Editar
