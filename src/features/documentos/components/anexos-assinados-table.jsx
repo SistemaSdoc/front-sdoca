@@ -3,12 +3,10 @@ import { Eye, MoreHorizontal, Edit3, FileText } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import PdfViewer from "@/components/pdf-viewer"
-import { useState } from "react"
+import { useViewAnexoAssinado } from "../hooks/docHooks"
 
 export function AnexosAssinadosTable({ Assinados = [] }) {
-  const [fileUrl, setFileUrl] = useState(null);
-
-  const closeViewer = () => setFileUrl(null);
+  const { fileUrl, viewAnexoAssinado, closeViewer } = useViewAnexoAssinado()
 
   return (
     <>
@@ -40,7 +38,7 @@ export function AnexosAssinadosTable({ Assinados = [] }) {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => setFileUrl(`http://localhost:8000/storage/app/public/${assinado.file_assinado}`)}>
+                        <DropdownMenuItem onClick={() => viewAnexoAssinado(assinado.doc_id_encrypted)}>
                           <Eye className="w-4 h-4" />
                           Visualizar
                         </DropdownMenuItem>
@@ -64,3 +62,4 @@ export function AnexosAssinadosTable({ Assinados = [] }) {
     </>
   )
 }
+

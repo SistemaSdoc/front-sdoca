@@ -219,6 +219,50 @@ export function useViewAttachment() {
   }
 }
 
+// hook para visualizar um anexo
+export function useViewAnexoAssinado() {
+  const [fileUrl, setFileUrl] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
+
+  const viewAnexoAssinado = async (docId) => {
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      const response = await axios.get(`/documentos/anexos/assinados/${docId}/view`, {
+        responseType: 'blob'
+      })
+
+      if (response.data.type !== 'application/pdf') {
+        throw new Error('O arquivo não é um PDF válido')
+      }
+
+      // sempre cria uma nova URL
+      const blobUrl = URL.createObjectURL(response.data)
+      setFileUrl(blobUrl)
+    } catch (err) {
+      setError(err)
+      toast.error('Erro ao carregar o anexo')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const closeViewer = () => {
+    if (fileUrl) URL.revokeObjectURL(fileUrl) // libera memória
+    setFileUrl(null)
+  }
+
+  return {
+    fileUrl,
+    isLoading,
+    error,
+    viewAnexoAssinado,
+    closeViewer,
+  }
+}
+
 // hook para pegar dados de geração de protocolo do doc
 export function useProtocoloData(id) {
   const query = useQuery({
