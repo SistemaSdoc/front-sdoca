@@ -33,23 +33,23 @@ export function UserNav() {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar className="h-8 w-8 cursor-pointer">
+          <Avatar className="w-8 h-8 cursor-pointer">
             <AvatarImage src="/placeholder.svg?height=32&width=32" alt="Avatar" />
             <AvatarFallback>JD</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end" forceMount>
-          <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4" />
+         {/*  <DropdownMenuItem>
+            <User className="w-4 h-4 mr-2" />
             <span>Visualizar perfil</span>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           <DropdownMenuItem>
-            <Settings className="mr-2 h-4 w-4" />
+            <Settings className="w-4 h-4 mr-2" />
             <span>Configurações</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setShowLogoutDialog(true)}>
-            <LogOut className="mr-2 h-4 w-4" />
+            <LogOut className="w-4 h-4 mr-2" />
             <span>Terminar sessão</span>
           </DropdownMenuItem>
         </DropdownMenuContent>

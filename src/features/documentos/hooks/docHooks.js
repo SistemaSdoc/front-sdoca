@@ -168,7 +168,7 @@ export function useCreateTransfer() {
     },
     onError: (error) => {
       console.error('Erro na transferência:', error.response.data.message)
-      toast.error(`Erro ao transferir: ${error.response.data.message}` )
+      toast.error(`Erro ao transferir: ${error.response.data.message}`)
     },
   })
 
@@ -238,4 +238,33 @@ export function useProtocoloData(id) {
   });
 
   return query;
+}
+
+export function useFinalizeDocument(id) {
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation({
+    mutationFn: async function (formData) {
+      if (!id) throw new Error("ID do documento é obrigatório")
+
+      const response = await axios.post(`/documentos/${id}/finalizar`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // essencial para envio de arquivos
+        }
+      })
+
+      return response.data
+    },
+    onSuccess: () => {
+      toast.success('Documento finalizado com sucesso!')
+      queryClient.invalidateQueries({ queryKey: ['documents'] })
+      navigate('/dashboard/documents')
+    },
+    onError: () => {
+      toast.error('Erro ao finalizar documento!')
+    },
+  })
+
+  return mutation
 }

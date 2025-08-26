@@ -40,10 +40,10 @@ export function UserNav() {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end" forceMount>
-          <DropdownMenuItem>
+          {/* <DropdownMenuItem>
             <User className="w-4 h-4 mr-1 " />
             <span>Meu perfil</span>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           <DropdownMenuItem onClick={() => navigate('/dashboard/settings')}>
             <Settings className="w-4 h-4 mr-1 " />
             <span>Configurações</span>

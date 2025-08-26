@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { Loader2, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { AnexosTable } from "@/features/documentos/components/anexos-table"
@@ -12,6 +12,7 @@ import HistoryContent from "../components/history-content"
 export default function ViewAnexos() {
   const { id } = useParams()
   const { data, isLoading } = useDocument(id)
+  const navigate = useNavigate()
 
   return (
     <div className="relative space-y-6">
@@ -24,17 +25,20 @@ export default function ViewAnexos() {
         <>
           {/* Header */}
           <div className="flex flex-col items-center w-full md:px-3 md:justify-between md:flex-row">
-            <div className="order-2 text-center md:order-1 md:text-start">
-              <h1 className="text-2xl font-medium text-accent-foreground">
-                {data.documento.titulo_doc} 
+            <div className="order-2 text-center lfex md:order-1 md:text-start">
+              <h1 className="text-2xl font-medium text-secondary-foreground">
+                {data.documento.titulo_doc}
               </h1>
 
-              <p className="text-sm md:max-w-3xl text-muted-foreground">
+              <p className="mt-2 text-sm md:max-w-3xl text-muted-foreground ">
                 {data.documento.descricao_doc} Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit dicta sequi animi beatae sapiente dolorem blanditiis ut
               </p>
             </div>
 
-            <QRCode link={data.documento.qrcode_doc} />
+            {/* <QRCode link={data.documento.qrcode_doc} /> */}
+            <Button className='order-1' onClick={() => navigate(`/dashboard/documents/finalizar/${id}`)}>
+              Finalizar
+            </Button>
           </div>
 
           <Separator />
