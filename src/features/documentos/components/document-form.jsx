@@ -9,12 +9,14 @@ import { Label } from "@/components/ui/label"
 import { useScanMutation } from "@/lib/scan"
 import { Loader2 } from "lucide-react"
 import { useState, useCallback } from "react"
+import { Controller } from "react-hook-form"
 
 export function DocumentForm({
   watch,
   register,
   setValue,
   onSubmit,
+  control,
   isPending,
   handleSubmit,
   onPreviewPdf,
@@ -27,7 +29,7 @@ export function DocumentForm({
 }) {
   const currentFiles = watch("anexo_docs") || []
   const [uploaderFiles, setUploaderFiles] = useState([])
-  
+
   // Função para adicionar arquivos ao uploader
   const addFileToUploader = useCallback((file) => {
     // Força uma atualização do estado com um novo array para garantir que o useEffect no DocumentUploader seja acionado
@@ -38,14 +40,14 @@ export function DocumentForm({
       return [...prev, file]
     })
   }, [])
-  
+
   const { mutate, isPending: isScanning } = useScanMutation({
     currentFiles,
     setValue,
     onScanComplete: (file) => {
       // Adiciona o arquivo escaneado ao estado do uploader
       addFileToUploader(file)
-      
+
       // Atualiza o estado do React Hook Form diretamente
       const updatedFiles = [...currentFiles, file]
       const deduplicated = Array.from(new Map(updatedFiles.map(f => [f.name, f])).values())
@@ -68,8 +70,12 @@ export function DocumentForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-3xl mx-auto rounded-xl bg-muted/50">
-      <Tabs defaultValue='info' className='bg-background'>
+      <Tabs defaultValue='utentes' className='bg-background'>
         <TabsList className='w-full'>
+          <TabsTrigger value='utentes'>
+            Dados do utentes
+          </TabsTrigger>
+
           <TabsTrigger value='info'>
             Informações do documento
           </TabsTrigger>
@@ -78,6 +84,71 @@ export function DocumentForm({
             Ficheiros
           </TabsTrigger>
         </TabsList>
+
+        {/* Tab utente data */}
+        <TabsContent value='utentes' forceMount>
+          <Card className="shadow-none">
+            <CardContent className="p-6 pt-1 pb-1">
+              <div className="flex flex-col gap-5">
+                {/* nº bi*/}
+                <div className="*:not-first:mt-2">
+                  <Label htmlFor="n_bi">Nº Bilhete</Label>
+                  <Input
+                    readOnly={isEdit}
+                    {...register("n_bi")}
+                    id="n_bi"
+                    placeholder="Ex: 021986560LA054"
+                  />
+                </div>
+
+                {/* Nome */}
+                <div className="*:not-first:mt-2">
+                  <Label htmlFor="nome">Nome</Label>
+                  <Input
+                    readOnly={isEdit}
+                    {...register("nome")}
+                    id="nome"
+                    placeholder="Ex: João Silva"
+                  />
+                </div>
+
+                {/* email*/}
+                <div className="*:not-first:mt-2">
+                  <Label htmlFor="email">E-mail</Label>
+                  <Input
+                    readOnly={isEdit}
+                    {...register("email")}
+                    id="email"
+                    placeholder="Ex: exemplo@email.com"
+                  />
+                </div>
+
+                {/* nº telefone */}
+                <div className="*:not-first:mt-2">
+                  <Label htmlFor="telefone">Telefone</Label>
+                  <Input
+                    readOnly={isEdit}
+                    type='number'
+                    {...register("telefone")}
+                    id="telefone"
+                    placeholder="Ex: 923000000"
+                  />
+                </div>
+
+                {/* submit button */}
+                <Button type="submit" className="w-full" disabled={isPending}>
+                  {isPending ? (
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  ) : isEdit ? (
+                    "Atualizar Documento"
+                  ) : (
+                    "Criar Documento"
+                  )}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         {/* Tab doc data */}
         <TabsContent value='info' forceMount>
@@ -95,24 +166,49 @@ export function DocumentForm({
                   />
                 </div>
 
-                {/* tipo de documento */}
-                <div className="*:not-first:mt-2">
-                  <Label htmlFor="tipo_doc_id">Tipo de documento</Label>
-                  <Select
-                    defaultValue={doc_types?.id ? String(doc_types.id) : ""}
-                    onValueChange={(value) => setValue("tipo_doc_id", value)}
-                  >
-                    <SelectTrigger id="tipo_doc_id" className="w-full">
-                      <SelectValue placeholder="Selecione o tipo de documento" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {doc_types.map((doc_type) => (
-                        <SelectItem key={doc_type.id} value={String(doc_type.id)}>
-                          {doc_type.nome}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                <div className="grid grid-cols-2 gap-4">
+                  {/* tipo de documento */}
+                  <div className="*:not-first:mt-2">
+                    <Label htmlFor="tipo_doc_id">Tipo de documento</Label>
+                    <Select
+                      defaultValue={doc_types?.id ? String(doc_types.id) : ""}
+                      onValueChange={(value) => setValue("tipo_doc_id", value)}
+                    >
+                      <SelectTrigger id="tipo_doc_id" className="w-full">
+                        <SelectValue placeholder="Selecione o tipo de documento" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {doc_types.map((doc_type) => (
+                          <SelectItem key={doc_type.id} value={String(doc_type.id)}>
+                            {doc_type.nome}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Privacidade */}
+                  <div className="*:not-first:mt-2">
+                    <Label htmlFor="privacidade">Nível de privacidade</Label>
+
+                    <Controller
+                      name="privacidade"
+                      control={control} // vem do useForm()
+                      defaultValue="0"
+                      render={({ field }) => (
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <SelectTrigger id="privacidade" className="w-full">
+                            <SelectValue placeholder="Selecione o nível" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="0">Público</SelectItem>
+                            <SelectItem value="1">Secreto</SelectItem>
+                            <SelectItem value="2">Ultra secreto</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      )}
+                    />
+                  </div>
                 </div>
 
                 {/* origem e destino */}

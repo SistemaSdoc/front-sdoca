@@ -81,6 +81,31 @@ export function useCreateDocument() {
   return mutation
 }
 
+// hook para carregar documentos com base no filtro
+export function useUtenteData() {
+  const queryKey = ["utente-data", ] // ← inclui a área
+
+  const { data: utentes, isLoading, isError, error, refetch } = useQuery({
+    queryKey,
+    queryFn: async function () {
+      const response = await axios.get(`/utentes`)
+      return response.data
+    },
+    onError: () => {
+      toast.error("Erro ao carregar utentes")
+    },
+    staleTime: 0, // força refetch sempre que entra na página
+  })
+
+  return {
+    utentes,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  }
+}
+
 // hook para atualizar um documento
 export function useUpdateDocument() {
   const navigate = useNavigate()

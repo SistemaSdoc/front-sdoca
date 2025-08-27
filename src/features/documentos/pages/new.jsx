@@ -16,6 +16,7 @@ export default function NewDocument() {
     onSubmit,
     isPending,
     isLoading,
+    control,
     areas,
     tiposDocumentos,
     cabinets,
@@ -67,6 +68,7 @@ export default function NewDocument() {
         drawers={drawers}
         processCovers={processCovers}
         onPreviewPdf={setSelectedPdfUrl}
+        control={control}
         watch={watch}
       />
     </>

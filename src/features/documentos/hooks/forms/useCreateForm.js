@@ -1,22 +1,28 @@
 import { useForm } from "react-hook-form"
 import { useAreas } from "@/features/areas/hooks/areasHooks"
 import { useTiposDocumentos } from "@/features/doc-type/hooks/doc-typeHooks"
-import { useCreateDocument } from "@/features/documentos/hooks/docHooks"
+import { useCreateDocument, useUtenteData } from "@/features/documentos/hooks/docHooks"
 import { useCabinets } from "@/features/cabinet/hooks/cabinetHooks"
 import { useDrawers } from "@/features/drawer/hooks/drawerHooks"
 import { useProcessCovers } from "@/features/process-cover/hooks/process-coverHooks"
 
 export function useCreateForm() {
+  const { utentes, isLoading } = useUtenteData()
   const { tiposDocumentos } = useTiposDocumentos()
   const { cabinets } = useCabinets()
   const { drawers } = useDrawers()
   const { processCovers } = useProcessCovers()
-  const { areas, isLoading } = useAreas()
+  const { areas } = useAreas()
   const mutation = useCreateDocument()
 
   const form = useForm({
     defaultValues: {
+      n_bi: "",
+      nome: "",
+      email: "",
+      telefone: "",
       titulo_doc: "",
+      privacidade: '0',
       tipo_doc_id: "",
       area_origem_id: "",
       area_destino_id: "",
@@ -29,7 +35,12 @@ export function useCreateForm() {
     const data = new FormData()
 
     // Campos normais
-    data.append("titulo_doc", formData.titulo_doc)
+    data.append("n_bi", formData.n_bi)
+    data.append("nome", formData.nome)
+    data.append("email", formData.email)
+    data.append("telefone", formData.telefone)
+    
+    data.append("privacidade", formData.privacidade)
     data.append("tipo_doc_id", formData.tipo_doc_id)
     data.append("area_origem_id", formData.area_origem_id)
     data.append("area_destino_id", formData.area_destino_id)
@@ -63,6 +74,7 @@ export function useCreateForm() {
     tiposDocumentos,
     cabinets,
     drawers,
-    processCovers
+    processCovers,
+    utentes
   }
 }
