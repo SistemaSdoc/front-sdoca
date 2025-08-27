@@ -40,6 +40,7 @@ export function useCreateForm() {
     data.append("email", formData.email)
     data.append("telefone", formData.telefone)
     
+    data.append("titulo_doc", formData.titulo_doc)
     data.append("privacidade", formData.privacidade)
     data.append("tipo_doc_id", formData.tipo_doc_id)
     data.append("area_origem_id", formData.area_origem_id)
