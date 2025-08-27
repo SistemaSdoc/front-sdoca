@@ -9,7 +9,7 @@ export function useCreateDepartamentoForm() {
   const form = useForm({
     defaultValues: {
       name_departamento: "",
-      slogan_departamento: "",
+      sigla_departamento: "",
       telefone_departamento: "",
       email_departamento: "",
       org_id: "",

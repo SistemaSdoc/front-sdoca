@@ -46,7 +46,7 @@ export function Register() {
                             </div>
                             <div className="mt-4 text-sm text-center">
                                 Já tem uma conta?{" "}
-                                <Link to="/login" className="underline underline-offset-4">Entrar</Link>
+                                <Link to="/" className="underline underline-offset-4">Entrar</Link>
                             </div>
                         </form>
                     </CardContent>

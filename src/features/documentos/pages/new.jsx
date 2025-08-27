@@ -48,7 +48,6 @@ export default function NewDocument() {
 
       <div className="space-y-2 text-center">
         <div className="flex items-center justify-center space-x-2">
-          <FileText className="w-8 h-8 text-primary" />
           <h1 className="text-3xl font-medium">Criar Novo Documento</h1>
         </div>
         <p className="text-muted-foreground">

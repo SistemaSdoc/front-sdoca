@@ -69,7 +69,8 @@ export function AuthProvider({ children }) {
       await axios.post("/logout")
       setUser(null)
       toast.success("Sessão terminada!")
-      navigate("/login")
+      /* navigate("/login") */
+      navigate("/")
     } catch (err) {
       setError(err)
       toast.error(err?.response?.data?.message || "Erro ao sair")

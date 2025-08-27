@@ -31,7 +31,7 @@ export function OrganizationForm({
               <Label htmlFor="name_org">Nome</Label>
               <Input
                 id="name_org"
-                placeholder="Ex: Empresa Kixico"
+                placeholder="Ex: Cazenga"
                 {...register('name_org')}
               />
             </div>
@@ -40,7 +40,7 @@ export function OrganizationForm({
               <div className="*:not-first:mt-2">
                 <Label htmlFor="nif_org">NIF</Label>
                 <Input
-                  type="number"
+                 /*  type="number" */
                   id="nif_org"
                   placeholder="Ex: 5000000000"
                   {...register('nif_org')}
@@ -97,7 +97,7 @@ export function OrganizationForm({
               <Label htmlFor="descricao_org">Descrição</Label>
               <Textarea
                 id="descricao_org"
-                placeholder="Fale um pouco sobre a organização..."
+                placeholder="Fale um pouco sobre a município..."
                 rows={5}
                 {...register('descricao_org')}
               />
@@ -107,9 +107,9 @@ export function OrganizationForm({
               {isPending ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               ) : isEdit ? (
-                "Atualizar Organização"
+                "Atualizar Município"
               ) : (
-                "Criar Organização"
+                "Criar Município"
               )}
             </Button>
           </div>

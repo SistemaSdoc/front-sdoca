@@ -17,13 +17,13 @@ export default function Organization() {
 
   return (
     <div className="relative space-y-4">
-      <h1 className="text-2xl font-semibold">Organizações</h1>
+      <h1 className="text-2xl font-semibold">Municípios</h1>
 
       <ListContent
         isLoading={isLoading}
         data={organizations}
         filtered={filtered}
-        resource="organização"
+        resource="municípios"
       >
         <OrganizationsTable organizations={filtered} />
       </ListContent>
@@ -34,7 +34,7 @@ export default function Organization() {
         >
           <Plus className="w-5 h-5 font" />
           <span className="text-sm font-medium transition-opacity duration-200 opacity-0 group-hover:opacity-100">
-            Criar organização
+            Criar Município
           </span>
         </Button>
       </Link>

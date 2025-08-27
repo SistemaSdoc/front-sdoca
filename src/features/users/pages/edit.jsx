@@ -39,7 +39,6 @@ export default function EditUserPage() {
 
       <div className="space-y-2 text-center">
         <div className="flex items-center justify-center space-x-2">
-          <Users className="w-8 h-8" />
           <h1 className="text-3xl font-medium">Editar Usuário</h1>
         </div>
         <p className="text-muted-foreground">Edite os dados abaixo para actualizar o usuário no sistema</p>

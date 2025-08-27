@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom"
 import { Button } from "@/components/ui/button"
-import { ChevronLeftIcon, Loader2, Layers } from "lucide-react"
+import { ChevronLeftIcon, Loader2, Layers, Boxes, Building } from "lucide-react"
 import { useEditDepartamentoForm } from "../hooks/forms/useEditForm"
 import { DepartamentoForm } from "../components/departamento-form"
 
@@ -38,11 +38,10 @@ export default function EditDepartamento() {
 
       <div className="space-y-2 text-center">
         <div className="flex items-center justify-center space-x-2">
-          <Layers className="w-8 h-8 text-primary" />
-          <h1 className="text-3xl font-medium">Editar Departamento</h1>
+          <h1 className="text-3xl font-medium">Editar Distrito</h1>
         </div>
         <p className="text-muted-foreground">
-          Atualize as informações do departamento
+          Actualize as informações do distrito
         </p>
       </div>
 

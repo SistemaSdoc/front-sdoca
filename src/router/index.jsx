@@ -22,7 +22,7 @@ import Landing from "@/features/landing/pages/Landing"
 import QrCodePage from "@/pages/QrCodePage"
 
 const router = createBrowserRouter([
-  { path: "/", element: <Landing /> },
+  /* { path: "/", element: <Landing /> }, */
   { path: "/qrcode/:token", element: <QrCodePage /> }, 
   ...authRoutes,
   {

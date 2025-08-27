@@ -30,17 +30,17 @@ export function DepartamentoForm({
                 <Label htmlFor="name_departamento">Nome</Label>
                 <Input
                   id="name_departamento"
-                  placeholder="Ex: departamento de desenvolvimento"
+                  placeholder="Ex: Kalawenda"
                   {...register("name_departamento")}
                 />
               </div>
 
               <div className="*:not-first:mt-2">
-                <Label htmlFor="slogan_departamento">Sigla</Label>
+                <Label htmlFor="sigla_departamento">Sigla</Label>
                 <Input
-                  id="slogan_departamento"
+                  id="sigla_departamento"
                   placeholder="Ex: DD"
-                  {...register("slogan_departamento")}
+                  {...register("sigla_departamento")}
                 />
               </div>
             </div>
@@ -58,19 +58,19 @@ export function DepartamentoForm({
               <Label htmlFor="email_departamento">E-mail</Label>
               <Input
                 id="email_departamento"
-                placeholder="Ex: desenvolvimento@departamento.ao"
+                placeholder="Ex: distrito@municipio.ao"
                 {...register("email_departamento")}
               />
             </div>
 
             <div className="*:not-first:mt-2">
-              <Label htmlFor="org_id">Organização Pertencente</Label>
+              <Label htmlFor="org_id">Município Pertencente</Label>
               <Select
                 defaultValue={departamento?.org_id ? String(departamento.org_id) : ""}
                 onValueChange={(value) => setValue("org_id", value)}>
                 <SelectTrigger id="org_id" className="w-full">
                   <SelectValue
-                    placeholder="Selecione a organização"
+                    placeholder="Selecione o município"
                   />
                 </SelectTrigger>
                 <SelectContent>
@@ -87,7 +87,7 @@ export function DepartamentoForm({
               <Label htmlFor="descricao_departamento">Descrição</Label>
               <Textarea
                 id="descricao_departamento"
-                placeholder="Insira uma descrição sobre o departamento..."
+                placeholder="Insira uma descrição sobre o distrito..."
                 rows={5}
                 {...register("descricao_departamento")}
               />
@@ -97,9 +97,9 @@ export function DepartamentoForm({
               {isPending ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               ) : isEdit ? (
-                "Atualizar Departamento"
+                "Actualizar Distrito"
               ) : (
-                "Criar Departamento"
+                "Criar Distrito"
               )}
             </Button>
           </div>

@@ -5,7 +5,7 @@ import { AuthProvider } from "@/context/AuthContext"
 
 export const authRoutes = [
   {
-    path: "/login",
+    path: "/",
     element: (
       <AuthProvider>
         <GuestRoute>

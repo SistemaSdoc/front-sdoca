@@ -34,12 +34,11 @@ export default function NewOrganization() {
       </div>
 
       <div className="space-y-2 text-center">
-        <div className="flex items-center justify-center space-x-2">
-          <Building2 className="w-8 h-8" />
-          <h1 className="text-3xl font-medium">Criar Nova Organização</h1>
+        <div className="flex items-center justify-center space-x-2 ">
+          <h1 className="text-3xl font-medium">Criar Novo Município</h1>
         </div>
         <p className="text-muted-foreground">
-          Preencha os dados abaixo para cadastrar uma nova organização
+          Preencha os dados abaixo para cadastrar um novo município no sistema
         </p>
       </div>
 

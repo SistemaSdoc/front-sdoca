@@ -10,7 +10,7 @@ export function useEditDepartamentoForm(id) {
   const form = useForm({
     values: departamento?.name_departamento ? {
       name_departamento: departamento.name_departamento,
-      slogan_departamento: departamento.slogan_departamento,
+      sigla_departamento: departamento.sigla_departamento,
       telefone_departamento: departamento.telefone_departamento,
       email_departamento: departamento.email_departamento,
       org_id: String(departamento.org_id),

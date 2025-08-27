@@ -10,7 +10,7 @@ import {
   SidebarGroupLabel,
 } from "@/components/ui/sidebar"
 import { Link, useLocation } from "react-router-dom"
-import { Boxes, Building2, FileText, Home, Layers, Users } from "lucide-react"
+import { Boxes, Building, Building2, FileText, Home, Layers, Users } from "lucide-react"
 import { useAuth } from "@/context/AuthContext"
 
 const data = {
@@ -21,15 +21,15 @@ const data = {
       icon: Home,
     },
     {
-      title: "Organizações",
+      title: "Municípios",
       url: "/dashboard/organizations",
       icon: Building2,
       permissions: ["super-admin-post", "admin-post"],
     },
     {
-      title: "Departamentos",
+      title: "Distritos",
       url: "/dashboard/departments",
-      icon: Boxes,
+      icon: Building,
       permissions: ["admin-post", "supervi-post"],
     },
     {

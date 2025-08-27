@@ -14,10 +14,15 @@ export default function PrivateRoute({ children }) {
     )
   }
 
-  if (!user) {
+/*   if (!user) {
     console.log("🔒 Redirecionando pro login...")
     return <Navigate to="/login" />
-  }
+  } */
+
+    if (!user) {
+      console.log("🔒 Redirecionando pro login...")
+      return <Navigate to="/" />
+    }
 
   return children
 }
