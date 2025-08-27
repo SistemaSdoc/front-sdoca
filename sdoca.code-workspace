@@ -5,6 +5,9 @@
         },
         {
             "path": "../Startkit-React"
+        },
+        {
+            "path": "../san-service"
         }
     ]
 }

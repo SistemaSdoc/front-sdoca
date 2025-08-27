@@ -22,7 +22,7 @@ export async function printProtocolo(id) {
             .footer-right { position: absolute; bottom: 40px; right: 40px; text-align:center; }
           </style>
         </head>
-        <body>
+        <body onload="window.print(); window.close();">
           <div class="header">
             <img src="/logo gov.png" alt="Logo" style="max-height:200px"/>
           </div>
@@ -40,20 +40,22 @@ export async function printProtocolo(id) {
       </html>
     `;
 
+    // Tenta abrir a nova janela
     const printWindow = window.open('', '_blank');
+
+    // Se o browser bloqueou, cai aqui
+    if (!printWindow) {
+      alert("⚠️ O navegador bloqueou a janela de impressão. Habilite pop-ups para este site.");
+      return;
+    }
+
+    // Escreve o HTML no novo documento
+    printWindow.document.open();
     printWindow.document.write(html);
     printWindow.document.close();
-
-    printWindow.onload = () => {
-      printWindow.focus();
-      printWindow.print();
-      printWindow.close();
-    };
-
 
   } catch (error) {
     console.error('Erro ao imprimir protocolo:', error);
     alert('Erro ao imprimir protocolo. Veja o console para detalhes.');
   }
 }
-
