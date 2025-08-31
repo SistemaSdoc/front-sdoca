@@ -38,7 +38,7 @@ export default function ViewDepartamento() {
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Informações do Departamento</CardTitle>
+            <CardTitle>Informações da Comuna</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -73,7 +73,7 @@ export default function ViewDepartamento() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Áreas do Departamento</CardTitle>
+            <CardTitle>Áreas da Comuna</CardTitle>
           </CardHeader>
           <CardContent>
             {departamento?.areas?.length > 0 ? (

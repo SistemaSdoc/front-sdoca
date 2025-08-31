@@ -1,92 +1,41 @@
 "use client"
 
 import * as React from "react"
-import { Bell, Check, FileText, MessageSquare, Users } from "lucide-react"
-
-import { Badge } from "@/components/ui/badge"
+import { Bell, Check, CheckCheck, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 
-// Exemplos de notificações
-const notifications = [
-  {
-    id: 1,
-    type: "document",
-    icon: FileText,
-    title: "Novo documento compartilhado",
-    message: "João Silva compartilhou o documento 'Relatório Mensal' com você",
-    time: "2 min atrás",
-    read: false,
-  },
-  {
-    id: 2,
-    type: "user",
-    icon: Users,
-    title: "Novo usuário adicionado",
-    message: "Maria Santos foi adicionada à organização TechCorp",
-    time: "15 min atrás",
-    read: false,
-  },
-  {
-    id: 3,
-    type: "message",
-    icon: MessageSquare,
-    title: "Nova mensagem",
-    message: "Carlos Oliveira comentou no documento 'Projeto Alpha'",
-    time: "1 hora atrás",
-    read: true,
-  },
-  {
-    id: 4,
-    type: "document",
-    icon: FileText,
-    title: "Documento aprovado",
-    message: "O documento 'Proposta Comercial' foi aprovado pela diretoria",
-    time: "2 horas atrás",
-    read: true,
-  },
-  {
-    id: 5,
-    type: "user",
-    icon: Users,
-    title: "Permissões atualizadas",
-    message: "Suas permissões na área 'Financeiro' foram atualizadas",
-    time: "1 dia atrás",
-    read: true,
-  },
-  {
-    id: 6,
-    type: "document",
-    icon: FileText,
-    title: "Documento expirado",
-    message: "O documento 'Contrato de Serviços' expira em 3 dias",
-    time: "2 dias atrás",
-    read: false,
-  },
-]
+import { useNotificacoes, useUpdateNotificacao } from "@/hooks/useNotificationsHooks"
 
 export function NotificationsPanel() {
   const [open, setOpen] = React.useState(false)
-  const unreadCount = notifications.filter((n) => !n.read).length
+  const { notificacoes = [], isLoading } = useNotificacoes()
+  const updateNotificacao = useUpdateNotificacao()
 
-  const markAsRead = (id) => {
-    // Aqui você implementaria a lógica para marcar como lida
-    console.log("Marcar como lida:", id)
+  const unreadCount = notificacoes.filter(n => !n.read).length
+
+  function markAsRead(id) {
+    updateNotificacao.mutate({ id })
   }
 
-  const markAllAsRead = () => {
-    // Aqui você implementaria a lógica para marcar todas como lidas
-    console.log("Marcar todas como lidas")
+  function markAllAsRead() {
+    notificacoes.forEach(n => {
+      if (!n.read) markAsRead(n.id)
+    })
   }
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative h-8 w-8">
-          <Bell className="h-4 w-4" />
+        <Button variant="ghost" size="icon" className="relative w-8 h-8">
+          <Bell className="w-4 h-4" />
+          {unreadCount > 0 && (
+            <span className="absolute w-1 h-1 bg-red-500 rounded-full top-1 right-2" />
+          )}
         </Button>
       </SheetTrigger>
+      
       <SheetContent className="w-80 sm:w-96 md:pt-5">
         <SheetHeader>
           <div className="flex items-center justify-between">
@@ -98,34 +47,45 @@ export function NotificationsPanel() {
             )}
           </div>
         </SheetHeader>
+        
         <ScrollArea className="h-full mt-6">
-          <div className="space-y-4 px-3">
-            {notifications.map((notification) => (
+          <div className="flex flex-col px-3 space-y-4">
+            {isLoading && (
+              <div className="flex items-center justify-center w-full py-20">
+                <Loader2 className="w-6 h-6 animate-spin" />
+              </div>
+            )}
+            
+            {!isLoading && notificacoes.length === 0 && (
+              <div className="flex flex-col items-center justify-center w-full gap-2 py-20 text-sm text-muted-foreground">
+                <Bell />
+                Nenhuma notificação no momento
+              </div>
+            )}
+            
+            {!isLoading && notificacoes.map(notification => (
               <div
                 key={notification.id}
-                className={`flex gap-3 p-3 rounded-lg border ${!notification.read ? "bg-muted/50 border-primary/20" : "bg-background"
-                  }`}>
-                <div className="flex-shrink-0">
-                  <div
-                    className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
-                    <notification.icon className="h-4 w-4 text-primary" />
-                  </div>
-                </div>
+                className={`flex gap-3 p-4 rounded-lg  ${!notification.read ? "bg-muted/50" : "bg-background"}`}>
                 <div className="flex-1 space-y-1">
                   <div className="flex items-start justify-between">
-                    <p className="text-sm font-medium">{notification.title}</p>
+                    <p className="text-sm font-medium">{notification.titulo}</p>
+                    
                     {!notification.read && (
                       <Button
+                        title='Marcar como lida'
                         variant="ghost"
                         size="icon"
-                        className="h-6 w-6"
-                        onClick={() => markAsRead(notification.id)}>
-                        <Check className="h-3 w-3" />
+                        className="w-6 h-6"
+                        onClick={() => markAsRead(notification.id)}
+                      >
+                        <CheckCheck className="w-3 h-3" />
                       </Button>
                     )}
                   </div>
-                  <p className="text-sm text-muted-foreground">{notification.message}</p>
-                  <p className="text-xs text-muted-foreground">{notification.time}</p>
+                  
+                  <p className="text-sm text-muted-foreground">{notification.mensagem}</p>
+                  <p className="text-xs text-muted-foreground">{notification.created_at}</p>
                 </div>
               </div>
             ))}
@@ -133,5 +93,5 @@ export function NotificationsPanel() {
         </ScrollArea>
       </SheetContent>
     </Sheet>
-  );
+  )
 }

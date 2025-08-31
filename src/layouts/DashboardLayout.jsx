@@ -29,7 +29,7 @@ export default function DashboardLayout() {
             </div>
             <div className="flex items-center gap-2 px-3 ml-auto">
               <GlobalSearch placeholder="Pesquise..." />
-              {/* <NotificationsPanel /> */}
+              <NotificationsPanel />
               <UserNav />
             </div>
           </header>

@@ -10,6 +10,7 @@ import { useScanMutation } from "@/lib/scan"
 import { Loader2 } from "lucide-react"
 import { useState, useCallback } from "react"
 import { Controller } from "react-hook-form"
+import AreasSelector from "@/components/multiple-select"
 
 export function DocumentForm({
   watch,
@@ -232,7 +233,7 @@ export function DocumentForm({
                     </Select>
                   </div>
 
-                  <div className="*:not-first:mt-2">
+                  {/* <div className="*:not-first:mt-2">
                     <Label htmlFor="area_destino_id">Área de destino</Label>
                     <Select
                       defaultValue={areas?.id ? String(areas.id) : ""}
@@ -249,7 +250,19 @@ export function DocumentForm({
                         ))}
                       </SelectContent>
                     </Select>
-                  </div>
+                  </div> */}
+
+                  <Controller
+                    name="area_destinos_ids"
+                    control={control}
+                    render={({ field }) => (
+                      <AreasSelector
+                        areas={areas}
+                        selected={(field.value ?? []).map(id => areas.find(a => a.id === id) || {})}
+                        onChange={field.onChange}
+                      />
+                    )}
+                  />
                 </div>
 
                 {/* Mapeamento Físico */}

@@ -25,7 +25,7 @@ export function useCreateForm() {
       privacidade: '0',
       tipo_doc_id: "",
       area_origem_id: "",
-      area_destino_id: "",
+      area_destinos_ids: [],
       descricao_doc: "",
       anexo_docs: [],
     }
@@ -44,7 +44,7 @@ export function useCreateForm() {
     data.append("privacidade", formData.privacidade)
     data.append("tipo_doc_id", formData.tipo_doc_id)
     data.append("area_origem_id", formData.area_origem_id)
-    data.append("area_destino_id", formData.area_destino_id)
+    data.append("area_destinos_ids", formData.area_destinos_ids)
     data.append("descricao_doc", formData.descricao_doc)
     data.append("capa_processo_id", Number(formData.capa_processo_id))
 

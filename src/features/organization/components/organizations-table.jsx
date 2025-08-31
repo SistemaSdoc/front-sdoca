@@ -31,11 +31,11 @@ export function OrganizationsTable({ organizations = [] }) {
               <TableRow>
                 <TableHead className="px-4">Nome</TableHead>
                 <TableHead className="px-4">Descrição</TableHead>
-                <TableHead className="px-4">Email</TableHead>
+                {/* <TableHead className="px-4">Email</TableHead> */}
                 <TableHead className="px-4">Telefone</TableHead>
                 <TableHead className="px-4">Província</TableHead>
-                <TableHead className="px-4">Regime</TableHead>
-                <TableHead className="px-4">NIF</TableHead>
+                {/* <TableHead className="px-4">Regime</TableHead> */}
+                {/* <TableHead className="px-4">NIF</TableHead> */}
                 <TableHead className="w-[50px] px-4"></TableHead>
               </TableRow>
             </TableHeader>
@@ -58,13 +58,13 @@ export function OrganizationsTable({ organizations = [] }) {
                     </div>
                   </TableCell>
                   <TableCell className="max-w-[250px] truncate text-muted-foreground px-4">{org.descricao_org}</TableCell>
-                  <TableCell className="px-4">{org.email_org}</TableCell>
+                  {/* <TableCell className="px-4">{org.email_org}</TableCell> */}
                   <TableCell className="px-4">{org.telefone_org}</TableCell>
                   <TableCell className="px-4">{org.provincia_org || "-"}</TableCell>
-                  <TableCell className="px-4">
+                 {/*  <TableCell className="px-4">
                     <Badge variant="outline">{org.regime_org || "N/A"}</Badge>
-                  </TableCell>
-                  <TableCell className="px-4">{org.nif_org}</TableCell>
+                  </TableCell> */}
+                  {/* <TableCell className="px-4">{org.nif_org}</TableCell> */}
                   <TableCell className="px-4">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>

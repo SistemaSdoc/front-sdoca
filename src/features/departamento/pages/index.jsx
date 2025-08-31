@@ -17,13 +17,14 @@ export default function Departamentos() {
 
   return (
     <div className="relative space-y-4">
-      <h1 className="text-2xl font-semibold">Distrito</h1>
+      <h1 className="text-2xl font-semibold">Comunas</h1>
 
       <ListContent
         isLoading={isLoading}
         data={departamentos}
         filtered={filtered}
-        resource="distrito"
+        resource="comuna"
+      
       >
         <DepartmentsTable departments={filtered} />
       </ListContent>
@@ -34,7 +35,7 @@ export default function Departamentos() {
         >
           <Plus className="w-5 h-5 font" />
           <span className="text-sm font-medium transition-opacity duration-200 opacity-0 group-hover:opacity-100">
-            Criar Distrito
+            Adicionar Comuna
           </span>
         </Button>
       </Link>

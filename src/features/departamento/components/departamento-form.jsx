@@ -30,7 +30,7 @@ export function DepartamentoForm({
                 <Label htmlFor="name_departamento">Nome</Label>
                 <Input
                   id="name_departamento"
-                  placeholder="Ex: Kalawenda"
+                  placeholder="Ex: Kima Kieza"
                   {...register("name_departamento")}
                 />
               </div>
@@ -39,7 +39,7 @@ export function DepartamentoForm({
                 <Label htmlFor="sigla_departamento">Sigla</Label>
                 <Input
                   id="sigla_departamento"
-                  placeholder="Ex: DD"
+                  placeholder="Ex: KK"
                   {...register("sigla_departamento")}
                 />
               </div>
@@ -58,7 +58,7 @@ export function DepartamentoForm({
               <Label htmlFor="email_departamento">E-mail</Label>
               <Input
                 id="email_departamento"
-                placeholder="Ex: distrito@municipio.ao"
+                placeholder="Ex: comuna@kimakieza.ao"
                 {...register("email_departamento")}
               />
             </div>
@@ -87,7 +87,7 @@ export function DepartamentoForm({
               <Label htmlFor="descricao_departamento">Descrição</Label>
               <Textarea
                 id="descricao_departamento"
-                placeholder="Insira uma descrição sobre o distrito..."
+                placeholder="Insira uma descrição sobre a comuna..."
                 rows={5}
                 {...register("descricao_departamento")}
               />
@@ -97,9 +97,9 @@ export function DepartamentoForm({
               {isPending ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               ) : isEdit ? (
-                "Actualizar Distrito"
+                "Actualizar Comuna"
               ) : (
-                "Criar Distrito"
+                "Criar Comuna"
               )}
             </Button>
           </div>

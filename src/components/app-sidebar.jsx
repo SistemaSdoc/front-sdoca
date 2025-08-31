@@ -27,7 +27,7 @@ const data = {
       permissions: ["super-admin-post", "admin-post"],
     },
     {
-      title: "Distritos",
+      title: "Comunas",
       url: "/dashboard/departments",
       icon: Building,
       permissions: ["admin-post", "supervi-post"],

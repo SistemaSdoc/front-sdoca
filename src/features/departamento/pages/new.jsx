@@ -36,10 +36,10 @@ export default function NewDepartamento() {
 
       <div className="space-y-2 text-center">
         <div className="flex items-center justify-center space-x-2 ">
-          <h1 className="text-3xl font-medium">Criar Novo Distrito</h1>
+          <h1 className="text-3xl font-medium">Criar Nova Comuna</h1>
         </div>
         <p className="text-muted-foreground">
-          Preencha os dados abaixo para registrar um novo distrito no sistema
+          Preencha os dados abaixo para registrar uma novo comuna no sistema
         </p>
       </div>
 
