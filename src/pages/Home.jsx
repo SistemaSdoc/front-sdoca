@@ -6,9 +6,16 @@ import { DashboardCards } from "@/components/dashboard-cards-v1"
 import { PerformanceTable } from "@/components/performance-table"
 import { DocumentosBarChart } from '@/components/charts/DocumentosBarChart'
 import { TempoRespostaChart } from '@/components/charts/TempoRespostaChart'
+import axios from 'axios'
+
+async function cardData() {
+  const cardData = await axios.get('/dashboard-data')
+  console.log('dados dos cards: ', cardData)
+}
 
 export default function DashboardDemo() {
   const { loading } = useAuth()
+  cardData()
 
   if (loading) return (
     <div className="fixed inset-0 flex items-center justify-center bg-white">
